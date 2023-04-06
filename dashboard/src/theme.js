@@ -2,17 +2,17 @@ import {createContext, useState, useMemo}from "react";
 import { createTheme } from "@mui/material/styles";
 //color design tokens
 export const tokens =(mode)=>({
-    ...(mode==='light'
+    ...(mode==="light"
     ?{primary: {
-        900: "#091c33",
-        800: "#123966",
-        700: "#1b5599",
-        600: "#2472cc",
+        100: "#2d8eff",
+        200: "#123966",
+        300: "#1b5599",
+        400: "#2472cc",
         500: "#2d8eff",
-        400: "#57a5ff",
-        300: "#81bbff",
-        200: "#abd2ff",
-        100: "#d5e8ff"
+        600: "#57a5ff",
+        700: "#81bbff",
+        800: "#abd2ff",
+        900: "#d5e8ff"
     },
     secondary: {
         100: "#f8fcff",
@@ -178,7 +178,7 @@ active: {
     700: "#81bbff",
     800: "#abd2ff",
     900: "#d5e8ff",
-},})
+},}),
 })
 //mui theme settings
 export const themeSettings=(mode)=>{
@@ -246,12 +246,12 @@ export const themeSettings=(mode)=>{
                 fontFamily:["Source Sans Pro", "sans-serif"].join(","),
                 fontSize:14,
             },
-        }
-    }
-}
+        },
+    };
+};
 //context for the color mode
 export const ColorModeContext=createContext({
-    toggleColorMode:()=>{}
+    toggleColorMode:()=>{},
 });
 export const useMode=()=>{
     const [mode,setMode]=useState("light");
@@ -262,6 +262,6 @@ export const useMode=()=>{
         }),
         []
     );
-    const theme=useMemo(()=>createTheme(themeSettings(mode)),[mode])
+    const theme=useMemo(()=>createTheme(themeSettings(mode)),[mode]);
     return[theme,colorMode];
 }
