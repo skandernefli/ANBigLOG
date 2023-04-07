@@ -4,15 +4,15 @@ import { createTheme } from "@mui/material/styles";
 export const tokens =(mode)=>({
     ...(mode==="light"
     ?{primary: {
-        100: "#2d8eff",
-        200: "#123966",
-        300: "#1b5599",
-        400: "#2472cc",
+        100: "#d5e8ff",
+        200: "#abd2ff",
+        300: "#81bbff",
+        400: "#57a5ff",
         500: "#2d8eff",
-        600: "#57a5ff",
-        700: "#81bbff",
-        800: "#abd2ff",
-        900: "#d5e8ff"
+        600: "#2472cc",
+        700: "#1b5599",
+        800: "#123966",
+        900: "#091c33",
     },
     secondary: {
         100: "#f8fcff",
@@ -189,33 +189,39 @@ export const themeSettings=(mode)=>{
             ...(mode === 'light'
             ? {
                 backgorund:{
-                    main:colors.secondary[100],
+                    main:colors.secondary[500],
                 },
                 primary:{
-                    main:colors.primary[100], 
+                    main:colors.primary[500], 
                 },
                 secondary:{
-                    main:colors.secondary[100],
+                    main:colors.secondary[500],
                 },
                 neutral:{
                     dark:colors.black[300],
                     main:colors.black[500],
                     light:colors.black[800],
+                }, 
+                white:{
+                    white:colors.white[500]
                 }
             }:{
                 backgorund:{
                     main:"#fcfcfc",
                 },
                 primary:{
-                    main:colors.primary[100], 
+                    main:colors.primary[500], 
                 },
                 secondary:{
-                    main:colors.secondary[100],
+                    main:colors.secondary[500],
                 },
                 neutral:{
                     dark:colors.black[300],
                     main:colors.black[500],
                     light:colors.black[800],
+                }, 
+                white:{
+                    white:colors.white[500]
                 }
             }),
         },
