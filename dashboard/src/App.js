@@ -1,33 +1,45 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { useState } from "react";
+import { BrowserRouter, Navigate,Routes, Route } from "react-router-dom";
 import HeaderBar from "./scenes/global/HeaderBar";
 import SideBar from "./scenes/global/SideBar";
+import LoginPage from "./scenes/auth";
+import { useSelector } from "react-redux";
 // import manageFeatureNews from "./scenes/manageFeatureNews/index";
 // import manageOtherSections from "./scenes/manageOtherSections/index";
 // import managePostGallery from "./scenes/managePostGallery/index";
 import managePosts from "./scenes/managePosts";
 // import manageVideoPosts from "./scenes/manageVideoPosts/index";
-import { Routes, Route } from "react-router-dom";
+
 function App() {
+
   const [theme, colorMode] = useMode();
   const [isSideBar, setIsSideBar] = useState(true);
+  const isAuth = Boolean(useSelector((state) => state.token));
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <SideBar isSideBar={isSideBar} />
+        <BrowserRouter>
+        {isAuth &&  <SideBar isSideBar={isSideBar} />}
           <main className="content">
-          <HeaderBar setIsSideBar={setIsSideBar}/>
+          {isAuth &&  <HeaderBar setIsSideBar={setIsSideBar}/>}
             <Routes>
-              <Route path="/" element={<managePosts />}/>
+            {isAuth ? (<>
+              <Route path="/" element={ <LoginPage />} />
+              <Route path="/manage_posts" element={ isAuth ?<managePosts />:<Navigate to="/"/>}/>
               {/* <Route path="/manage_featur_posts" element={<manageFeatureNews/>}/> */}
               {/* <Route path="/manage_other_sections" element={<manageOtherSections/>}/> */}
               {/* <Route path="/manage_post_gallery" element={<managePostGallery/>}/> */}
               {/* <Route path="/manage_video_posts" element={<manageVideoPosts/>}/> */}
+            </>):(   <Route path="/" element={<LoginPage />} />
+              )}
             </Routes>
           </main>
+          </BrowserRouter>
+
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
