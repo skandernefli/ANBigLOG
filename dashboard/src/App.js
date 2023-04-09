@@ -28,7 +28,6 @@ function App() {
           {isAuth &&  <HeaderBar setIsSideBar={setIsSideBar}/>}
             <Routes>
             {isAuth ? (<>
-              <Route path="/" element={ <LoginPage />} />
               <Route path="/manage_posts" element={ isAuth ?<managePosts />:<Navigate to="/"/>}/>
               {/* <Route path="/manage_featur_posts" element={<manageFeatureNews/>}/> */}
               {/* <Route path="/manage_other_sections" element={<manageOtherSections/>}/> */}
