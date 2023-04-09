@@ -75,8 +75,10 @@ const Form = () => {
       }
      
     );
+   
+   if (loggedInResponse.status===200){
     const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
+   
     if (loggedIn) {
       dispatch(
         setLogin({
@@ -85,7 +87,11 @@ const Form = () => {
         })
       );
       navigate("/manage_posts");
-    }
+      onSubmitProps.resetForm();
+    }else{
+      navigate("/");
+      onSubmitProps.resetForm();
+    }}
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
