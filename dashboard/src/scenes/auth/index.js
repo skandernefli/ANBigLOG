@@ -38,10 +38,8 @@ const Form = () => {
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
-      console.log("Form Line41, index 3:loop register");
 
     }
-    console.log("Form Line44, index 4:under the loop ");
 
     const savedUserResponse = await fetch(
       "http://localhost:8000/server/auth/register",
@@ -52,15 +50,11 @@ const Form = () => {
         body: JSON.stringify(values),
       }
     );
-    console.log("Form Line53, index 5:under the saved user response",savedUserResponse);
 
     const savedUser = await savedUserResponse.json();
-    console.log("Form Line56, index 6:under the saved user response",savedUserResponse);
     onSubmitProps.resetForm();
-    console.log("Form Line58, index 7:under the saved user response",savedUserResponse);
     if (savedUser) {
       setPageType("login");
-      console.log("Form Line61, index 8:under the saved user response",savedUserResponse);
     }
   };
   const login = async (values, onSubmitProps) => {
