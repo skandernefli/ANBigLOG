@@ -1,19 +1,17 @@
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
-const authMiddleware = (req, res, next) => {
-  const token = req.cookies.access_token;
 
-  if (!token) {
-    return res.status(401).json("Access denied. No token provided.");
-  }
+const verifyToken = (req, res, next) => {
+  const token = req.cookies.access_token || '';
 
   try {
-    const decoded = jwt.verify(token, "jwtkey");
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     req.user = decoded;
     next();
-  } catch (ex) {
-    res.status(400).json("Invalid token.");
+  } catch (err) {
+    return res.status(401).json({ message: 'Unauthorized: Invalid token' });
   }
 };
 
-module.exports = authMiddleware;
+module.exports = { verifyToken };
