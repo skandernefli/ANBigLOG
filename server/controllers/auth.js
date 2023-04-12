@@ -1,7 +1,7 @@
 const connection=require('../db/connection');
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
-
+require("dotenv").config()
 const createAdmin=(req,res)=>{
     //check authorization
     const q="SELECT * FROM authorizedtable WHERE authorized = ? ";
@@ -36,8 +36,9 @@ const login=(req,res)=>{
     );
     if(!isPasswordCORRECT)
     return res.status(400).json("wrong username or password");
-    const token=jwt.sign({id: data[0].id},"jwtkey");
+    const token=jwt.sign({id: data[0].id},process.env.ACCESS_TOKEN_SECRET);
     const{password, ...other}=data[0];
+    req.token = token; 
      res 
     .cookie("access_token",token, {
         httpOnly : true,
