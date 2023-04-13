@@ -80,6 +80,7 @@ const Form = () => {
           token: loggedIn.token,
         })
       );
+      console.log(token);
       navigate("/manage_posts");
       onSubmitProps.resetForm();
     }else{
