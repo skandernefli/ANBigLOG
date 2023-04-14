@@ -1,4 +1,4 @@
-const managePosts =()=>{
+const ManagePosts =()=>{
     return <div>managePosts</div>
 }
-export default managePosts;
+export default ManagePosts;

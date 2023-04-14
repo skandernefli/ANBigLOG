@@ -93,7 +93,7 @@ const SideBar = () => {
                 icon={<FeedOutlinedIcon />}
                 title="Manage Posts"
               >
-                <Link to={"/posts_list"} />
+                <Link to={"/manage_posts"} />
                 <MenuItem
                   active={selected === "createPost"}
                   style={{

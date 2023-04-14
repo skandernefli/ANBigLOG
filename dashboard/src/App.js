@@ -9,14 +9,19 @@ import { useSelector } from "react-redux";
 // import manageFeatureNews from "./scenes/manageFeatureNews/index";
 // import manageOtherSections from "./scenes/manageOtherSections/index";
 // import managePostGallery from "./scenes/managePostGallery/index";
-import managePosts from "./scenes/managePosts";
+import ManagePosts from "./scenes/managePosts";
+
+import { useStore } from 'react-redux';
+
 // import manageVideoPosts from "./scenes/manageVideoPosts/index";
 
 function App() {
-
+  const store = useStore();
+  const token = store.getState().token;
   const [theme, colorMode] = useMode();
   const [isSideBar, setIsSideBar] = useState(true);
-  const isAuth = Boolean(useSelector((state) => state.token));
+  const isAuth = Boolean(token);
+  console.log(token);console.log(isAuth);
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -28,7 +33,7 @@ function App() {
           {isAuth &&  <HeaderBar setIsSideBar={setIsSideBar}/>}
             <Routes>
             {isAuth ? (<>
-              <Route path="/manage_posts" element={ isAuth ?<managePosts />:<Navigate to="/"/>}/>
+              <Route path="/manage_posts" element={ isAuth ?<ManagePosts />:<Navigate to="/"/>}/>
               {/* <Route path="/manage_featur_posts" element={<manageFeatureNews/>}/> */}
               {/* <Route path="/manage_other_sections" element={<manageOtherSections/>}/> */}
               {/* <Route path="/manage_post_gallery" element={<managePostGallery/>}/> */}

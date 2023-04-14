@@ -37,6 +37,7 @@ const login=(req,res)=>{
     if(!isPasswordCORRECT)
     return res.status(400).json("wrong username or password");
     const token=jwt.sign({id: data[0].id},process.env.ACCESS_TOKEN_SECRET);
+    console.log(token);
     const{password, ...other}=data[0];
     req.token = token; 
      res 

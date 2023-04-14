@@ -58,36 +58,40 @@ const Form = () => {
     }
   };
   const login = async (values, onSubmitProps) => {
-    
+    const accessToken = localStorage.getItem("access_token");
     const loggedInResponse = await fetch(
       "http://localhost:8000/server/auth/login",
       {
         method: "POST",
         credentials: 'include',
-        headers: { "Content-Type": "application/json","Authorization": `Bearer ${"access_token"}` },
+        headers: { "Content-Type": "application/json","Authorization": `Bearer ${accessToken}` },
         body: JSON.stringify(values),
       }
      
     );
    
-   if (loggedInResponse.status===200){
+ 
     const loggedIn = await loggedInResponse.json();
-   
-    if (loggedIn) {
+    onSubmitProps.resetForm();
+console.log("*************************************************************")
+console.log(loggedInResponse.headers.Authorization)
+console.log("*************************************************************")
+    if (loggedInResponse.status===200) {
+      
+      localStorage.setItem("access_token", loggedIn.token);
       dispatch(
-        setLogin({
+        setLogin({ 
           user: loggedIn.user,
           token: loggedIn.token,
         })
       );
-      console.log(token);
+    
       navigate("/manage_posts");
-      onSubmitProps.resetForm();
     }else{
       navigate("/");
       onSubmitProps.resetForm();
     }}
-  };
+  
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);

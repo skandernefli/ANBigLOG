@@ -13,7 +13,22 @@ App.use(cors({
 }));
 App.use(cookieParser());
 App.use(addAccessTokenToHeaders); 
+
 App.use((req, res, next) => {
+  console.log("this is the request header")
+  console.log(req.headers); // log the headers of the incoming request
+  next();
+});
+App.use((req, res, next) => {
+  console.log("this is the response header")
+  console.log(res.headers); // log the headers of the incoming request
+  next();
+});
+App.use((req, res, next) => {
+  const token = req.token;
+  if (token) {
+    res.setHeader("Authorization", "Bearer " + token);
+  }
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
