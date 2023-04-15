@@ -5,15 +5,13 @@ import { BrowserRouter, Navigate,Routes, Route } from "react-router-dom";
 import HeaderBar from "./scenes/global/HeaderBar";
 import SideBar from "./scenes/global/SideBar";
 import LoginPage from "./scenes/auth";
-import { useSelector } from "react-redux";
-// import manageFeatureNews from "./scenes/manageFeatureNews/index";
-// import manageOtherSections from "./scenes/manageOtherSections/index";
-// import managePostGallery from "./scenes/managePostGallery/index";
-import ManagePosts from "./scenes/managePosts";
-
+import ManageFeaturePosts  from "./scenes/manageFeaturePosts/index";
+import ManageOtherSections from "./scenes/manageOtherSections/index";
+import ManagePostGallery from "./scenes/managePostGallery/index";
+import PostsList from "./scenes/postsList";
+import ManageVideoPosts from "./scenes/manageVideoPosts/index";
 import { useStore } from 'react-redux';
 
-// import manageVideoPosts from "./scenes/manageVideoPosts/index";
 
 function App() {
   const store = useStore();
@@ -32,11 +30,11 @@ function App() {
           {isAuth &&  <HeaderBar setIsSideBar={setIsSideBar}/>}
             <Routes>
             {isAuth ? (<>
-              <Route path="/manage_posts" element={ isAuth ?<ManagePosts />:<Navigate to="/"/>}/>
-              {/* <Route path="/manage_featur_posts" element={<manageFeatureNews/>}/> */}
-              {/* <Route path="/manage_other_sections" element={<manageOtherSections/>}/> */}
-              {/* <Route path="/manage_post_gallery" element={<managePostGallery/>}/> */}
-              {/* <Route path="/manage_video_posts" element={<manageVideoPosts/>}/> */}
+              <Route path="/posts_list" element={ isAuth ?<PostsList />:<Navigate to="/"/>}/>
+              <Route path="/manage_featur_posts" element={<ManageFeaturePosts/>}/>
+              <Route path="/manage_other_sections" element={<ManageOtherSections/>}/>
+              <Route path="/manage_post_gallery" element={<ManagePostGallery/>}/>
+              <Route path="/manage_video_posts" element={<ManageVideoPosts/>}/>
             </>):(   <Route path="/" element={<LoginPage />} />
               )}
             </Routes>

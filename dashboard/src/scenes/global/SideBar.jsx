@@ -93,18 +93,8 @@ const SideBar = () => {
                 icon={<FeedOutlinedIcon />}
                 title="Manage Posts"
               >
-                <Link to={"/manage_posts"} />
-                <MenuItem
-                  active={selected === "createPost"}
-                  style={{
-                    color: "#fff",
-                  }}
-                  onClick={() => setSelected("createPost")}
-                  icon={<AddOutlinedIcon />}
-                >
-                  <Typography>Create a post</Typography>
-                  <Link to={"/create_post"} />
-                </MenuItem>
+                <Link to={"/posts_list"} />
+                
                 <MenuItem
                   active={selected === "postsList"}
                   style={{
@@ -115,6 +105,17 @@ const SideBar = () => {
                 >
                   <Typography>Posts list</Typography>
                   <Link to={"/posts_list"} />
+                </MenuItem>
+                <MenuItem
+                  active={selected === "createPost"}
+                  style={{
+                    color: "#fff",
+                  }}
+                  onClick={() => setSelected("createPost")}
+                  icon={<AddOutlinedIcon />}
+                >
+                  <Typography>Create a post</Typography>
+                  <Link to={"/create_post"} />
                 </MenuItem>
               </SubMenu>
               <SubMenu

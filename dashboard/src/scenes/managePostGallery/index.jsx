@@ -1,4 +1,4 @@
-const managePostGallery =()=>{
+const ManagePostGallery =()=>{
     return <div>managePostGallery</div>
 }
-export default managePostGallery;
+export default ManagePostGallery;

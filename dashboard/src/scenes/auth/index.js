@@ -81,7 +81,7 @@ const Form = () => {
         })
       );
     
-      window.location.reload(navigate("/manage_posts"));
+      window.location.reload(navigate("/posts_list"));
      
     }else{
       navigate("/");
@@ -109,11 +109,12 @@ const Form = () => {
         resetForm,
       }) => {
         return(
-        <form onSubmit={handleSubmit}  maxWidth="xs">
+        <form onSubmit={handleSubmit}   >
           <Box  >
             {isRegister && (
               <>
                 <TextField
+                  fullWidth
                   label="auth"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -123,11 +124,12 @@ const Form = () => {
                     Boolean(touched.authorized) && Boolean(errors.authorized)
                   }
                   helperText={touched.authorized && errors.authorized}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 2" ,mb:"1rem"}}
                 />
               </>
             )}
             <TextField
+            fullWidth
               label="Name"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -135,10 +137,11 @@ const Form = () => {
               name="name"
               error={Boolean(touched.name) && Boolean(errors.name)}
               helperText={touched.name && errors.name}
-              sx={{ gridColumn: "span 2" }}
+              sx={{ gridColumn: "span 2",mb:"1rem" }}
               autoFocus
             />
             <TextField
+            fullWidth
               label="Password"
               type="password"
               onBlur={handleBlur}
@@ -147,7 +150,7 @@ const Form = () => {
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
-              sx={{ gridColumn: "span 4" }}
+              sx={{ gridColumn: "span 4",mb:"1rem" }}
             />
           </Box>
           <Box>
@@ -157,9 +160,9 @@ const Form = () => {
               sx={{
                 m: "2rem 0",
                 p: "1rem",
-                backgroundColor: "#FEE715FF",
-                color: "#101820FF",
-                "&:hover": { color: "#FEE715FF" },
+                backgroundColor: "#101820ff",
+                color: "#fff",
+                "&:hover": { color: "#101820ff" },
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
@@ -171,11 +174,12 @@ const Form = () => {
               }}
               sx={{
                 textDecoration: "underline",
-                color: "#FEE715FF",
+                color: "#101820ff",
                 "&:hover": {
                   cursor: "pointer",
-                  color: "#FEE715FF",
+                  color: "#11112fff",
                 },
+                textAlign:"center"
               }}
             >
               {isLogin
@@ -190,28 +194,32 @@ const Form = () => {
 };
 const LoginPage = () => {
   return (
-    <Box >
+    <Box height={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}backgroundColor={"#101820ff"}>
+    <Box  minWidth={"30%"}maxWidth={"30%"} borderRadius={"3%"} padding={"1rem"} backgroundColor={"#fff"} >
       <Box 
       
         sx={{
-          marginTop: 8,
+         
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#000" }}>
+        <Avatar sx={{ m: 1, bgcolor: "#101820ff",color:"#fff" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography
           sx={{
-            color: "#FEE715FF",
+            color: "#101820ff",
+            m:"2rem"
           }}
         >
           Welcome
         </Typography>
+        </Box>
+
         <Form />
-      </Box>
+    </Box>
     </Box>
   );
 };

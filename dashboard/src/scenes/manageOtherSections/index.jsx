@@ -1,4 +1,4 @@
-const manageOtherSections =()=>{
+const ManageOtherSections =()=>{
     return <div>manageOtherSections</div>
 }
-export default manageOtherSections;
+export default ManageOtherSections;

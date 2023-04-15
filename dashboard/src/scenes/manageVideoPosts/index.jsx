@@ -1,4 +1,4 @@
-const manageVideoPosts =()=>{
+const ManageVideoPosts =()=>{
     return <div>manageVideoPosts</div>
 }
-export default manageVideoPosts;
+export default ManageVideoPosts;
