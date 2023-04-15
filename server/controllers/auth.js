@@ -42,10 +42,10 @@ const login=(req,res)=>{
     req.token = token; 
      res 
     .cookie("access_token",token, {
-        httpOnly : true,
-    })
+httpOnly : true,
+     })
     .status(200)
-    .json(other);
+    .json({ token, other });;
 
     });
 };

@@ -21,7 +21,6 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSideBar, setIsSideBar] = useState(true);
   const isAuth = Boolean(token);
-  console.log(token);console.log(isAuth);
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>

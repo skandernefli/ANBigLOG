@@ -5,7 +5,7 @@ const {addAccessTokenToHeaders}=require("./middleware/authMiddleware")
 const cookieParser = require('cookie-parser');
 const postRoute=require("./routes/post");
 const authroute=require('./routes/auth');
-
+require("dotenv").config()
 const App =express();
 App.use(cors({
     origin: 'http://localhost:3000',

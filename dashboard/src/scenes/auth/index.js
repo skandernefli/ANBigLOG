@@ -26,14 +26,12 @@ const initialValuesLogin = {
   password: "",
 };
 const Form = () => {
-  console.log("Form Line29, index 1")
   const [pageType, setPageType] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
   const register = async (values, onSubmitProps) => {
-    console.log("Form Line36, index 2:register async fonction");
 
     const formData = new FormData();
     for (let value in values) {
@@ -58,13 +56,12 @@ const Form = () => {
     }
   };
   const login = async (values, onSubmitProps) => {
-    const accessToken = localStorage.getItem("access_token");
     const loggedInResponse = await fetch(
       "http://localhost:8000/server/auth/login",
       {
         method: "POST",
-        credentials: 'include',
-        headers: { "Content-Type": "application/json","Authorization": `Bearer ${accessToken}` },
+        /* credentials: 'include', */
+        headers: { "Content-Type": "application/json"/* ,"Authorization": `Bearer ${accessToken}`  */},
         body: JSON.stringify(values),
       }
      
@@ -73,9 +70,7 @@ const Form = () => {
  
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
-console.log("*************************************************************")
-console.log(loggedInResponse.headers.Authorization)
-console.log("*************************************************************")
+
     if (loggedInResponse.status===200) {
       
       localStorage.setItem("access_token", loggedIn.token);
@@ -86,7 +81,8 @@ console.log("*************************************************************")
         })
       );
     
-      navigate("/manage_posts");
+      window.location.reload(navigate("/manage_posts"));
+     
     }else{
       navigate("/");
       onSubmitProps.resetForm();
@@ -193,7 +189,6 @@ console.log("*************************************************************")
   );
 };
 const LoginPage = () => {
-  console.log("line 188")
   return (
     <Box >
       <Box 
