@@ -19,11 +19,7 @@ App.use((req, res, next) => {
   console.log(req.headers); // log the headers of the incoming request
   next();
 });
-App.use((req, res, next) => {
-  console.log("this is the response header")
-  console.log(res.headers); // log the headers of the incoming request
-  next();
-});
+
 App.use((req, res, next) => {
   const token = req.token;
   if (token) {

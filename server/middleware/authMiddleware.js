@@ -16,21 +16,21 @@ const addAccessTokenToHeaders = (req, res, next) => {
   next();
 };
 const verifyToken =async (req, res, next) => {
- /*  const token = req.cookies.access_token;
+  // const token = req;
+
+  // try {
+  //   const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  //   req.user = decoded;
+  //   next();
+  // } catch (err) {
+  //   return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+  // } 
 
   try {
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    req.user = decoded;
-    next();
-  } catch (err) {
-    return res.status(401).json({ message: 'Unauthorized: Invalid token' });
-  } */
-
-  try {
-    let token = req.header("Authorization");
+    let token = req.cookies.access_token;
 
     if (!token) {
-      return res.status(403).send("Access Denied");
+      return res.status(403).send("Access indeed Denied");
     }
 
     if (token.startsWith("Bearer ")) {
