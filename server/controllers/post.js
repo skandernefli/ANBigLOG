@@ -2,11 +2,22 @@ const connection=require('../db/connection');
 const jwt=require('jsonwebtoken');
 const postModel = require('../postmodel/postModel');
 const getPost=(req,res)=>{
-    const q = "SELECT `title`,`content`,`created_at`,`updated_at` FROM posts WHERE id=?";
-    connection.query(q,[req.params.id],(err,data)=>{
-        if(err) return res.status(500).json(err);
-        return res.status(200).json(data[0])
+    postModel.findById(req.params.id)
+    .then(post => {
+      if (!post) {
+        return res.status(404).json({
+          message: 'Post not found'
+        });
+      }
+
+      res.status(200).json(post);
     })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        error: error
+      });
+    });
 }
 const postPost=(req,res)=>{
     const userInfo=req.user;
@@ -48,39 +59,128 @@ const postPost=(req,res)=>{
         
      
 }
-const getPosts=(req,res)=>{
+const getPosts_Ad=(req,res)=>{
     const q = "SELECT * FROM posts";
-    connection.query(q,[req.query.cat],(err,data)=>{
+    connection.query(q,(err,data)=>{
         if(err) return res.status(500).json(err);
         return res.status(200).json(data)
     })
 }
+const getPosts_Cl=(req,res)=>{
+    postModel.find()
+    .sort({ created_at: -1 })
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        error: error
+      });
+    });
+}
 const deletePost=(req,res)=>{
-    const token=req.cookies.access_token;
-    if (!token) return res.status(401).json("user not authenticated");
-    jwt.verify(token,"jwtkey",(err,userInfo)=>{
-        if(err) return res.status(403).json("token nt valid!");
+    const userInfo=req.user;
         const postId=req.params.id;
-        const q="DELETE FROM posts WHERE `id`= ? AND `admin_id`= ?";
+        const q="DELETE FROM posts WHERE `post_id`= ? AND `admin_id`= ?";
         connection.query(q,[postId,userInfo.id],(err,data)=>{
             if (err) return res.status(500).json(err);
-            return res.json("post deleted");
-        })
+            postModel.findByIdAndDelete(postId)
+    .then(post => {
+      if (!post) {
+        return res.status(404).json({
+          message: 'Post not found'
+        });
+      }
+
+      res.status(200).json({
+        message: 'Post deleted successfully',
+        post: post
+      });
     })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        error: error
+      });
+    });
+        })
+
 }
-const updatePost=(req,res)=>{
-    const token=req.cookies.access_token;
-    if(!token) return res.status(401).json("not authenticated");
-    jwt.verify(token,"jwtkey",(err,userInfo)=>{
-        if (err) return res.status(403).json("token is not valid!");
-        const postId=req.params.id;
-        q=
-        "UPDATE posts SET `title`=?,`content`=?,`categorie_id`=? WHERE `id` = ? AND `admin_id` = ?";
-        const values=[req.body.title,req.body.content,req.body.categorie_id]
-        connection.query(q, [...values,postId,userInfo.id],(err,data)=>{
+const updatePost = (req, res) => {
+    const userInfo = req.user;
+    const postId = req.params.id;
+    let categorie_id;
+  
+    if (req.body.categorie_name) {
+      const q = "SELECT `id` FROM categories WHERE `name`=?";
+      connection.query(q, [req.body.categorie_name], (err, data) => {
+        if (err) return res.status(500).json(err);
+        categorie_id = data[0].id;
+  
+        const updateQ =
+          "UPDATE posts SET `title`=?,`categorie_id`=? WHERE `post_id` = ? AND `admin_id` = ?";
+        const values = [req.body.title, categorie_id];
+        connection.query(
+          updateQ,
+          [...values, postId, userInfo.id],
+          (err, data) => {
             if (err) return res.status(500).json(err);
-            return res.json("post updated!")
-        })
-    })
-}
-module.exports={postPost, getPosts, deletePost,updatePost,getPost}
+            postModel
+              .findByIdAndUpdate(postId, req.body, { new: true })
+              .then((post) => {
+                if (!post) {
+                  return res.status(404).json({
+                    message: "Post not found",
+                  });
+                }
+  
+                res.status(200).json({
+                  message: "Post updated successfully",
+                  post: post,
+                });
+              })
+              .catch((error) => {
+                console.log(error);
+                res.status(500).json({
+                  error: error,
+                });
+              });
+          }
+        );
+      });
+    } else {
+      const updateQ =
+        "UPDATE posts SET `title`=?,`categorie_id`=NULL WHERE `post_id` = ? AND `admin_id` = ?";
+      const values = [req.body.title];
+      connection.query(
+        updateQ,
+        [...values, postId, userInfo.id],
+        (err, data) => {
+          if (err) return res.status(500).json(err);
+          postModel
+            .findByIdAndUpdate(postId, req.body, { new: true })
+            .then((post) => {
+              if (!post) {
+                return res.status(404).json({
+                  message: "Post not found",
+                });
+              }
+  
+              res.status(200).json({
+                message: "Post updated successfully",
+                post: post,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              res.status(500).json({
+                error: error,
+              });
+            });
+        }
+      );
+    }
+  };
+  
+module.exports={postPost,getPosts_Cl, getPosts_Ad, deletePost,updatePost,getPost}
