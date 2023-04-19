@@ -1,6 +1,6 @@
 const express= require('express');
 const {getPost,getPosts_Ad, getPosts_Cl,postPost, deletePost, updatePost}= require('../controllers/post');
-const {verifyToken}=require('../middleware/authMiddleware')
+const {verifyToken}=require('../middleware/authMiddleware');
 
 const router=express.Router();
 

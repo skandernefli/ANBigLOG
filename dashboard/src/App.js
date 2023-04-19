@@ -4,6 +4,8 @@ import { useState } from "react";
 import { BrowserRouter, Navigate,Routes, Route } from "react-router-dom";
 import HeaderBar from "./scenes/global/HeaderBar";
 import SideBar from "./scenes/global/SideBar";
+import CreatePostPage from "scenes/createPost";
+
 import LoginPage from "./scenes/auth";
 import ManageFeaturePosts  from "./scenes/manageFeaturePosts/index";
 import ManageOtherSections from "./scenes/manageOtherSections/index";
@@ -11,8 +13,6 @@ import ManagePostGallery from "./scenes/managePostGallery/index";
 import PostsList from "./scenes/postsList";
 import ManageVideoPosts from "./scenes/manageVideoPosts/index";
 import { useStore } from 'react-redux';
-
-
 function App() {
   const store = useStore();
   const token = store.getState().token;
@@ -31,6 +31,7 @@ function App() {
             <Routes>
             {isAuth ? (<>
               <Route path="/posts_list" element={ isAuth ?<PostsList />:<Navigate to="/"/>}/>
+              <Route path="/create_post" element={ isAuth ?<CreatePostPage />:<Navigate to="/"/>}/>
               <Route path="/manage_featur_posts" element={<ManageFeaturePosts/>}/>
               <Route path="/manage_other_sections" element={<ManageOtherSections/>}/>
               <Route path="/manage_post_gallery" element={<ManagePostGallery/>}/>
