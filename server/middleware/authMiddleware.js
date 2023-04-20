@@ -9,7 +9,7 @@ const loggerMiddlewareres = (req, res, next) => {
   next();
 };
 const addAccessTokenToHeaders = (req, res, next) => {
-  const token = req.cookies.access_token;
+  const token = req.token;
   if (token) {
     res.setHeader("Authorization", "Bearer " + token);
   }

@@ -1,7 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
-import { Box, IconButton, useTheme } from "@mui/material";
-
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import BoxInsider from "../../components/box";
 import { useNavigate } from 'react-router-dom';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
@@ -51,12 +51,15 @@ const PostsList =()=>{
         navigate('/edit/${id}');
         };
 
-    return (<div style={{ height: '100%', width: '100%',padding:'5%' }}>
+    return (
+    <BoxInsider>
+      <Typography>Dashboard/Manage_Posts/Posts_List</Typography>
+    <div style={{ height: '100%', width: '100%',padding:'5%' }}>
     <DataGrid
           columns={columns}
           rows={data}
           autoHeight={true}
         />
-    </div>)
+    </div></BoxInsider>)
 }
 export default PostsList;

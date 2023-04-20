@@ -26,6 +26,8 @@ const SideBar = () => {
       sx={{
         "& .pro-sidebar-inner": {
           background: `#101820FF !important`,
+          height: "100vh",
+          position:"fixed"
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -41,7 +43,7 @@ const SideBar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
+      <ProSidebar collapsed={isCollapsed}  style={{ minHeight: "100vh" }}>
         <Menu iconShape="square">
           {/* logo and menu Icon */}
           <MenuItem

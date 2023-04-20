@@ -33,8 +33,8 @@ const HeaderBar = () => {
   } 
    
   return (
-    <Box display="flex" justifyContent="flex-end" p={2}>
-      <Box display="flex">
+    <Box display="flex" justifyContent="flex-end" p={2}   position={"fixed"} top={0} right={0} height={"8vh"} left={0} backgroundColor={"#fff"} zIndex={999}boxShadow=" 0 10px 10px -10px rgba(0, 0, 0, 0.5)"  borderBottom="blur 1px" borderBottomColor="#101820ff">
+      <Box display="flex" justifyContent="flex-end" >
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "light" ? (
             <DarkModeOutlinedIcon />
