@@ -189,39 +189,38 @@ export const themeSettings=(mode)=>{
             ...(mode === 'light'
             ? {
                 backgorund:{
-                    main:colors.secondary[500],
-                },
+                    main:"#fcfcfc",                },
                 primary:{
-                    main:colors.primary[500], 
+                    main:"#fcfcfc",
                 },
                 secondary:{
-                    main:colors.secondary[500],
+                    main:"#fcfcfc",
                 },
                 neutral:{
-                    dark:colors.black[300],
-                    main:colors.black[500],
-                    light:colors.black[800],
+                    main:"#fcfcfc",
+                   main:"#fcfcfc",
+                   main:"#fcfcfc",
                 }, 
                 white:{
-                    white:colors.white[500]
+                    white:"#C8C8C8"
                 }
             }:{
                 backgorund:{
                     main:"#fcfcfc",
                 },
                 primary:{
-                    main:colors.primary[500], 
+                    main:"#fcfcfc",
                 },
                 secondary:{
-                    main:colors.secondary[500],
+                    main:"#fcfcfc",
                 },
                 neutral:{
                     dark:colors.black[300],
                     main:colors.black[500],
-                    light:colors.black[800],
+                    main:"#fcfcfc",
                 }, 
                 white:{
-                    white:colors.white[500]
+                    main:"#fcfcfc",
                 }
             }),
         },

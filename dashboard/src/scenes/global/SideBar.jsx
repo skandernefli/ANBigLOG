@@ -14,6 +14,7 @@ import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import TravelExploreOutlinedIcon from '@mui/icons-material/TravelExploreOutlined';
 import StarOutlineOutlinedIcon from '@mui/icons-material/StarOutlineOutlined';
 import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
+import React, { useEffect, useRef } from 'react';
 
 const SideBar = () => {
   const theme = useTheme();
@@ -24,8 +25,9 @@ const SideBar = () => {
   return (
     <Box
       sx={{
+     
         "& .pro-sidebar-inner": {
-          background: `#101820FF !important`,
+          background: `transparent !important`,
           height: "100vh",
           position:"fixed"
         },
@@ -36,14 +38,22 @@ const SideBar = () => {
           padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-          color: `#FEE715FF  !important`,
+          color: `#A2D2FF  !important`,
         },
         "& .pro-menu-item.active": {
-          color: `#fff !important`,
+          color: `#FFC857 !important`,
         },
       }}
     >
+       
       <ProSidebar collapsed={isCollapsed}  style={{ minHeight: "100vh" }}>
+
+
+
+
+
+
+
         <Menu iconShape="square">
           {/* logo and menu Icon */}
           <MenuItem
@@ -74,6 +84,29 @@ const SideBar = () => {
               </Box>
             )}
           </MenuItem>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           {!isCollapsed && (
             <Box paddingLeft={isCollapsed ? undefined : "10%"}>
               <Typography
@@ -226,7 +259,9 @@ const SideBar = () => {
             </Box>
           )}
         </Menu>
+        
       </ProSidebar>
+      
     </Box>
   );
 };

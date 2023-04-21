@@ -7,10 +7,12 @@ body,
   height: 100%;
   width: 100%;
   font-family: 'Source Sans Pro',sans-serif;
+  background-color: #252423    ;
 }
 .app {
   display: flex;
   position: relative;
+
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -27,7 +29,7 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-.button_cc{
+.button button{
   position:relative;
   display:flex;
   align-items: center;
@@ -37,23 +39,23 @@ body,
   padding:12px 18px;
   cursor:pointer;
 }
-.button_cc::before{
-  content: "this is a fucking button";
+.button button::before{
+  content: "";
   position:absolute;
   top:50%;
-  z-index:-1;
-  translate: calc(100%+4px)-50%;
+  translate: calc(100% + 35px)-50%;
+  z-index: -1;
   width: 45px;
   height:45px;
-  background:#101820FF;
+  background:#F4A261  ;
   border-radius: 50px;
   transition:
   translate 0.25s 0.25s
   cubic-bezier(0,0,0.5,2),
   width 0.25s
-  cubic-bezier(0,0,0.5,2),
+  cubic-bezier(0,0,0.5,2);
 }
-.button_cc:hover::before{
+.button button:hover::before{
   width: 100%;
   translate: -18px -50%;
   transition: 
@@ -63,12 +65,68 @@ body,
   cubic-bezier(0,0,0.5,2),
 
 }
-.button_cc i {
+.button button .MuiSvgIcon-root {
   margin-left:5px;
   transition: 
   translate 0.25s 0.4s
   cubic-bezier(0,0,0.5,2),
 }
-.button_cc:hover i{
+.button button:hover .MuiSvgIcon-root{
   translate: 3px 0;
 }
+.button button:active{
+  transform: scale(0.9);
+}
+.palette{
+ flex:1;
+  display: flex;
+  flex-direction: column;
+ 
+}
+.palette div{
+  flex:1
+
+}
+.ColorA{
+
+  box-shadow: 0 0 15px #e200ff, 0 0 20px #0c002b, 0 0 25px #e200ff, 0 0 30px #0c002b, 0 0 35px #0c002b, 0 0 40px #e200ff, 0 0 45px #0c002b;
+}
+.ColorB{
+  box-shadow: 0 0 15px #0c002b, 0 0 20px #0c002b, 0 0 25px #0c002b, 0 0 30px #0c002b, 0 0 35px #e200ff, 0 0 40px #e200ff, 0 0 45px #e200ff;
+}
+.ColorC{
+
+  box-shadow: 0 0 15px #e200ff, 0 0 20px #e200ff, 0 0 25px #e200ff, 0 0 30px #e200ff, 0 0 35px #e200ff, 0 0 40px #e200ff, 0 0 45px #e200ff;
+}
+
+.ColorD{
+  box-shadow: 0 0 15px #e200ff, 0 0 20px #e200ff, 0 0 25px #e200ff, 0 0 30px #e200ff, 0 0 35px #e200ff, 0 0 40px #e200ff, 0 0 45px #e200ff;}
+
+.ColorE{
+  border-bottom: 2px solid #e200ff;}
+
+.ColorF{
+  background-color: aqua;
+}
+.ColorG{
+  background-color: aqua;
+}
+
+/********************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+.sphere path {
+  fill: url(#sphereGradient);
+  stroke-width: 0.1px;
+  stroke: rgba(80,80,80,.35);
+  backface-visibility: hidden;
+}
+

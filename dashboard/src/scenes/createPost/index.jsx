@@ -1,14 +1,15 @@
 import BoxInsider from "components/box";
-import {Button,TextField, Typography } from "@mui/material";
+import {Button,TextField, Typography,Box } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Background from "components/background";
 const CreatePostPage =()=>{
   return(
-<BoxInsider backgroundColor="#fff" height="100%" width="100%">
-<Button className="button_cc" >
-this is a fucking button
- <i> <LockOutlinedIcon /></i></Button>
-</BoxInsider>
-
+       
+    
+<Background>
+    <Box position={"absolute"} zIndex={999}>Create page</Box>
+    
+    </Background>
 
     );
 }
