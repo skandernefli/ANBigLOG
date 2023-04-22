@@ -1,15 +1,108 @@
-const Background=()=>{
-   return( <div position="absolute" zIndex={-1} top="0"  maxWidth="70vw" maxHeight="70vh">
- <div class="animation-wrapper">
-    <div class="sphere-animation">
-    <svg class="sphere" viewBox="0 0 440 440" stroke="rgba(80,80,80,.35)">
+import { Box } from '@mui/material';
+import React, { useEffect, useRef ,useStyles} from "react";
+import anime from 'animejs';
+
+const Sphere=({ children,size, color,position, ...props })=>{
+  
+  
+  useEffect(() => {
+
+    const sphereEl = document.querySelector('.sphere-animation');
+    const spherePathEls = sphereEl.querySelectorAll('.sphere path');
+    const pathLength = spherePathEls.length;
+    const aimations = [];
+
+    function fitElementToParent(el, padding) {
+      let timeout = null;
+      function resize() {
+        if (timeout) clearTimeout(timeout);
+        anime.set(el, {scale: 1});
+        const pad = padding || 0;
+        const parentEl = el.parentNode;
+        const elOffsetWidth = el.offsetWidth - pad;
+        const parentOffsetWidth = parentEl.offsetWidth;
+        const ratio = parentOffsetWidth / elOffsetWidth;
+        timeout = setTimeout(anime.set(el, {scale: ratio}), 10);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+    }
+
+    fitElementToParent(sphereEl);
+
+    const breathAnimation = anime({
+      begin: function() {
+        for (let i = 0; i < pathLength; i++) {
+          aimations.push(anime({
+            targets: spherePathEls[i],
+            stroke: {value: ['rgba(255,75,75,1)', 'rgba(80,80,80,.35)'], duration: 500},
+            translateX: [2, -4],
+            translateY: [2, -4],
+            easing: 'easeOutQuad',
+            autoplay: false
+          }));
+        }
+      },
+      update: function(ins) {
+        aimations.forEach(function(animation, i) {
+          const percent = (1 - Math.sin((i * .35) + (.0022 * ins.currentTime))) / 2;
+          animation.seek(animation.duration * percent);
+        });
+      },
+      duration: Infinity,
+      autoplay: false
+    });
+
+    const introAnimation = anime.timeline({
+      autoplay: false
+    })
+    .add({
+      targets: spherePathEls,
+      strokeDashoffset: {
+        value: [anime.setDashoffset, 0],
+        duration: 10,
+        easing: 'easeInOutCirc',
+        delay: anime.stagger(190, {direction: 'reverse'})
+      },
+      duration: 2000,
+      delay: anime.stagger(60, {direction: 'reverse'}),
+      easing: 'linear'
+    }, 0);
+
+    const shadowAnimation = anime({
+        targets: '#sphereGradient',
+        x1: '25%',
+        x2: '25%',
+        y1: '0%',
+        y2: '75%',
+        duration: 30000,
+        easing: 'easeOutQuint',
+        autoplay: false
+      }, 0);
+
+    function init() {
+      introAnimation.play();
+      breathAnimation.play();
+      shadowAnimation.play();
+    }
+
+    init();
+
+    return () => {
+      window.removeEventListener('resize', fitElementToParent);
+    }
+
+  }, [])
+   return( 
+  <Box sx={{width:"50vw"}} {...props}>
+ <div classNameName="animation-wrapper">
+    <div className="sphere-animation">
+    <svg className="sphere" viewBox="0 0 440 440" stroke="rgba(80,80,80,.35)">
     <defs>
       <linearGradient id="sphereGradient" x1="5%" x2="5%" y1="0%" y2="15%">
-      <stop stop-color="#670000" offset="0%"/>
-  <stop stop-color="#550204" offset="40%"/>
-  <stop stop-color="#440406" offset="70%"/>
-  <stop stop-color="#320504" offset="90%"/>
-  <stop stop-color="#230000" offset="100%"/>
+          <stop stop-color="#373734" offset="0%"/>
+          <stop stop-color="#242423" offset="50%"/>
+          <stop stop-color="#0D0D0C" offset="100%"/>
       </linearGradient>
     </defs>
     <path d="M361.604 361.238c-24.407 24.408-51.119 37.27-59.662 28.727-8.542-8.543 4.319-35.255 28.726-59.663 24.408-24.407 51.12-37.269 59.663-28.726 8.542 8.543-4.319 35.255-28.727 59.662z"/>
@@ -35,7 +128,58 @@ const Background=()=>{
     <path d="M109.698 109.332c-24.408 24.407-51.12 37.268-59.663 28.726-8.542-8.543 4.319-35.255 28.727-59.662 24.407-24.408 51.12-37.27 59.662-28.727 8.543 8.543-4.319 35.255-28.726 59.663z"/>
     </svg>
     </div>
-    </div>
-    </div>);
+    </div> </Box>)
 }
+const Background=({ children, ...props })=>{
+
+    const spheres = [
+      { size: 200, position: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' } },
+      { size: 150,  position: { top: '30%', left: '20%', transform: 'translate(-50%, -50%)' } },
+      { size: 100, position: { top: '70%', left: '80%', transform: 'translate(-50%, -50%)' } },
+      { size: 50,  position: { top: '20%', left: '80%', transform: 'translate(-50%, -50%)' } },
+      { size: 80, position: { top: '50%', left: '20%', transform: 'translate(-50%, -50%)' } },
+      { size: 120,  position: { top: '80%', left: '50%', transform: 'translate(-50%, -50%)' } },
+    ];
+    const spheres_2 = [
+      { size: 200, position: { top: '10%', left: '10%', transform: 'translate(-50%, -50%)' } },
+      { size: 150,  position: { top: '40%', left: '70%', transform: 'translate(-50%, -50%)' } },
+      { size: 100, position: { top: '70%', left: '80%', transform: 'translate(-50%, -50%)' } },
+      { size: 50,  position: { top: '20%', left: '80%', transform: 'translate(-50%, -50%)' } },
+      { size: 80, position: { top: '50%', left: '20%', transform: 'translate(-50%, -50%)' } },
+      { size: 120,  position: { top: '80%', left: '50%', transform: 'translate(-50%, -50%)' } },
+    ];
+  
+   const colors = ['#f7f7f7', '#b2b2b2', '#808080'];
+  const positions = [];
+  const maxPosition = 100;
+  const minPosition = 0;
+
+  for (let i = 0; i < 80; i++) {
+    let unique = false;
+    let position;
+
+    // Generate unique positions
+    while (!unique) {
+      position = {
+        top: `${Math.floor(Math.random() * (maxPosition - minPosition)) + minPosition}%`,
+        left: `${Math.floor(Math.random() * (maxPosition - minPosition)) + minPosition}%`,
+        transform: 'translate(-50%, -50%)',
+      };
+
+      unique = positions.every(
+        (pos) => pos.top !== position.top || pos.left !== position.left
+      );
+    }
+
+    positions.push(position);
+  }
+
+  return (
+    <Box height={"100vh"} width="100vw" position="absolute" zIndex={999}   backgroundColor= "#252423" 
+    >
+    <Sphere size={"1000"}></Sphere>
+    </Box>
+  );
+};
+
 export default Background;

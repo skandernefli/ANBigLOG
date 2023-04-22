@@ -6,10 +6,9 @@ const CreatePostPage =()=>{
   return(
        
     
-<Background>
     <Box position={"absolute"} zIndex={999}>Create page</Box>
-    
-    </Background>
+  
+ 
 
     );
 }

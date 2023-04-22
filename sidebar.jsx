@@ -25,7 +25,7 @@ const SideBar = () => {
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-          backgroundColor: "transparent !important",
+          background: `#101820FF !important`,
           height: "100vh",
           position:"fixed"
         },
@@ -95,6 +95,7 @@ const SideBar = () => {
                 icon={<FeedOutlinedIcon />}
                 title="Manage Posts"
               >
+                <Link to={"/posts_list"} />
                 
                 <MenuItem
                   active={selected === "postsList"}
