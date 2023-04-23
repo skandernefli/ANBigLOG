@@ -94,8 +94,8 @@ const Sphere=({ children,size, color,position, ...props })=>{
 
   }, [])
    return( 
-  <Box sx={{width:"50vw"}} {...props}>
- <div classNameName="animation-wrapper">
+  <Box sx={{width:"45vw"}} {...props}>
+ <div >
     <div className="sphere-animation">
     <svg className="sphere" viewBox="0 0 440 440" stroke="rgba(80,80,80,.35)">
     <defs>
@@ -175,9 +175,9 @@ const Background=({ children, ...props })=>{
   }
 
   return (
-    <Box height={"100vh"} width="100vw" position="absolute" zIndex={999}   backgroundColor= "#252423" 
+    <Box height={"100vh"} width="100vw" position="fixed" zIndex={200}   backgroundColor= "#252423" 
     >
-    <Sphere size={"1000"}></Sphere>
+    <Sphere size={"1000"}  ></Sphere>
     </Box>
   );
 };

@@ -39,7 +39,7 @@ const PostsList =()=>{
         },
       ];
       const handleDelete = (id) => {
-        fetch(`your_backend_api_url/${id}`, { method: 'DELETE' })
+        fetch(`http://localhost:8000/server/post/${id}`, { method: 'DELETE' })
         .then(() => {
             const updatedData = data.filter((item) => item.id !== id);
             setData(updatedData);
@@ -54,11 +54,12 @@ const PostsList =()=>{
     return (
     <BoxInsider>
       <Typography>Dashboard/Manage_Posts/Posts_List</Typography>
-    <div style={{ height: '100%', width: '100%',padding:'5%' }}>
+    <div style={{ height: '100%', width: '100%',padding:'1%' }}>
     <DataGrid
           columns={columns}
           rows={data}
           autoHeight={true}
+          sx={{backgroundColor:"#fff", width:"100%",borderRadius:"5px"}}
         />
     </div></BoxInsider>)
 }

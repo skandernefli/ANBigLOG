@@ -114,6 +114,7 @@ const Form = () => {
             {isRegister && (
               <>
                 <TextField
+                  variant="filled"
                   fullWidth
                   label="auth"
                   onBlur={handleBlur}
@@ -124,11 +125,13 @@ const Form = () => {
                     Boolean(touched.authorized) && Boolean(errors.authorized)
                   }
                   helperText={touched.authorized && errors.authorized}
-                  sx={{ gridColumn: "span 2" ,mb:"1rem"}}
+                  sx={{ gridColumn: "span 2" ,mb:"1rem",backgroundColor:"rgba(255,255,255,0.7)"  }}
                 />
               </>
             )}
             <TextField
+              variant="filled"
+              backgroundColor="#fff"
             fullWidth
               label="Name"
               onBlur={handleBlur}
@@ -137,20 +140,20 @@ const Form = () => {
               name="name"
               error={Boolean(touched.name) && Boolean(errors.name)}
               helperText={touched.name && errors.name}
-              sx={{ gridColumn: "span 2",mb:"1rem" }}
+              sx={{ gridColumn: "span 2",mb:"1rem",backgroundColor:"rgba(255,255,255,0.7)"            }}
               autoFocus
             />
             <TextField
+              variant="filled"
             fullWidth
               label="Password"
               type="password"
-              onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
-              sx={{ gridColumn: "span 4",mb:"1rem" }}
+              sx={{ gridColumn: "span 4",mb:"1rem" ,backgroundColor:"rgba(255,255,255,0.7)"  }}
             />
           </Box>
           <Box>
@@ -160,9 +163,9 @@ const Form = () => {
               sx={{
                 m: "2rem 0",
                 p: "1rem",
-                backgroundColor: "#101820ff",
-                color: "#fff",
-                "&:hover": { color: "#101820ff" },
+                backgroundColor: "#373734",
+                color: "rgba(255,75,75,1)",
+                "&:hover": { color: "rgba(255,75,75,1)",backgroundColor: "#373734", },
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
@@ -174,10 +177,10 @@ const Form = () => {
               }}
               sx={{
                 textDecoration: "underline",
-                color: "#101820ff",
+                color: "rgba(255,75,75,1)",
                 "&:hover": {
                   cursor: "pointer",
-                  color: "#11112fff",
+                  color: "#373734",
                 },
                 textAlign:"center"
               }}
@@ -194,8 +197,42 @@ const Form = () => {
 };
 const LoginPage = () => {
   return (
-    <Box height={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}backgroundColor={"#101820ff"}>
-    <Box  minWidth={"30%"}maxWidth={"30%"} borderRadius={"3%"} padding={"1rem"} backgroundColor={"#fff"} >
+    <Box     background="transparent" position='relative' height={"100%"} display={"flex"} justifyContent={"center"} margin="0"alignItems={"center"} zIndex={200} pointerEvents= "auto">
+    <Box  minWidth={"30%"}maxWidth={"30%"} borderRadius={"3%"} padding={"1rem"} backgroundColor={"rgba(40,40,40,0.3)"} sx={{border:1 ,borderColor:" rgba(255,75,75,1) ", borderWidth:"0.1px", 
+    '& label.Mui-focused': {
+      color:"#373734 ",
+    }, 
+    
+    '& label.Mui-root': {
+      color:" #373734 ",
+    },
+    
+    '& .MuiFilledTextField-underline:focused': {
+      borderBottomColor: 'yellow',
+      color:"#373734"
+
+    },
+    '& .MuiTextField-root': {
+      '& fieldset': {
+        borderColor: '  #373734',
+
+
+      },
+      '&:hover fieldset': {
+        borderColor: "#373734",
+        color:"white"
+
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#373734',
+
+        color:"white"
+
+      },  '&.Mui-root fieldset': {
+        borderColor:"#373734",
+        color:"white"
+
+      },}}}  >
       <Box 
       
         sx={{
@@ -205,12 +242,13 @@ const LoginPage = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#101820ff",color:"#fff" }}>
+        <Avatar sx={{ m: 1, bgcolor: "#373734",color:"rgba(255,75,75,1)" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography
+        variant="h3"
           sx={{
-            color: "#101820ff",
+            color: "rgba(255,75,75,1)",
             m:"2rem"
           }}
         >

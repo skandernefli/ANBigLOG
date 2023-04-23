@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, MenuItem, ProSidebar, SubMenu } from "react-pro-sidebar";
+import { Menu, MenuItem, ProSidebar, SubMenu,SidebarHeader,SidebarContent } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import "react-pro-sidebar/dist/css/styles.css";
 import { Link } from "react-router-dom";
@@ -24,11 +24,20 @@ const SideBar = () => {
   return (
     <Box
       sx={{
+       
         "& .pro-sidebar-inner": {
           backgroundColor: "transparent !important",
           height: "100vh",
-          position:"fixed"
+          position:"fixed",
+          boxShadow:"",
+          boxShadow: "4px 0 4px rgba(0, 0, 0, 0.2)",
+
+      
         },
+        "& .pro-menu-item::marker": {
+          color: "transparent !important",
+        },
+        
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
         },
@@ -41,10 +50,17 @@ const SideBar = () => {
         "& .pro-menu-item.active": {
           color: `#fff !important`,
         },
+        "& .prosidebar-menu": {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          height: "100%",
+        }
       }}
     >
-      <ProSidebar collapsed={isCollapsed}  style={{ minHeight: "100vh" }}>
-        <Menu iconShape="square">
+      <ProSidebar collapsed={isCollapsed}  style={{height: "100vh"}}>
+      <SidebarHeader>
+       
           {/* logo and menu Icon */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -56,6 +72,8 @@ const SideBar = () => {
           >
             {!isCollapsed && (
               <Box
+              justifySelflf="flex-start"
+              alignSelf="flex-start"
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
@@ -74,8 +92,22 @@ const SideBar = () => {
               </Box>
             )}
           </MenuItem>
+
+          </SidebarHeader>
+          <SidebarContent>
+          <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignItems:"flex-start",
+        height: "100%",
+      }}
+    >
+          <Menu iconShape="square" >
           {!isCollapsed && (
-            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            <Box paddingLeft={isCollapsed ? undefined : "4%"}    
+            mr="15px"  >
               <Typography
                 variant="h6"
                 color={"#fff"}
@@ -224,7 +256,7 @@ const SideBar = () => {
               </SubMenu>
             </Box>
           )}
-        </Menu>
+        </Menu>   </Box></SidebarContent>
       </ProSidebar>
     </Box>
   );

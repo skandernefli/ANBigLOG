@@ -164,7 +164,7 @@ body {
   }
 
   .sphere-wrapper:hover {
-    transform: rotateY(180deg);
+    transform: rotateY( deg);
   }
   
   .move:hover{
