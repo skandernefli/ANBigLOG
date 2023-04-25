@@ -43,6 +43,8 @@ const login=(req,res)=>{
      res 
     .cookie("access_token",token, {
 httpOnly : true,
+expires: new Date(Date.now() + 999999999999), // set to a date far in the future
+
      })
     .status(200)
     .json({ token, other });;

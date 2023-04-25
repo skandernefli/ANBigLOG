@@ -2,10 +2,13 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import BoxInsider from "../../components/box";
+import { useStore } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 const PostsList =()=>{
+  const store = useStore();
+const token = store.getState().token;
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
@@ -28,27 +31,32 @@ const PostsList =()=>{
           width: 80,
           renderCell: (params) => (
             <>
-              <IconButton aria-label="delete" onClick={() => handleDelete(params.row.id)}>
+              <IconButton aria-label="delete" onClick={() => handleDelete(params.row.post_id)}>
                 <RemoveCircleOutlineOutlinedIcon />
               </IconButton>
-              <IconButton aria-label="edit" onClick={() => handleEdit(params.row.id)}>
+              <IconButton aria-label="edit" onClick={() => handleEdit(params.row.post_id)}>
                 <CreateOutlinedIcon />
               </IconButton>
             </>
           ),
         },
       ];
-      const handleDelete = (id) => {
-        fetch(`http://localhost:8000/server/post/${id}`, { method: 'DELETE' })
+      const handleDelete = async(post_id) => {
+        console.log("this is a token",token)
+        fetch(`http://localhost:8000/server/post/${post_id}`, {  method: "delete",
+        credentials: 'include',
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+       })
+
         .then(() => {
-            const updatedData = data.filter((item) => item.id !== id);
+            const updatedData = data.filter((item) => item.post_id !== post_id);
             setData(updatedData);
           })
-          .catch(error => console.log(error));
+          .catch(error => console.log("this is an error from the console", error));
         };
 
-        const handleEdit = (id) => {
-        navigate('/edit/${id}');
+        const handleEdit = (post_id) => {
+        navigate(`/edit/${post_id}`);
         };
 
     return (

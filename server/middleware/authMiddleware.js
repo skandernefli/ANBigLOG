@@ -9,8 +9,13 @@ const loggerMiddlewareres = (req, res, next) => {
   next();
 };
 const addAccessTokenToHeaders = (req, res, next) => {
-  const token = req.token;
+  console.log("the is the add access token middleware")
+
+
+
+  const token =req.cookies.access_token;
   if (token) {
+    console.log("the is the add access token middleware")
     res.setHeader("Authorization", "Bearer " + token);
   }
   next();
@@ -25,20 +30,17 @@ const verifyToken =async (req, res, next) => {
   } catch (err) {
     return res.status(401).json({ message: 'Unauthorized: Invalid token' });
   } 
- */
+ */    const  token =req.cookies.access_token;
+
   try {
-    let token = req.token;
-
+console.log("**********************************************");
+console.log(token)
     if (!token) {
-      return res.status(403).send("Access indeed Denied");
+      return res.status(403).json("Access indeed Denied");
     }
 
-    if (token.startsWith("Bearer ")) {
-      token = token.slice(7, token.length).trimLeft();
-    }
-
-    const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    req.user = verified;
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    req.user = decoded;
     next();
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -60,8 +60,8 @@ const Form = () => {
       "http://localhost:8000/server/auth/login",
       {
         method: "POST",
-        /* credentials: 'include', */
-        headers: { "Content-Type": "application/json"/* ,"Authorization": `Bearer ${accessToken}`  */},
+        credentials: 'include', 
+        headers: { "Content-Type": "application/json",/* "Authorization": `Bearer ${token}` */},
         body: JSON.stringify(values),
       }
      
@@ -70,7 +70,6 @@ const Form = () => {
  
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
-
     if (loggedInResponse.status===200) {
       
       localStorage.setItem("access_token", loggedIn.token);
@@ -82,7 +81,8 @@ const Form = () => {
       );
     
       window.location.reload(navigate("/posts_list"));
-     
+      console.log("this is the login token",loggedIn.token);
+
     }else{
       navigate("/");
       onSubmitProps.resetForm();
