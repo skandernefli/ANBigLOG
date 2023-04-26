@@ -249,7 +249,7 @@ const LoginPage = () => {
         variant="h3"
           sx={{
             color: "rgba(255,75,75,1)",
-            m:"2rem"
+            m:"2rem",
           }}
         >
           Welcome

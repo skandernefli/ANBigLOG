@@ -14,17 +14,35 @@ import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import TravelExploreOutlinedIcon from '@mui/icons-material/TravelExploreOutlined';
 import StarOutlineOutlinedIcon from '@mui/icons-material/StarOutlineOutlined';
 import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
+import { useSelector,useDispatch } from "react-redux";
+import { setCollapse} from "../../state/index";
+import { useStore } from 'react-redux';
+
+const SidebarState = () => {
+  const store = useStore();
+  const isCollapsed = store.getState().collapsed;
+  const dispatch = useDispatch();
+
+  const toggleCollapse = () => {
+    const collapsed = !isCollapsed;
+    dispatch(setCollapse({ collapsed }));
+  };
+
+  return { isCollapsed, toggleCollapse };
+};
 
 const SideBar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("managePosts");
+  const [Collapsed, setIsCollapsed] = useState(false);
+ const [selected, setSelected] = useState("managePosts");
+  const { isCollapsed, toggleCollapse } = SidebarState();
 
   return (
     <Box
+    zIndex={1001}
+
       sx={{
-       
         "& .pro-sidebar-inner": {
           backgroundColor: "transparent !important",
           height: "100vh",
@@ -58,12 +76,12 @@ const SideBar = () => {
         }
       }}
     >
-      <ProSidebar collapsed={isCollapsed}  style={{height: "100vh"}}>
+      <ProSidebar collapsed={Collapsed}  style={{height: "100vh", }} >
       <SidebarHeader>
        
           {/* logo and menu Icon */}
           <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
+         onClick={()=>{toggleCollapse();setIsCollapsed(!Collapsed)}}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",
@@ -82,7 +100,8 @@ const SideBar = () => {
                 <Typography variant="h3" color={"#FEE715FF "}>
                   ANbigLOG
                 </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                <IconButton         onClick={toggleCollapse}
+>
                   <MenuOutlinedIcon
                     style={{
                       color: "#fff",

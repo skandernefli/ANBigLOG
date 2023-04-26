@@ -34,7 +34,7 @@ const HeaderBar = () => {
   } 
    
   return (
-    <Box display="flex" justifyContent="flex-end" p={"5px"} paddingRight={"20px"}   position={"fixed"} top={0} width="auto" height={"auto"} right={0} backgroundColor={"fff"} zIndex={999}boxShadow=" 0 10px 10px -10px rgba(0, 0, 0, 0.5)"  borderBottom="blur 1px" borderBottomColor="#101820ff">
+    <Box display="flex" justifyContent="flex-end" p={"5px"} paddingRight={"20px"}   position={"fixed"} top={0} width="auto" height={"auto"} right={"3%"} backgroundColor={"fff"} zIndex={999}boxShadow=" 0 10px 10px -10px rgba(0, 0, 0, 0.5)"  borderBottom="blur 1px" borderBottomColor="#101820ff">
       <Box display="flex" flexDirection={"row"} >
         
         <IconButton onClick={colorMode.toggleColorMode} sx={{justifySelf:"flex-end"}}>
