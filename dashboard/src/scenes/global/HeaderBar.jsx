@@ -39,16 +39,16 @@ const HeaderBar = () => {
         
         <IconButton onClick={colorMode.toggleColorMode} sx={{justifySelf:"flex-end"}}>
           {theme.palette.mode === "light" ? (
-            <DarkModeOutlinedIcon sx={{color:"#fff"}} />
+            <DarkModeOutlinedIcon sx={{color:"rgba(255,75,75,1)"}} />
           ) : (
-            <LightModeOutlinedIcon />
+            <LightModeOutlinedIcon sx={{color:"rgba(255,75,75,1)"}}  />
           )}
         </IconButton>
         <IconButton  sx={{justifySelf:"flex-end"}} onClick={()=>{
           logout();   window.location.reload(navigate("/"));;
           }
         }>
-          <PersonOutlinedIcon sx={{color:"#fff"}} />
+          <PersonOutlinedIcon sx={{color:"rgba(255,75,75,1)"}} />
         </IconButton>
       </Box>
     </Box>

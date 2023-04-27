@@ -17,7 +17,9 @@ import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOu
 import { useSelector,useDispatch } from "react-redux";
 import { setCollapse} from "../../state/index";
 import { useStore } from 'react-redux';
-
+import Avatar from '@mui/material/Avatar';
+import profileimg from"../../public/profileimg.jpg";
+import logo from "../../public/logo.png";
 const SidebarState = () => {
   const store = useStore();
   const isCollapsed = store.getState().collapsed;
@@ -49,8 +51,12 @@ const SideBar = () => {
           position:"fixed",
           boxShadow:"",
           boxShadow: "4px 0 4px rgba(0, 0, 0, 0.2)",
+      
 
       
+        },
+        '&::-webkit-scrollbar': {
+          width: 0,
         },
         "& .pro-menu-item::marker": {
           color: "transparent !important",
@@ -63,7 +69,7 @@ const SideBar = () => {
           padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-          color: `#FEE715FF  !important`,
+          color: `#ebff33  !important`,
         },
         "& .pro-menu-item.active": {
           color: `#fff !important`,
@@ -85,33 +91,33 @@ const SideBar = () => {
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",
-              color: "#fff",
+              color: "rgba(255,75,75,1)",
+              
             }}
           >
+         
             {!isCollapsed && (
               <Box
               justifySelflf="flex-start"
-              alignSelf="flex-start"
-                display="flex"
+              style={{ display: 'flex',flexDirection:"column", justifyContent: 'center', alignItems: 'center' }}                display="flex"
                 justifyContent="space-between"
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={"#FEE715FF "}>
-                  ANbigLOG
-                </Typography>
-                <IconButton         onClick={toggleCollapse}
->
-                  <MenuOutlinedIcon
-                    style={{
-                      color: "#fff",
-                    }}
-                  />
-                </IconButton>
+            <img src={logo} width="130" height="73" alt="ANbigLog"/>
+              
+             
               </Box>
             )}
           </MenuItem>
+          {!isCollapsed &&(    <div style={{ display: 'flex',flexDirection:"column", justifyContent: 'center', alignItems: 'center' }}>
+  <Avatar src={profileimg} alt='Profile Photo' sx={{ width: 100, height: 100, boxShadow: "10px 0 10px rgba(0, 0, 0, 0.2)",marginBottom:"10px" }} />
+  <Typography variant="h5" color={"rgba(255,75,75,1)"} /* sx={{fontFamily: 'Newsreader'}} */ >Skander Nefli</Typography>
+  <Typography variant="h6" color={"rgba(255,75,75,1)"} sx={{marginBottom:"20px"}} >Founder</Typography>
 
+
+</div>
+)}
           </SidebarHeader>
           <SidebarContent>
           <Box

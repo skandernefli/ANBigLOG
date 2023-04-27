@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;800&family=Newsreader:wght@200;300;400;500;600&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+:root {
+  --themeCol1: rgba(255,75,75,1);
+}
 html,
 body,
 #root,
@@ -183,3 +186,126 @@ body {
       transform: rotateY(360deg);
     }
   }
+/***********************************************************************/
+
+.button {
+  box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.3);
+
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 28px;
+  color: var(--themeCol1);
+  font-size: 10pt;
+  line-height: 200%;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  z-index: 1;
+}
+
+.button span {
+  position: absolute;
+  transition-property: all;
+  transition-duration: .2s;
+  transition-timing-function: ease-out;
+  z-index: 1;
+}
+
+.button .border {
+  border: 1px solid var(--themeCol1);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.button .top, 
+.button .bottom, 
+.button .left, 
+.button .right {
+  background-color: var(--themeCol1);
+  height: 1px;
+  width: 0;
+}
+
+.button .left, 
+.button .right {
+  height: 0;
+  width: 1px;
+}
+
+.button .top {
+  top: -5px;
+  left: -15px;
+}
+
+.button .bottom {
+  bottom: -5px;
+  right: -15px;
+}
+
+.button .left {
+  top: -15px;
+  right: -5px;
+}
+
+.button .right {
+  bottom: -15px;
+  left: -5px;
+}
+
+.button:hover {
+  color: #fff;
+}
+
+.button:hover .border {
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+}
+
+.button:hover .top, 
+.button:hover .bottom {
+  width: 120px;
+}
+
+.button:hover .left, 
+.button:hover .right {
+  height: 28px;
+}
+
+.button:hover .top {
+  left: -5px;
+}
+
+.button:hover .bottom {
+  right: -5px;
+}
+
+.button:hover .left {
+  top: -5px;
+}
+
+.button:hover .right {
+  bottom: -5px;
+}
+
+.button .text {
+  position: relative;
+  letter-spacing: .03em;
+}
+
+.controllersLayout{
+  position: fixed;
+  right: 20px;
+  bottom: 82px;
+  width: fit-content;
+ height: 70%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
