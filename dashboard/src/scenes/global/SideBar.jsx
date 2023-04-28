@@ -51,10 +51,12 @@ const SideBar = () => {
           position:"fixed",
           boxShadow:"",
           boxShadow: "4px 0 4px rgba(0, 0, 0, 0.2)",
-      
+  },
+  '& .pro-sidebar .pro-menu .pro-menu-item.pro-sub-menu > .pro-inner-item > .pro-arrow-wrapper .pro-arrow': {
 
-      
-        },
+    borderColor: 'rgba(255,75,75,1)',
+   
+  },
         '&::-webkit-scrollbar': {
           width: 0,
         },
@@ -69,10 +71,13 @@ const SideBar = () => {
           padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-          color: `#ebff33  !important`,
+          color: `#e60234  !important`,
         },
         "& .pro-menu-item.active": {
-          color: `#fff !important`,
+          color: `rgba(255,75,75,1) !important`,
+        },
+        "& .pro-menu-item.after": {
+          color: `rgba(255,75,75,1) !important`,
         },
         "& .prosidebar-menu": {
           display: "flex",
@@ -135,7 +140,7 @@ const SideBar = () => {
             mr="15px"  >
               <Typography
                 variant="h6"
-                color={"#fff"}
+                color={"rgba(255,75,75,1)"}
                 sx={{ m: "15px 0 5px 20px" }}
               >
                 Dashboard
@@ -144,19 +149,20 @@ const SideBar = () => {
               <SubMenu
                 active={selected === "postsList"}
                 style={{
-                  color: colors.white[500],
+                  color: "rgba(255,75,75,1)",
                 }}
                 onClick={() => {
                   setSelected("postsList");
                 }}
                 icon={<FeedOutlinedIcon />}
                 title="Manage Posts"
+               
               >
                 
                 <MenuItem
                   active={selected === "postsList"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("postsList")}
                   icon={<FormatListBulletedOutlinedIcon />}
@@ -167,7 +173,7 @@ const SideBar = () => {
                 <MenuItem
                   active={selected === "createPost"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("createPost")}
                   icon={<AddOutlinedIcon />}
@@ -179,7 +185,7 @@ const SideBar = () => {
               <SubMenu
                 active={selected === "managePostsGallery"}
                 style={{
-                  color: colors.white[500],
+                  color: "rgba(255,75,75,1)",
                 }}
                 onClick={() => {
                   setSelected("managePostsGallery");
@@ -191,7 +197,7 @@ const SideBar = () => {
                 <MenuItem
                   active={selected === "managePostsGallery"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("managePostsGallery")}
                   icon={<CollectionsOutlinedIcon />}
@@ -202,7 +208,7 @@ const SideBar = () => {
                 <MenuItem
                   active={selected === "manageTrendy"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("manageTrendy")}
                   icon={<TrendingUpOutlinedIcon />}
@@ -213,7 +219,7 @@ const SideBar = () => {
                 <MenuItem
                   active={selected === "manageLatest"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("manageLatest")}
                   icon={<TravelExploreOutlinedIcon />}
@@ -224,7 +230,7 @@ const SideBar = () => {
                 <MenuItem
                   active={selected === "managePopular"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("managePopular")}
                   icon={<StarOutlineOutlinedIcon />}
@@ -236,7 +242,7 @@ const SideBar = () => {
               <MenuItem
                 active={selected === "manageFeaturePosts"}
                 style={{
-                  color: "#fff",
+                  color: "rgba(255,75,75,1)",
                 }}
                 onClick={() => setSelected("manageFeaturePosts")}
                 icon={<FeaturedPlayListOutlinedIcon />}
@@ -247,7 +253,7 @@ const SideBar = () => {
               <SubMenu
                 active={selected === "manageVideoPosts"}
                 style={{
-                  color: colors.white[500],
+                  color: "rgba(255,75,75,1)",
                 }}
                 onClick={() => {
                   setSelected("manageVideoPosts");
@@ -259,7 +265,7 @@ const SideBar = () => {
                 <MenuItem
                   active={selected === "manageVideoPosts"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("manageVideoPosts")}
                   icon={<PlayCircleFilledOutlinedIcon />}
@@ -270,7 +276,7 @@ const SideBar = () => {
                 <MenuItem
                   active={selected === "popularVideo"}
                   style={{
-                    color: "#fff",
+                    color: "rgba(255,75,75,1)",
                   }}
                   onClick={() => setSelected("popularVideo")}
                   icon={<TrendingUpOutlinedIcon />}

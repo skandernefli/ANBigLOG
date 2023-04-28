@@ -44,33 +44,8 @@ const BoxInsider=(props)=>{
           '&::-webkit-scrollbar': {
             width: 0,
           },
-          '& label.Mui-focused': {
-            color: "#373734",
-          },
-          '& label.Mui-root': {
-            color: "#373734",
-          },
-          '& .MuiFilledTextField-underline:focused': {
-            borderBottomColor: 'yellow',
-            color: "#373734"
-          },
-          '& .MuiTextField-root': {
-            '& fieldset': {
-              borderColor: '#373734',
-            },
-            '&:hover fieldset': {
-              borderColor: "#373734",
-              color: "white"
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: '#373734',
-              color: "white"
-            },
-            '&.Mui-root fieldset': {
-              borderColor: "#373734",
-              color: "white"
-            },
-          },
+         
+          
 
         }}
         padding="10px"
