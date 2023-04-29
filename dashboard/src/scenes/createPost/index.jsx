@@ -141,16 +141,22 @@ const CreatePostPage =()=>{
                   />)
                 }else if(element.type==='image'){
                   return(  <Input
+                    placeholder="Insert an ihhhhhhhhhhhhhhmage"
+
                     type="file"
 /*                     onChange={handleFileInputChange}
  */                  />)
                 }else if(element.type==='video'){
                   return(  <Input
+                    placeholder="Insert a video"
+
                     type="file"
 /*                     onChange={handleFileInputChange}
  */                  />)
                 }else if(element.type==='file'){
                   return(  <Input
+                    placeholder="Insert a file"
+
                     type="file"
 /*                     onChange={handleFileInputChange}
  */                  />)
