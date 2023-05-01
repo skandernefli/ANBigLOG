@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 const AnimatedButton =(props)=>{
     const { children, ...rest } = props;
 
     return(
-        <Box  {...rest}>
+        <Button  {...rest}>
         <a href="javascript: void 0;" className="button" >
         <span className="border"></span>
         <span className="top"></span>
@@ -12,7 +12,7 @@ const AnimatedButton =(props)=>{
         <span className="left"></span>
         <span className="text">{children}</span>
     </a>
-    </Box>
+    </Button>
     )
 }
 export default AnimatedButton ;
