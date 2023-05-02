@@ -1,9 +1,9 @@
 import BoxInsider from "components/box";
 import { Button, TextField, Typography, Box } from "@mui/material";
 import AnimatedButton from "../../components/button";
-import { Formik } from "formik";
+import { Formik, useFormik } from "formik";
 import * as yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@mui/material";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import firebase from "firebase/app";
@@ -14,7 +14,9 @@ const CreatePostPage = () => {
   const addElement = (elementType) => {
     setElements([...elements, { type: elementType }]);
   };
+
   const postSchema = yup.object().shape({
+    categorie_name: yup.string().required(),
     title: yup.string().required(),
     intro: yup.string().required(),
     content: yup.array().of(
@@ -33,41 +35,52 @@ const CreatePostPage = () => {
             "video",
           ]),
         value: yup.string(),
- 
       })
     ),
   });
+  const [content, setContent] = useState([]);
   const initialValuesPostSchema = {
+    categorie_name: "",
     title: "",
     intro: "",
-    content: [
-      {
-        type: "",
-        value: "",
-       /*  backlink: {
-          text: "",
-          link: "",
-        }, */
-      },
-    ],
+
+    content: content,
   };
+  const handleAdd = (contentType, contentValue) => {
+    const newContent = { type: contentType, value: contentValue };
+    content.push(newContent);
+    setContent(content);
+  };
+  const handleValue = (values, index, event) => {
+        values.content.index.value= event.target.value;
+  
+        setContent(`content.${index}.value`);
+  };
+  const formik = useFormik({
+    initialValues: initialValuesPostSchema,
+  });
+  useEffect(() => {
+    formik.setValues({
+      ...formik.values,
+      content: [...content],
+    });
+  }, [content]);
 
   const createPost = async (values, onSubmitProps) => {
     const formData = new FormData();
-   
-    
+
     const storageRef = ref(getStorage());
     for (let value in values) {
       if (values[value] instanceof File) {
         const fileRef = storageRef.child(`posts/${values[value].name}`);
         await uploadBytes(fileRef, values[value]);
-      
+
         formData.append(value, `posts/${values[value].name}`);
       } else {
         formData.append(value, values[value]);
       }
     }
-    
+
     const SavedPostResonse = await fetch("http://localhost:8000/server/post", {
       method: "POST",
       credentials: "include",
@@ -81,7 +94,8 @@ const CreatePostPage = () => {
     console.log("this  responese", SavedPost);
     if (SavedPost) {
       console.log("this is the success responese", SavedPost);
-      onSubmitProps.resetForm();    }
+      onSubmitProps.resetForm();
+    }
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -98,7 +112,12 @@ const CreatePostPage = () => {
       </Typography>
       <Box className="controllersLayout">
         <Box>
-          <AnimatedButton onClick={() => addElement("text")}>
+          <AnimatedButton
+            onClick={() => {
+              addElement("text");
+              handleAdd("","");
+            }}
+          >
             add text
           </AnimatedButton>
         </Box>
@@ -147,7 +166,6 @@ const CreatePostPage = () => {
             add link
           </AnimatedButton>
         </Box>
-   
       </Box>
       <Formik
         onSubmit={handleFormSubmit}
@@ -176,13 +194,20 @@ const CreatePostPage = () => {
               >
                 <>
                   <TextField
+                    onChange={handleChange}
+                    value={values.categorie_name}
+                    name="categorie_name"
+                    error={
+                      Boolean(touched.categorie_name) &&
+                      Boolean(errors.categorie_name)
+                    }
+                  />
+                  <TextField
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.title}
                     name="title"
-                    error={
-                      Boolean(touched.title) && Boolean(errors.title)
-                    }
+                    error={Boolean(touched.title) && Boolean(errors.title)}
                     variant="filled"
                     label="Title"
                     sx={{
@@ -198,18 +223,15 @@ const CreatePostPage = () => {
                     }}
                   />
                   <TextField
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.intro}
-                      name="intro"
-                      error={
-                        Boolean(touched.intro) && Boolean(errors.intro)
-                      }
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.intro}
+                    name="intro"
+                    error={Boolean(touched.intro) && Boolean(errors.intro)}
                     variant="filled"
                     label="auth"
                     multiline
                     rows={10}
-                    maxRows={400}
                     sx={{
                       gridColumn: "span 2",
                       mb: "1rem",
@@ -222,19 +244,24 @@ const CreatePostPage = () => {
                       style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                     }}
                   />
-                   {values.content.map((content, index) => (
-                     <div key={index}>
                   {elements.map((element, index) => {
-                    if (element.type === "text") {
+                    if (element.type === "text") {             
+
+                      /*        
+                      console.log("this is the type inside the add break",values.content[index].type);
+                      console.log("this is the value inside the add break",values.content[index].type); */
                       return (
                         <TextField
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={(event) => handleValue(values,element.type, index, event)}
+                           key={`${element.type}-${index}`}
+                          name={`${element.type}-${index}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           variant="filled"
                           label="paragraph"
                           multiline
@@ -251,20 +278,25 @@ const CreatePostPage = () => {
                             style: { fontSize: 18, color: "#FFF" },
                           }} // font size of input text
                           InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                            style: {
+                              fontSize: 16,
+                              color: "rgba(255,75,75,1)",
+                            },
                           }}
                         />
                       );
                     } else if (element.type === "title") {
                       return (
                         <TextField
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index]}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index]) &&
+                            Boolean(values.content[index])
+                          }
                           variant="filled"
                           label="Title"
                           sx={{
@@ -285,13 +317,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "sub") {
                       return (
                         <TextField
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index]}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index]) &&
+                            Boolean(values.content[index])
+                          }
                           variant="filled"
                           label="sub"
                           sx={{
@@ -312,13 +346,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "code") {
                       return (
                         <TextField
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index].value}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index].value) &&
+                            Boolean(values.content[index].value)
+                          }
                           variant="filled"
                           label="code"
                           multiline
@@ -342,13 +378,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "quotes") {
                       return (
                         <TextField
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index]}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index].value) &&
+                            Boolean(values.content[index].value)
+                          }
                           variant="filled"
                           label="quotes"
                           multiline
@@ -372,13 +410,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "points") {
                       return (
                         <TextField
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index]}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index].value) &&
+                            Boolean(values.content[index].value)
+                          }
                           variant="filled"
                           label="points"
                           sx={{
@@ -399,13 +439,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "image") {
                       return (
                         <Input
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index].value}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index].value) &&
+                            Boolean(values.content[index].value)
+                          }
                           placeholder="Insert an image"
                           type="file"
                           /*                     onChange={handleFileInputChange}
@@ -415,13 +457,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "video") {
                       return (
                         <Input
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index].value}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index].value) &&
+                            Boolean(values.content[index].value)
+                          }
                           placeholder="Insert a video"
                           type="file"
                           /*                     onChange={handleFileInputChange}
@@ -431,13 +475,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "file") {
                       return (
                         <Input
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].valued}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index].valued}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index].value) &&
+                            Boolean(values.content[index].value)
+                          }
                           placeholder="Insert a file"
                           type="file"
                           /*                     onChange={handleFileInputChange}
@@ -447,13 +493,15 @@ const CreatePostPage = () => {
                     } else if (element.type === "link") {
                       return (
                         <TextField
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.content[index].value}
-                        name={element.type}
-                        error={
-                          Boolean(values.content[index].value) && Boolean(values.content[index].value)
-                        }
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.content[index].value}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={
+                            Boolean(values.content[index].value) &&
+                            Boolean(values.content[index].value)
+                          }
                           variant="filled"
                           label="link"
                           sx={{
@@ -473,22 +521,21 @@ const CreatePostPage = () => {
                       );
                     }
                   })}
-                  </div>    ))}
                 </>
               </Box>
               <Box>
-          <AnimatedButton
-          type="submit"
-            sx={{
-              "& .button .top, .button .bottom, .button .left, .button .right":
-                { backgroundColor: "#ebff33" },
-              "& .button .border": { border: "1px solid #ebff33" },
-              "& .button": { color: "#ebff33" },
-            }}
-          >
-            Submit
-          </AnimatedButton>
-        </Box>
+                <AnimatedButton
+                  type="submit"
+                  sx={{
+                    "& .button .top, .button .bottom, .button .left, .button .right":
+                      { backgroundColor: "#ebff33" },
+                    "& .button .border": { border: "1px solid #ebff33" },
+                    "& .button": { color: "#ebff33" },
+                  }}
+                >
+                  Submit
+                </AnimatedButton>
+              </Box>
             </form>
           );
         }}
