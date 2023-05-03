@@ -1,12 +1,11 @@
 import BoxInsider from "components/box";
-import { Button, TextField, Typography, Box } from "@mui/material";
+import {  TextField, Typography, Box } from "@mui/material";
 import AnimatedButton from "../../components/button";
-import { Formik, useFormik } from "formik";
+import { Formik,  } from "formik";
 import * as yup from "yup";
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import { Input } from "@mui/material";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import firebase from "firebase/app";
 import "firebase/storage";
 /*****************************************************************************/
 
@@ -18,24 +17,25 @@ const CreatePostPage = () => {
   const [value,setValue]=useState("")
   const addElement = (elementType) => {
     setElements([...elements, { type: elementType,value }]);
-    console.log("addElement Break Point ",elements);
   };
   
   
   
   const addValue=(event,index)=>{
-    const newElements = [...elements];
-    console.log("newElements Break Point ", newElements);
-    const updatedElement = { ...newElements[index], value: event.target.value };
-    console.log("updatedElement ", updatedElement);
-    newElements[index] = updatedElement;
-    console.log("newElements Break Point  after", newElements);
-    setElements(newElements);}
+    if (elements[index].type === "image" || elements[index].type === "video" || elements[index].type === "file") {
+      const newElements = [...elements];
+      const updatedElement = { ...newElements[index], value: event.target.files[0] };
+      newElements[index] = updatedElement;
+      setElements(newElements);
+    } else {
+      const newElements = [...elements];
+      const updatedElement = { ...newElements[index], value: event.target.value };
+      newElements[index] = updatedElement;
+      setElements(newElements);
+    }
   
-  
-  const handleAdd=(values,elements)=>{
-    values.content=elements;
   }
+ 
 
   const postSchema = yup.object().shape({
     categorie_name: yup.string().required(),
@@ -68,39 +68,18 @@ const CreatePostPage = () => {
 
     content: content,
   };
- /*  const handleAdd = (contentType, contentValue) => {
-    const newContent = { type: contentType, value: contentValue };
-    content.push(newContent);
-    setContent(content);
-  };
-  const handleValue = (values, index, event) => {
-        values.content.index.value= event.target.value;
-  
-        setContent(`content.${index}.value`);
-  }; */
-  const formik = useFormik({
-    initialValues: initialValuesPostSchema,
-  });
- /*  useEffect(() => {
-    formik.setValues({
-      ...formik.values,
-      content: [...content],
-    });
-  }, [content]);
- */
+ 
+ 
+
   const createPost = async (values, onSubmitProps) => {
     const formData = new FormData();
 
-    const storageRef = ref(getStorage());
+    console.log("these are the values",values);
+    console.log("values.contetn",values.content);
     for (let value in values) {
-      if (values[value] instanceof File) {
-        const fileRef = storageRef.child(`posts/${values[value].name}`);
-        await uploadBytes(fileRef, values[value]);
-
-        formData.append(value, `posts/${values[value].name}`);
-      } else {
+     
         formData.append(value, values[value]);
-      }
+      
     }
 
     const SavedPostResonse = await fetch("http://localhost:8000/server/post", {
@@ -119,10 +98,38 @@ const CreatePostPage = () => {
       onSubmitProps.resetForm();
     }
   };
+  const handleFileUpload = async () => {
+    const storage = getStorage();
+
+  for (let index = 0; index < elements.length; index++) {
+    const element = elements[index];
+
+    if (element.type === "image" || element.type === "video" || element.type === "file") {
+      const storageRef = ref(storage, `posts/${element.value.name}`);
+      await uploadBytes(storageRef, element.value);
+      
+      console.log("File uploaded:", element.value.name);
+
+      const newElements = [...elements];
+      const updatedElement = { ...newElements[index], value: `posts/${element.value.name}` };
+      newElements[index] = updatedElement;
+      setElements(newElements);
+    }
+  }
+  }
 
   const handleFormSubmit = async (values, onSubmitProps) => {
+   console.log("passed here 1");
+    handleFileUpload();
+    console.log("passed here 2");
+
+   
+    console.log("passed here 5");
+
       const finalElements = elements.map(element => ({ type: element.type, value: element.value || '' }));
       values.content = finalElements;
+      console.log("passed here 6");
+
       await createPost(values, onSubmitProps);
    }
   return (
@@ -290,7 +297,6 @@ const CreatePostPage = () => {
                           label="paragraph"
                           multiline
                           rows={10}
-                          maxRows={400}
                           sx={{
                             gridColumn: "span 2",
                             mb: "1rem",
@@ -389,7 +395,6 @@ const CreatePostPage = () => {
                           label="code"
                           multiline
                           rows={10}
-                          maxRows={400}
                           sx={{
                             gridColumn: "span 2",
                             mb: "1rem",
@@ -423,7 +428,6 @@ const CreatePostPage = () => {
                           label="quotes"
                           multiline
                           rows={10}
-                          maxRows={400}
                           sx={{
                             gridColumn: "span 2",
                             mb: "1rem",
@@ -473,6 +477,7 @@ const CreatePostPage = () => {
                     } else if (element.type === "image") {
                       return (
                         <Input
+                        type="file"
                           onBlur={handleBlur}
                           onChange={(event) => addValue(event,index)}
 
@@ -485,7 +490,6 @@ const CreatePostPage = () => {
                               errors.content[index]
                           )}
                           placeholder="Insert an image"
-                          type="file"
                           /*                     onChange={handleFileInputChange}
                            */
                         />
@@ -494,7 +498,7 @@ const CreatePostPage = () => {
                       return (
                         <Input
                           onBlur={handleBlur}
-                                                    onChange={(event) => addValue(event,index)}
+                          onChange={(event) => addValue(event,index)}
 
                           key={element.id}
                           name={`${element.type}-${element.id}`}
@@ -514,9 +518,8 @@ const CreatePostPage = () => {
                       return (
                         <Input
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index].valued}
-                          key={element.id}
+                          onChange={(event) => addValue(event,index)}
+ key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
                             touched.content &&
@@ -530,12 +533,12 @@ const CreatePostPage = () => {
                            */
                         />
                       );
-                    } else if (element.type === "link") {
+                    } else if (element.type === "backlink") {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index].value}
+                          onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(

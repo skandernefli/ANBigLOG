@@ -43,7 +43,7 @@ function App() {
                     <Route path="/create_post" element={<CreatePostPage />} />
                     <Route path="/manage_featur_posts" element={<ManageFeaturePosts/>}/>
                     <Route path="/manage_other_sections" element={<ManageOtherSections/>}/>
-                    <Route path="/manage_post_gallery" element={<ManagePostGallery/>}/>
+                    <Route path="/manage_posts_gallery" element={<ManagePostGallery/>}/>
                     <Route path="/manage_video_posts" element={<ManageVideoPosts/>}/>
                   </>
                 ) : (
