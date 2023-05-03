@@ -8,12 +8,34 @@ import { Input } from "@mui/material";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import firebase from "firebase/app";
 import "firebase/storage";
+/*****************************************************************************/
 
+
+
+/*****************************************************************************/
 const CreatePostPage = () => {
   const [elements, setElements] = useState([]);
+  const [value,setValue]=useState("")
   const addElement = (elementType) => {
-    setElements([...elements, { type: elementType }]);
+    setElements([...elements, { type: elementType,value }]);
+    console.log("addElement Break Point ",elements);
   };
+  
+  
+  
+  const addValue=(event,index)=>{
+    const newElements = [...elements];
+    console.log("newElements Break Point ", newElements);
+    const updatedElement = { ...newElements[index], value: event.target.value };
+    console.log("updatedElement ", updatedElement);
+    newElements[index] = updatedElement;
+    console.log("newElements Break Point  after", newElements);
+    setElements(newElements);}
+  
+  
+  const handleAdd=(values,elements)=>{
+    values.content=elements;
+  }
 
   const postSchema = yup.object().shape({
     categorie_name: yup.string().required(),
@@ -46,7 +68,7 @@ const CreatePostPage = () => {
 
     content: content,
   };
-  const handleAdd = (contentType, contentValue) => {
+ /*  const handleAdd = (contentType, contentValue) => {
     const newContent = { type: contentType, value: contentValue };
     content.push(newContent);
     setContent(content);
@@ -55,17 +77,17 @@ const CreatePostPage = () => {
         values.content.index.value= event.target.value;
   
         setContent(`content.${index}.value`);
-  };
+  }; */
   const formik = useFormik({
     initialValues: initialValuesPostSchema,
   });
-  useEffect(() => {
+ /*  useEffect(() => {
     formik.setValues({
       ...formik.values,
       content: [...content],
     });
   }, [content]);
-
+ */
   const createPost = async (values, onSubmitProps) => {
     const formData = new FormData();
 
@@ -99,8 +121,10 @@ const CreatePostPage = () => {
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    await createPost(values, onSubmitProps);
-  };
+      const finalElements = elements.map(element => ({ type: element.type, value: element.value || '' }));
+      values.content = finalElements;
+      await createPost(values, onSubmitProps);
+   }
   return (
     <BoxInsider>
       <Typography
@@ -115,7 +139,7 @@ const CreatePostPage = () => {
           <AnimatedButton
             onClick={() => {
               addElement("text");
-              handleAdd("","");
+             
             }}
           >
             add text
@@ -253,7 +277,7 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => handleValue(values,element.type, index, event)}
+                          onChange={(event) => addValue(event,index)}
                            key={`${element.type}-${index}`}
                           name={`${element.type}-${index}`}
                           error={Boolean(
@@ -289,14 +313,16 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index]}
+                          onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index]) &&
-                            Boolean(values.content[index])
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           variant="filled"
                           label="Title"
                           sx={{
@@ -314,18 +340,20 @@ const CreatePostPage = () => {
                           }}
                         />
                       );
-                    } else if (element.type === "sub") {
+                    } else if (element.type === "subtitle") {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index]}
+                          onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index]) &&
-                            Boolean(values.content[index])
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           variant="filled"
                           label="sub"
                           sx={{
@@ -347,14 +375,16 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index].value}
+                          onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index].value) &&
-                            Boolean(values.content[index].value)
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           variant="filled"
                           label="code"
                           multiline
@@ -375,18 +405,20 @@ const CreatePostPage = () => {
                           }}
                         />
                       );
-                    } else if (element.type === "quotes") {
+                    } else if (element.type === "quote") {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index]}
+                          onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index].value) &&
-                            Boolean(values.content[index].value)
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           variant="filled"
                           label="quotes"
                           multiline
@@ -411,14 +443,16 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index]}
+                          onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index].value) &&
-                            Boolean(values.content[index].value)
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           variant="filled"
                           label="points"
                           sx={{
@@ -440,14 +474,16 @@ const CreatePostPage = () => {
                       return (
                         <Input
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index].value}
+                          onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index].value) &&
-                            Boolean(values.content[index].value)
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           placeholder="Insert an image"
                           type="file"
                           /*                     onChange={handleFileInputChange}
@@ -458,14 +494,16 @@ const CreatePostPage = () => {
                       return (
                         <Input
                           onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.content[index].value}
+                                                    onChange={(event) => addValue(event,index)}
+
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index].value) &&
-                            Boolean(values.content[index].value)
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           placeholder="Insert a video"
                           type="file"
                           /*                     onChange={handleFileInputChange}
@@ -480,10 +518,12 @@ const CreatePostPage = () => {
                           value={values.content[index].valued}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index].value) &&
-                            Boolean(values.content[index].value)
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           placeholder="Insert a file"
                           type="file"
                           /*                     onChange={handleFileInputChange}
@@ -498,10 +538,12 @@ const CreatePostPage = () => {
                           value={values.content[index].value}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
-                          error={
-                            Boolean(values.content[index].value) &&
-                            Boolean(values.content[index].value)
-                          }
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
                           variant="filled"
                           label="link"
                           sx={{
