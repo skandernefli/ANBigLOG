@@ -1,41 +1,71 @@
 import BoxInsider from "components/box";
-import {  TextField, Typography, Box } from "@mui/material";
+import { TextField, Typography, Box ,MenuItem,IconButton  } from "@mui/material";
 import AnimatedButton from "../../components/button";
-import { Formik,  } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
-import { useState,  } from "react";
+import { useState ,useEffect} from "react";
 import { Input } from "@mui/material";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import "firebase/storage";
-/*****************************************************************************/
-
-
-
-/*****************************************************************************/
+import { v4 as uuidv4 } from "uuid";
+import { getDownloadURL } from "firebase/storage";
+import Notification from "components/notification";
+import InputAdornment from '@mui/material/InputAdornment';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+import AudiotrackOutlinedIcon from '@mui/icons-material/AudiotrackOutlined';
+import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
+import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 const CreatePostPage = () => {
-  const [elements, setElements] = useState([]);
-  const [value,setValue]=useState("")
-  const addElement = (elementType) => {
-    setElements([...elements, { type: elementType,value }]);
+  const [categories, setCategories] = useState([]);
+
+  const [notification, setNotification] = useState(null);
+  const handleNotification = (message, type = 'error', duration = 3000) => {
+    setNotification({ message, type, duration });
   };
-  
-  
-  
-  const addValue=(event,index)=>{
-    if (elements[index].type === "image" || elements[index].type === "video" || elements[index].type === "file") {
+
+  const handleCloseNotification = () => {
+    setNotification(null);
+  };
+
+  const [elements, setElements] = useState([]);
+  const [value, setValue] = useState("");
+  const addElement = (elementType) => {
+    setElements([...elements, { type: elementType, value }]);
+  };
+  useEffect(() => {
+    fetch('http://localhost:8000/server/category')
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error);
+      });
+  }, []);
+  const addValue = (event, index) => {
+    if (
+      elements[index].type === "image" ||
+      elements[index].type === "video" ||
+      elements[index].type === "file"
+    ) {
       const newElements = [...elements];
-      const updatedElement = { ...newElements[index], value: event.target.files[0] };
+      const updatedElement = {
+        ...newElements[index],
+        value: event.target.files[0],
+      };
+      console.log("this are event.target.files[0]", event.target.files[0]);
       newElements[index] = updatedElement;
       setElements(newElements);
     } else {
       const newElements = [...elements];
-      const updatedElement = { ...newElements[index], value: event.target.value };
+      const updatedElement = {
+        ...newElements[index],
+        value: event.target.value,
+      };
       newElements[index] = updatedElement;
       setElements(newElements);
     }
-  
-  }
- 
+  };
 
   const postSchema = yup.object().shape({
     categorie_name: yup.string().required(),
@@ -46,6 +76,7 @@ const CreatePostPage = () => {
         type: yup
           .string()
           .oneOf([
+            "",
             "text",
             "image",
             "backlink",
@@ -55,8 +86,30 @@ const CreatePostPage = () => {
             "quote",
             "points",
             "video",
+            "file",
+            "audio",
           ]),
         value: yup.string(),
+        backlink: yup.object().shape({
+          text: yup.string(),
+          link: yup.string(),
+        }),
+        image: yup.object().shape({
+          location: yup.string(),
+          downloadlink: yup.string(),
+        }),
+        video: yup.object().shape({
+          location: yup.string(),
+          downloadlink: yup.string(),
+        }),
+        file: yup.object().shape({
+          location: yup.string(),
+          downloadlink: yup.string(),
+        }),
+        audio: yup.object().shape({
+          location: yup.string(),
+          downloadlink: yup.string(),
+        }),
       })
     ),
   });
@@ -68,18 +121,15 @@ const CreatePostPage = () => {
 
     content: content,
   };
- 
- 
 
   const createPost = async (values, onSubmitProps) => {
+    try {
     const formData = new FormData();
 
-    console.log("these are the values",values);
-    console.log("values.contetn",values.content);
+    console.log("these are the values", values);
+    console.log("values.contetn", values.content);
     for (let value in values) {
-     
-        formData.append(value, values[value]);
-      
+      formData.append(value, values[value]);
     }
 
     const SavedPostResonse = await fetch("http://localhost:8000/server/post", {
@@ -91,47 +141,77 @@ const CreatePostPage = () => {
       },
       body: JSON.stringify(values),
     });
-    const SavedPost = await SavedPostResonse.json();
-    console.log("this  responese", SavedPost);
-    if (SavedPost) {
-      console.log("this is the success responese", SavedPost);
-      onSubmitProps.resetForm();
+    if (!SavedPostResonse.ok) {
+      throw new Error("Error creating pos:");
+    } 
+  
+  } catch (error) {
+      console.error("Error creating pos:", error);
+      throw new Error("Error creating pos:");
     }
   };
-  const handleFileUpload = async () => {
+  const handleFileUpload = async (values) => {
+    try {
     const storage = getStorage();
+    const categorie_name = values.categorie_name;
+    const postTitle = values.title;
+    const postId = uuidv4();
+    for (let index = 0; index < elements.length; index++) {
+      const element = elements[index];
 
-  for (let index = 0; index < elements.length; index++) {
-    const element = elements[index];
-
-    if (element.type === "image" || element.type === "video" || element.type === "file") {
-      const storageRef = ref(storage, `posts/${element.value.name}`);
-      await uploadBytes(storageRef, element.value);
-      
-      console.log("File uploaded:", element.value.name);
-
-      const newElements = [...elements];
-      const updatedElement = { ...newElements[index], value: `posts/${element.value.name}` };
-      newElements[index] = updatedElement;
-      setElements(newElements);
+      if (
+        element.type === "image" ||
+        element.type === "video" ||
+        element.type === "file"
+      ) {
+        try {
+          const storageRef = ref(
+            storage,
+            `posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`
+          );
+          await uploadBytes(storageRef, element.value);
+          console.log("File uploaded:", element.value.name);
+          const  downloadlink= await getDownloadURL(storageRef);
+          const newElements = elements;
+          const updatedElement = {
+            ...newElements[index],
+            value:JSON.stringify({location:`posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`,downloadlink:downloadlink}),
+          };
+          newElements[index] = updatedElement;
+          setElements(newElements);
+          console.log(
+            "elements :new set elements 121 in handlefileUpload",
+            elements
+          );
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      }
+    }  } catch (error) {
+      console.error("Error uploading file:", error);
+      throw new Error("Failed to upload one or more files.");
     }
-  }
-  }
+  };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-   console.log("passed here 1");
-    handleFileUpload();
-    console.log("passed here 2");
+    try {
+    await handleFileUpload(values);
+    const finalElements = elements.map((element) => ({
+      type: element.type,
+      value: element.value || "",
+    }));
+    values.content = finalElements;
 
-   
-    console.log("passed here 5");
+    await createPost(values, onSubmitProps);
+  
+    handleNotification('success!', 'success');
+    onSubmitProps.resetForm();
+  } catch (error) {
+      console.error("Error while creating post!", error);
+      handleNotification('Error while creating post!', 'error');
 
-      const finalElements = elements.map(element => ({ type: element.type, value: element.value || '' }));
-      values.content = finalElements;
-      console.log("passed here 6");
-
-      await createPost(values, onSubmitProps);
-   }
+    }
+  };
   return (
     <BoxInsider>
       <Typography
@@ -146,7 +226,6 @@ const CreatePostPage = () => {
           <AnimatedButton
             onClick={() => {
               addElement("text");
-             
             }}
           >
             add text
@@ -193,10 +272,29 @@ const CreatePostPage = () => {
           </AnimatedButton>
         </Box>
         <Box>
+          <AnimatedButton onClick={() => addElement("audio")}>
+            add audio
+          </AnimatedButton>
+        </Box>
+        <Box>
           <AnimatedButton onClick={() => addElement("backlink")}>
             add link
           </AnimatedButton>
         </Box>
+        <Box>
+                <AnimatedButton
+                  type="submit"
+                  form="myForm"
+                  sx={{
+                    "& .button .top, .button .bottom, .button .left, .button .right":
+                      { backgroundColor: "#ebff33" },
+                    "& .button .border": { border: "1px solid #ebff33" },
+                    "& .button": { color: "#ebff33" },
+                  }}
+                >
+                  Submit
+                </AnimatedButton>
+              </Box>
       </Box>
       <Formik
         onSubmit={handleFormSubmit}
@@ -213,7 +311,7 @@ const CreatePostPage = () => {
           resetForm,
         }) => {
           return (
-            <form onSubmit={handleSubmit}>
+            <form id="myForm" onSubmit={handleSubmit}>
               <Box
                 paddingLeft={4}
                 sx={{
@@ -224,15 +322,35 @@ const CreatePostPage = () => {
                 }}
               >
                 <>
-                  <TextField
-                    onChange={handleChange}
-                    value={values.categorie_name}
-                    name="categorie_name"
-                    error={
-                      Boolean(touched.categorie_name) &&
-                      Boolean(errors.categorie_name)
-                    }
-                  />
+                <TextField
+        select
+         value={values.categorie_name}
+      name="categorie_name"
+        label="Category"
+        variant="filled"
+        onChange={handleChange}
+        sx={{
+          gridColumn: 'span 2',
+          mb: '1rem',
+          backgroundColor: 'rgba(255,255,255,0.4)',
+          width: '90%',
+          borderColor: '#000',
+        }}
+        inputProps={{ style: { fontSize: 18, color: '#FFF' } }}
+        InputLabelProps={{
+          style: { fontSize: 16, color: 'rgba(255,75,75,1)' },
+        }}
+        SelectProps={{
+          style: { color: '#FFF' }
+        }}
+      >
+        {categories.map((category) => (
+          <MenuItem key={category.id} value={category.name}>
+            {category.name}
+          </MenuItem>
+        ))}
+      </TextField>
+                
                   <TextField
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -248,7 +366,7 @@ const CreatePostPage = () => {
                       width: "90%",
                       borderColor: "#000",
                     }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} // font size of input text
+                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
                     InputLabelProps={{
                       style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                     }}
@@ -270,22 +388,19 @@ const CreatePostPage = () => {
                       width: "90%",
                       height: "20",
                     }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} // font size of input text
+                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
                     InputLabelProps={{
                       style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                     }}
                   />
                   {elements.map((element, index) => {
-                    if (element.type === "text") {             
-
-                      /*        
-                      console.log("this is the type inside the add break",values.content[index].type);
-                      console.log("this is the value inside the add break",values.content[index].type); */
+                    if (element.type === "text") {
+                    
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-                           key={`${element.type}-${index}`}
+                          onChange={(event) => addValue(event, index)}
+                          key={`${element.type}-${index}`}
                           name={`${element.type}-${index}`}
                           error={Boolean(
                             touched.content &&
@@ -306,7 +421,7 @@ const CreatePostPage = () => {
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} // font size of input text
+                          }}
                           InputLabelProps={{
                             style: {
                               fontSize: 16,
@@ -319,8 +434,7 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -340,7 +454,7 @@ const CreatePostPage = () => {
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} // font size of input text
+                          }} 
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -350,8 +464,7 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -371,7 +484,7 @@ const CreatePostPage = () => {
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} // font size of input text
+                          }} 
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -381,8 +494,7 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -404,7 +516,7 @@ const CreatePostPage = () => {
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} // font size of input text
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -414,8 +526,7 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -437,7 +548,7 @@ const CreatePostPage = () => {
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} // font size of input text
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -447,8 +558,7 @@ const CreatePostPage = () => {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -468,7 +578,7 @@ const CreatePostPage = () => {
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} // font size of input text
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -477,10 +587,9 @@ const CreatePostPage = () => {
                     } else if (element.type === "image") {
                       return (
                         <Input
-                        type="file"
+                          type="file"
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -490,16 +599,38 @@ const CreatePostPage = () => {
                               errors.content[index]
                           )}
                           placeholder="Insert an image"
-                          /*                     onChange={handleFileInputChange}
-                           */
+                          inputProps={{ accept: "image/*" }}
+                          overFlow="hidden"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(0,0,0,0.1)",
+                            width: "90%",
+                            borderColor: "#000",
+                            "& .MuiInputBase-input": {
+                              fontSize: 18,
+                              color: "#FFF",
+                            },
+                            "& .MuiInputLabel-root": {
+                              fontSize: 16,
+                              color: "rgba(255,75,75,1)",
+                            },
+                          }}
+                          startAdornment={
+                            <InputAdornment position="start">
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload an Image</Typography>
+                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                                <AddPhotoAlternateOutlinedIcon />
+                              </IconButton>
+                            </InputAdornment>
+                          }
                         />
                       );
                     } else if (element.type === "video") {
                       return (
                         <Input
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -508,18 +639,41 @@ const CreatePostPage = () => {
                               errors.content &&
                               errors.content[index]
                           )}
-                          placeholder="Insert a video"
-                          type="file"
-                          /*                     onChange={handleFileInputChange}
-                           */
+                          placeholder="Insert an image"
+                          inputProps={{ accept: "video/*" }}
+
+                          overFlow="hidden"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(0,0,0,0.1)",
+                            width: "90%",
+                            borderColor: "#000",
+                            "& .MuiInputBase-input": {
+                              fontSize: 18,
+                              color: "#FFF",
+                            },
+                            "& .MuiInputLabel-root": {
+                              fontSize: 16,
+                              color: "rgba(255,75,75,1)",
+                            },
+                          }}
+                          startAdornment={
+                            <InputAdornment position="start">
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload a video</Typography>
+                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                                <VideoLibraryOutlinedIcon />
+                              </IconButton>
+                            </InputAdornment>
+                          }
                         />
                       );
                     } else if (element.type === "file") {
                       return (
                         <Input
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
- key={element.id}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
                             touched.content &&
@@ -529,16 +683,82 @@ const CreatePostPage = () => {
                           )}
                           placeholder="Insert a file"
                           type="file"
-                          /*                     onChange={handleFileInputChange}
-                           */
+                          overFlow="hidden"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(0,0,0,0.1)",
+                            width: "90%",
+                            borderColor: "#000",
+                            "& .MuiInputBase-input": {
+                              fontSize: 18,
+                              color: "#FFF",
+                            },
+                            "& .MuiInputLabel-root": {
+                              fontSize: 16,
+                              color: "rgba(255,75,75,1)",
+                            },
+                          }}
+                          startAdornment={
+                            <InputAdornment position="start">
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload a file</Typography>
+                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                                <FileCopyOutlinedIcon />
+                              </IconButton>
+                            </InputAdornment>
+                          }
                         />
+                      );
+                    } else if (element.type === "audio") {
+                      return (
+                        <Input
+                          onBlur={handleBlur}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
+                          variant="filled"
+
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          placeholder="Insert a file"
+                          accept="audio/*"
+                          type="file"
+                          overFlow="hidden"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(0,0,0,0.1)",
+                            width: "90%",
+                            borderColor: "#000",
+                            "& .MuiInputBase-input": {
+                              fontSize: 18,
+                              color: "#FFF",
+                            },
+                            "& .MuiInputLabel-root": {
+                              fontSize: 16,
+                              color: "rgba(255,75,75,1)",
+                            },
+                          }}
+                          startAdornment={
+                            <InputAdornment position="start">
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload an audio</Typography>
+                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                                <AudiotrackOutlinedIcon />
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                        />
+                       
                       );
                     } else if (element.type === "backlink") {
                       return (
                         <TextField
                           onBlur={handleBlur}
-                          onChange={(event) => addValue(event,index)}
-
+                          onChange={(event) => addValue(event, index)}
                           key={element.id}
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
@@ -568,24 +788,20 @@ const CreatePostPage = () => {
                   })}
                 </>
               </Box>
-              <Box>
-                <AnimatedButton
-                  type="submit"
-                  sx={{
-                    "& .button .top, .button .bottom, .button .left, .button .right":
-                      { backgroundColor: "#ebff33" },
-                    "& .button .border": { border: "1px solid #ebff33" },
-                    "& .button": { color: "#ebff33" },
-                  }}
-                >
-                  Submit
-                </AnimatedButton>
-              </Box>
+            
             </form>
           );
         }}
       </Formik>
+      {notification &&  <Notification
+             message={notification.message}
+             type={notification.type}
+             duration={notification.duration}
+             onClose={() => setNotification(null)}
+      />}
+
     </BoxInsider>
+    
   );
 };
 export default CreatePostPage;

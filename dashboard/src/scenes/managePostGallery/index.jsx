@@ -3,6 +3,7 @@ import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import BoxInsider from "components/box";
 
 const ManagePostGallery =()=>{
+    
     const [selectedFile, setSelectedFile] = useState(null);
 
 const handleFileInputChange = (e) => {

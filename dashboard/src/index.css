@@ -309,3 +309,14 @@ body {
   justify-content: space-between;
   
 }
+.success{
+  background-color: #4BB543;
+  color: #fff;
+}
+.error{
+  background-color:  #FF4136;
+  color: #fff;
+}
+.icon {
+  margin-right: 10px;
+}

@@ -5,10 +5,8 @@ const postSchema=new mongoose.Schema({
     content:[{
         type: { type: String, enum: ['','text', 'image','backlink', 'title', 'subtitle', 'code', 'quote','points','video','file'] },
         value: { type: String },
-  /*       backlink: {
-            text: { type: String },
-            link: { type: String }
-        } */
+        
+
     }],
     created_at:{type:Date,default:Date.now},
     updated_at:{type:Date, default:Date.now}
