@@ -9,6 +9,7 @@ const popularRoute=require('./routes/popular');
 const postgalleryRoute=require('./routes/postsgallery');
 const trendyRoute=require('./routes/trendy');
 const latestRoute=require('./routes/latest');
+const featureRoute=require('./routes/feature');
 
 require("dotenv").config();
 
@@ -47,5 +48,6 @@ App.use('/server/popular', popularRoute);
 App.use('/server/postgalley', postgalleryRoute);
 App.use('/server/trendy', trendyRoute);
 App.use('/server/latest', latestRoute);
+App.use('/server/feature', featureRoute);
 
 module.exports = App;
