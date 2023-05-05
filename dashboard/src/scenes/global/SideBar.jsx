@@ -193,7 +193,6 @@ const SideBar = () => {
                 icon={<CollectionsOutlinedIcon />}
                 title="Manage posts gallery"
               >
-                <Link to={"/manage_posts_gallery"} />
                 <MenuItem
                   active={selected === "managePostsGallery"}
                   style={{
@@ -261,7 +260,6 @@ const SideBar = () => {
                 icon={<PlayCircleFilledOutlinedIcon />}
                 title="Manage video posts"
               >
-                <Link to={"/manage_video_posts"} />
                 <MenuItem
                   active={selected === "manageVideoPosts"}
                   style={{

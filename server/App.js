@@ -5,6 +5,11 @@ const { addAccessTokenToHeaders, verifyToken } = require("./middleware/authMiddl
 const cookieParser = require('cookie-parser');
 const postRoute = require("./routes/post");
 const authroute = require('./routes/auth');
+const popularRoute=require('./routes/popular');
+const postgalleryRoute=require('./routes/postsgallery');
+const trendyRoute=require('./routes/trendy');
+const latestRoute=require('./routes/latest');
+
 require("dotenv").config();
 
 const App = express();
@@ -38,5 +43,9 @@ App.use(express.json());
 App.use('/server/category', categoryRoute);
 App.use('/server/post', postRoute);
 App.use('/server/auth', authroute);
+App.use('/server/popular', popularRoute);
+App.use('/server/postgalley', postgalleryRoute);
+App.use('/server/trendy', trendyRoute);
+App.use('/server/latest', latestRoute);
 
 module.exports = App;
