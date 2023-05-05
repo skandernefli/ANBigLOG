@@ -3,7 +3,10 @@ const postSchema=new mongoose.Schema({
     title:{type: String, required: true},
     intro:{type: String, required: true},
     content:[{
-        type: { type: String, enum: ['','text', 'image','backlink', 'title', 'subtitle', 'code', 'quote','points','video','file'] },
+        type: { type: String, enum: ['text','audio', 'image','backlink', 'title', 'subtitle', 'code', 'quote','points','video','file' ,'externalImage',
+        'externalVideo',
+        'externalAudio',
+        'externalFile','externalLink'] },
         value: { type: String },
         
 

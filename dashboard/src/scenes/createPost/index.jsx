@@ -32,6 +32,49 @@ const CreatePostPage = () => {
   const addElement = (elementType) => {
     setElements([...elements, { type: elementType, value }]);
   };
+  const [backlinks,setBacklinks]=useState([]);
+  
+  const addBackLink=(event,index)=>{
+    if (elements[index].type==="backlink"){
+      if (backlinks.length === 0) {
+        const newBackLinks = [{        index: index,        link: event.target.value      }];
+        setBacklinks(newBackLinks);
+        console.log("updated backlinks", newBackLinks);
+      } else{
+   backlinks.map((backlink,i)=>{
+    if(backlink.index===index){
+    const newBackLinks = [...backlinks];
+    const updatedbacklink = {
+      ...newBackLinks[i],
+      index:index,
+      link: event.target.value,
+    };
+    newBackLinks[i] = updatedbacklink;
+    setBacklinks(newBackLinks);
+    
+    console.log("passed by addBackLink if",backlinks)
+  }else{
+      const newBackLinks = [...backlinks];
+      newBackLinks.push({
+    
+      index:index,
+      link: event.target.value,
+    });
+    setBacklinks(newBackLinks);
+    console.log("passed by addBackLink else",backlinks)
+
+    }
+  
+  
+  })}
+   
+    console.log("passed by addBackLink",backlinks)}
+  }
+  
+  const getBackLink = (index) => {
+    const backlink = backlinks.find((backlink) => backlink.index === index);
+    return backlink ? backlink.link : '';
+  }
   useEffect(() => {
     fetch('http://localhost:8000/server/category')
       .then((response) => response.json())
@@ -42,11 +85,13 @@ const CreatePostPage = () => {
         console.error('Error fetching categories:', error);
       });
   }, []);
+ 
   const addValue = (event, index) => {
     if (
       elements[index].type === "image" ||
       elements[index].type === "video" ||
-      elements[index].type === "file"
+      elements[index].type === "file"  ||
+      elements[index].type === "audio"
     ) {
       const newElements = [...elements];
       const updatedElement = {
@@ -56,7 +101,7 @@ const CreatePostPage = () => {
       console.log("this are event.target.files[0]", event.target.files[0]);
       newElements[index] = updatedElement;
       setElements(newElements);
-    } else {
+    } else  {
       const newElements = [...elements];
       const updatedElement = {
         ...newElements[index],
@@ -88,6 +133,12 @@ const CreatePostPage = () => {
             "video",
             "file",
             "audio",
+            "externalImage",
+            "externalVideo",
+            "externalAudio",
+            "externalFile",
+            "externalLink"
+
           ]),
         value: yup.string(),
         backlink: yup.object().shape({
@@ -146,8 +197,8 @@ const CreatePostPage = () => {
     } 
   
   } catch (error) {
-      console.error("Error creating pos:", error);
-      throw new Error("Error creating pos:");
+      console.error("Error creating post:", error);
+      throw new Error("Error creating post:");
     }
   };
   const handleFileUpload = async (values) => {
@@ -162,9 +213,12 @@ const CreatePostPage = () => {
       if (
         element.type === "image" ||
         element.type === "video" ||
-        element.type === "file"
+        element.type === "file"  ||
+        element.type === "audio"
       ) {
         try {
+          console.log("File in process:", element.value.name);
+
           const storageRef = ref(
             storage,
             `posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`
@@ -186,7 +240,18 @@ const CreatePostPage = () => {
         } catch (error) {
           console.error("Error uploading file:", error);
         }
-      }
+      }else   if (
+        element.type === "backlink" ){
+const link=getBackLink(index);
+console.log("this is the link",link);
+          const newElements = elements;
+          const updatedElement = {
+            ...newElements[index],
+            value:JSON.stringify({textOfLink:element.value,backlinkLink:link}),
+          };
+          newElements[index] = updatedElement;
+          setElements(newElements);
+        }
     }  } catch (error) {
       console.error("Error uploading file:", error);
       throw new Error("Failed to upload one or more files.");
@@ -262,8 +327,18 @@ const CreatePostPage = () => {
           </AnimatedButton>
         </Box>
         <Box>
+          <AnimatedButton onClick={() => addElement("externalImage")}>
+            add external image
+          </AnimatedButton>
+        </Box>
+        <Box>
           <AnimatedButton onClick={() => addElement("video")}>
             add video
+          </AnimatedButton>
+        </Box>
+        <Box>
+          <AnimatedButton onClick={() => addElement("externalVideo")}>
+            add extenal video
           </AnimatedButton>
         </Box>
         <Box>
@@ -272,13 +347,28 @@ const CreatePostPage = () => {
           </AnimatedButton>
         </Box>
         <Box>
+          <AnimatedButton onClick={() => addElement("externalFile")}>
+            add external file
+          </AnimatedButton>
+        </Box>
+        <Box>
           <AnimatedButton onClick={() => addElement("audio")}>
             add audio
           </AnimatedButton>
         </Box>
         <Box>
+          <AnimatedButton onClick={() => addElement("externalAudio")}>
+            add external audio
+          </AnimatedButton>
+        </Box>
+        <Box>
           <AnimatedButton onClick={() => addElement("backlink")}>
             add link
+          </AnimatedButton>
+        </Box>
+        <Box>
+          <AnimatedButton onClick={() => addElement("externalLink")}>
+            add external link
           </AnimatedButton>
         </Box>
         <Box>
@@ -378,7 +468,7 @@ const CreatePostPage = () => {
                     name="intro"
                     error={Boolean(touched.intro) && Boolean(errors.intro)}
                     variant="filled"
-                    label="auth"
+                    label="intro"
                     multiline
                     rows={10}
                     sx={{
@@ -618,7 +708,7 @@ const CreatePostPage = () => {
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload an Image</Typography>
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
                               <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
                                 <AddPhotoAlternateOutlinedIcon />
                               </IconButton>
@@ -641,7 +731,7 @@ const CreatePostPage = () => {
                           )}
                           placeholder="Insert an image"
                           inputProps={{ accept: "video/*" }}
-
+type="file"
                           overFlow="hidden"
                           sx={{
                             gridColumn: "span 2",
@@ -660,7 +750,7 @@ const CreatePostPage = () => {
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload a video</Typography>
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload a video</Typography>
                               <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
                                 <VideoLibraryOutlinedIcon />
                               </IconButton>
@@ -701,7 +791,7 @@ const CreatePostPage = () => {
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload a file</Typography>
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload a file</Typography>
                               <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
                                 <FileCopyOutlinedIcon />
                               </IconButton>
@@ -745,7 +835,7 @@ const CreatePostPage = () => {
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"840px"}}>upload an audio</Typography>
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an audio</Typography>
                               <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
                                 <AudiotrackOutlinedIcon />
                               </IconButton>
@@ -754,7 +844,7 @@ const CreatePostPage = () => {
                         />
                        
                       );
-                    } else if (element.type === "backlink") {
+                    }else if (element.type === "externalImage") {
                       return (
                         <TextField
                           onBlur={handleBlur}
@@ -768,7 +858,162 @@ const CreatePostPage = () => {
                               errors.content[index]
                           )}
                           variant="filled"
-                          label="link"
+                          label="external image"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(255,255,255,0.7)",
+                            width: "90%",
+                            borderColor: "#000",
+                          }}
+                          inputProps={{
+                            style: { fontSize: 18, color: "#FFF" },
+                          }} 
+                          InputLabelProps={{
+                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                          }}
+                        />
+                      );
+                    }else if (element.type === "externalVideo") {
+                      return (
+                        <TextField
+                          onBlur={handleBlur}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          variant="filled"
+                          label="external video"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(255,255,255,0.7)",
+                            width: "90%",
+                            borderColor: "#000",
+                          }}
+                          inputProps={{
+                            style: { fontSize: 18, color: "#FFF" },
+                          }} 
+                          InputLabelProps={{
+                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                          }}
+                        />
+                      );
+                    }else if (element.type === "externalAudio") {
+                      return (
+                        <TextField
+                          onBlur={handleBlur}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          variant="filled"
+                          label="external audio"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(255,255,255,0.7)",
+                            width: "90%",
+                            borderColor: "#000",
+                          }}
+                          inputProps={{
+                            style: { fontSize: 18, color: "#FFF" },
+                          }} 
+                          InputLabelProps={{
+                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                          }}
+                        />
+                      );
+                    }else if (element.type === "externalLink") {
+                      return (
+                        <TextField
+                          onBlur={handleBlur}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          variant="filled"
+                          label="external link"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(255,255,255,0.7)",
+                            width: "90%",
+                            borderColor: "#000",
+                          }}
+                          inputProps={{
+                            style: { fontSize: 18, color: "#FFF" },
+                          }} 
+                          InputLabelProps={{
+                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                          }}
+                        />
+                      );
+                    }
+                    else if (element.type === "externalFile") {
+                      return (
+                        <TextField
+                          onBlur={handleBlur}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          variant="filled"
+                          label="external file"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(255,255,255,0.7)",
+                            width: "90%",
+                            borderColor: "#000",
+                          }}
+                          inputProps={{
+                            style: { fontSize: 18, color: "#FFF" },
+                          }} 
+                          InputLabelProps={{
+                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                          }}
+                        />
+                      );
+                    }
+                     else if (element.type === "backlink") { 
+
+                       return (
+                        
+                        <Box >
+                        <TextField
+                          onBlur={handleBlur}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          variant="filled"
+                          label="text of the link"
                           sx={{
                             gridColumn: "span 2",
                             mb: "1rem",
@@ -783,6 +1028,34 @@ const CreatePostPage = () => {
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
                         />
+                        <TextField
+                        onBlur={handleBlur}
+                        onChange={(event) => addBackLink(event, index)}
+                        key={element.id+1}
+                        name={`${element.type}-${element.id}+1`}
+                        error={Boolean(
+                          touched.content &&
+                            touched.content[index] &&
+                            errors.content &&
+                            errors.content[index]
+                        )}
+                        variant="filled"
+                        label="back link"
+                        sx={{
+                          gridColumn: "span 2",
+                          mb: "1rem",
+                          backgroundColor: "rgba(255,255,255,0.7)",
+                          width: "90%",
+                          borderColor: "#000",
+                        }}
+                        inputProps={{
+                          style: { fontSize: 18, color: "#FFF" },
+                        }} // font size of input text
+                        InputLabelProps={{
+                          style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                        }}
+                      />
+                      </Box>
                       );
                     }
                   })}
