@@ -1,14 +1,14 @@
-const trendyPosts = require('../homepagemodel/managepostsgallery/trendy');
+const managevideoposts = require('../homepagemodel/managevideoposts/managevideoposts');
 const getGalleryPost=(req,res)=>{
-    trendyPosts.findById(req.params.id)
-    .then(trendyPosts => {
-      if (!trendyPosts) {
+    managevideoposts.findById(req.params.id)
+    .then(managevideoposts => {
+      if (!managevideoposts) {
         return res.status(404).json({
           message: 'gallery Post not found'
         });
       }
 
-      res.status(200).json(trendyPosts);
+      res.status(200).json(managevideoposts);
     })
     .catch(error => {
       console.log(error);
@@ -30,7 +30,7 @@ const postGalleryPost= async (req,res)=>{
           link: req.body.link
         };
     
-        const post = await trendyPosts.findOneAndUpdate(
+        const post = await managevideoposts.findOneAndUpdate(
           {},
           { $push: { data: newPost } },
           { upsert: true }
@@ -42,13 +42,13 @@ const postGalleryPost= async (req,res)=>{
         res.status(500).json({ message: "Something went wrong" });
       }
     };
-    
-    
+  
+
 const getGalleryPosts=(req,res)=>{
-    trendyPosts.find()
+    managevideoposts.find()
     .sort({ created_at: -1 })
-    .then(trendyPosts => {
-      res.status(200).json(trendyPosts);
+    .then(managevideoposts => {
+      res.status(200).json(managevideoposts);
     })
     .catch(error => {
       console.log(error);
@@ -60,9 +60,9 @@ const getGalleryPosts=(req,res)=>{
 const deleteGalleryPost=(req,res)=>{
 
         const postId=req.params.id;
-        trendyPosts.findByIdAndDelete(postId)
-    .then(trendyPosts => {
-      if (!trendyPosts) {
+        managevideoposts.findByIdAndDelete(postId)
+    .then(managevideoposts => {
+      if (!managevideoposts) {
         return res.status(404).json({
           message: 'Post not found'
         });
@@ -70,7 +70,7 @@ const deleteGalleryPost=(req,res)=>{
 
       res.status(200).json({
         message: 'Post deleted successfully',
-        trendyPosts: trendyPosts
+        managevideoposts: managevideoposts
       });
     })
     .catch(error => {
@@ -85,10 +85,10 @@ const updateGalleryPost = (req, res) => {
     const postId = req.params.id;
   
    
-            trendyPosts
+            managevideoposts
               .findByIdAndUpdate(postId, req.body, { new: true })
-              .then((trendyPosts) => {
-                if (!trendyPosts) {
+              .then((managevideoposts) => {
+                if (!managevideoposts) {
                   return res.status(404).json({
                     message: "Post not found",
                   });
@@ -96,7 +96,7 @@ const updateGalleryPost = (req, res) => {
   
                 res.status(200).json({
                   message: "Post updated successfully",
-                  trendyPosts: trendyPosts,
+                  managevideoposts: managevideoposts,
                 });
               })
               .catch((error) => {

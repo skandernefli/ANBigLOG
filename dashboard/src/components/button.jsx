@@ -1,10 +1,9 @@
 import { Box, Button } from "@mui/material";
-const AnimatedButton =(props)=>{
-    const { children, ...rest } = props;
+const AnimatedButton =({ className, children, ...rest })=>{
 
     return(
         <Button  {...rest}>
-        <a href="javascript: void 0;" className="button" >
+        <a href="javascript: void 0;"  className={className} >
         <span className="border"></span>
         <span className="top"></span>
         <span className="right"></span>

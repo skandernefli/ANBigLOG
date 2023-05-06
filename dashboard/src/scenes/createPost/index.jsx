@@ -288,7 +288,7 @@ console.log("this is the link",link);
       </Typography>
       <Box className="controllersLayout">
         <Box>
-          <AnimatedButton
+          <AnimatedButton className="button"
             onClick={() => {
               addElement("text");
             }}
@@ -297,82 +297,83 @@ console.log("this is the link",link);
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("title")}>
+          <AnimatedButton className="button" onClick={() => addElement("title")}>
             add title
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("subtitle")}>
+          <AnimatedButton className="button" onClick={() => addElement("subtitle")}>
             add sub
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("code")}>
+          <AnimatedButton className="button" onClick={() => addElement("code")}>
             add code
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("quote")}>
+          <AnimatedButton className="button" onClick={() => addElement("quote")}>
             add quotes
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("points")}>
+          <AnimatedButton className="button" onClick={() => addElement("points")}>
             add points
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("image")}>
+          <AnimatedButton className="button" onClick={() => addElement("image")}>
             add image
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("externalImage")}>
+          <AnimatedButton className="button" onClick={() => addElement("externalImage")}>
             add external image
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("video")}>
+          <AnimatedButton className="button" onClick={() => addElement("video")}>
             add video
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("externalVideo")}>
+          <AnimatedButton className="button" onClick={() => addElement("externalVideo")}>
             add extenal video
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("file")}>
+          <AnimatedButton className="button" onClick={() => addElement("file")}>
             add file
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("externalFile")}>
+          <AnimatedButton className="button" onClick={() => addElement("externalFile")}>
             add external file
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("audio")}>
+          <AnimatedButton className="button" onClick={() => addElement("audio")}>
             add audio
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("externalAudio")}>
+          <AnimatedButton className="button" onClick={() => addElement("externalAudio")}>
             add external audio
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("backlink")}>
+          <AnimatedButton className="button" onClick={() => addElement("backlink")}>
             add link
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton onClick={() => addElement("externalLink")}>
+          <AnimatedButton className="button" onClick={() => addElement("externalLink")}>
             add external link
           </AnimatedButton>
         </Box>
         <Box>
                 <AnimatedButton
+                className="button"
                   type="submit"
                   form="myForm"
                   sx={{

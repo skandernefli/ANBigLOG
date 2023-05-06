@@ -21,7 +21,7 @@ const postGalleryPost= async (req,res)=>{
     try {
         const newPost = {
           title: req.body.title,
-          image: req.body.picture,
+          image: req.body.image,
           article: req.body.article,
           category: {
             name: req.body.category.name,

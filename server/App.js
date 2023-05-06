@@ -10,6 +10,8 @@ const postgalleryRoute=require('./routes/postsgallery');
 const trendyRoute=require('./routes/trendy');
 const latestRoute=require('./routes/latest');
 const featureRoute=require('./routes/feature');
+const mainvideoRoute=require('./routes/mainvideo');
+const managevideopostsRoute=require('./routes/managevideoposts');
 
 require("dotenv").config();
 
@@ -49,5 +51,7 @@ App.use('/server/postgalley', postgalleryRoute);
 App.use('/server/trendy', trendyRoute);
 App.use('/server/latest', latestRoute);
 App.use('/server/feature', featureRoute);
+App.use('/server/mainvideo', mainvideoRoute);
+App.use('/server/managevideoposts', managevideopostsRoute);
 
 module.exports = App;

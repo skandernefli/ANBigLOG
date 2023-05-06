@@ -7,6 +7,16 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { useDispatch } from "react-redux";
 import { setLogout } from "state";
 import { useNavigate } from "react-router-dom";
+const clearAllCookies = () => {
+  const cookies = document.cookie.split(";");
+
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i];
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+  }
+};
 
 const HeaderBar = () => {
   const theme = useTheme();
@@ -27,8 +37,10 @@ const HeaderBar = () => {
   }
   );
  
-  if (logoutser.status===200){
-    dispatch(setLogout())
+  if (logoutser.ok){
+    clearAllCookies();
+    dispatch(setLogout());
+    window.location.reload(navigate("/login"));
   }
 
   } 
@@ -45,7 +57,7 @@ const HeaderBar = () => {
           )}
         </IconButton>
         <IconButton  sx={{justifySelf:"flex-end"}} onClick={()=>{
-          logout();   window.location.reload(navigate("/"));;
+          logout();  
           }
         }>
           <PersonOutlinedIcon sx={{color:"rgba(255,75,75,1)"}} />

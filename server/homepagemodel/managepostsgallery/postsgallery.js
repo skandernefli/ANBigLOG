@@ -1,6 +1,6 @@
 const mongoose = require('../../db/MongodbConnection');
 const postGallerySchema=new mongoose.Schema({
-    data :{
+    data :[{
     title:{type: String, required: true},
     picture:{type: String, required: true},
     thumbnail:{type: String, required: true},
@@ -14,7 +14,7 @@ const postGallerySchema=new mongoose.Schema({
     description:{type: String, required: true},
     link:{type: String, required: true},
 
-}
+}]
 });
 
 const postGallery=mongoose.model('postgallery',postGallerySchema);

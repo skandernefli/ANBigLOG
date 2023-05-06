@@ -1,5 +1,6 @@
 const  express=require('express');
 const {login,logout,createAdmin}=require('../controllers/auth');
+const {verifyToken}=require('../middleware/authMiddleware');
 
 //const putAdmin=require('../controllers/auth');
 //const deleteAdmin=require('../controller/auth');

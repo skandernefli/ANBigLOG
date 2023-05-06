@@ -9,7 +9,7 @@ import Background from "components/background";
 import LoginPage from "./scenes/auth";
 import ManageFeaturePosts  from "./scenes/manageFeaturePosts/index";
 import ManageOtherSections from "./scenes/manageOtherSections/index";
-import ManagePostGallery from "./scenes/managePostGallery/index";
+import ManagePostGallery from "./scenes/managePostGallery/managepostsgallery";
 import PostsList from "./scenes/postsList";
 import ManageVideoPosts from "./scenes/manageVideoPosts/index";
 import { useStore } from 'react-redux';
@@ -47,7 +47,7 @@ function App() {
                     <Route path="/manage_video_posts" element={<ManageVideoPosts/>}/>
                   </>
                 ) : (
-                  <Route path="/" element={<LoginPage />} />
+                  <Route path="/login" element={<LoginPage />} />
                 )}
               </Routes>
             </main>

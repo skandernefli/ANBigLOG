@@ -1,6 +1,6 @@
 const mongoose = require('../../db/MongodbConnection');
-const popularPostsSchema=new mongoose.Schema({
-    data :[{
+const managevideopostsSchema=new mongoose.Schema({
+    data :{
         title:{type: String, required: true},
         image:{type: String, required: true},
         category:{
@@ -13,8 +13,9 @@ const popularPostsSchema=new mongoose.Schema({
         description:{type: String, required: true},
         link:{type: String, required: true},
 
-    }]
+    
+    }
 });
 
-const popularPosts=mongoose.model('popularposts',popularPostsSchema);
-module.exports=popularPosts;
+const managevideoposts=mongoose.model('managevideoposts',managevideopostsSchema);
+module.exports=managevideoposts;

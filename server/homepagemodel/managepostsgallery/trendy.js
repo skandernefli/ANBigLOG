@@ -1,6 +1,6 @@
 const mongoose = require('../../db/MongodbConnection');
 const trendyPostsSchema=new mongoose.Schema({
-    data :{
+    data :[{
         title:{type: String, required: true},
         image:{type: String, required: true},
         category:{
@@ -13,7 +13,7 @@ const trendyPostsSchema=new mongoose.Schema({
         description:{type: String, required: true},
         link:{type: String, required: true},
 
-    }
+    }]
 });
 
 const trendyPosts=mongoose.model('trendyposts',trendyPostsSchema);
