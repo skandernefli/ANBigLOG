@@ -13,6 +13,8 @@ import ManagePostGallery from "./scenes/managePostGallery/managepostsgallery";
 import PostsList from "./scenes/postsList";
 import ManageVideoPosts from "./scenes/manageVideoPosts/index";
 import { useStore } from 'react-redux';
+import  AddPostGallery from "./scenes/managePostGallery/create/addPostGallery";
+
 
 function App() {
   const store = useStore();
@@ -41,13 +43,15 @@ function App() {
                   <>
                     <Route path="/posts_list" element={<PostsList />} />
                     <Route path="/create_post" element={<CreatePostPage />} />
+                    <Route path="/addPostGallery" element={<AddPostGallery />} />
+
                     <Route path="/manage_featur_posts" element={<ManageFeaturePosts/>}/>
                     <Route path="/manage_other_sections" element={<ManageOtherSections/>}/>
                     <Route path="/manage_posts_gallery" element={<ManagePostGallery/>}/>
                     <Route path="/manage_video_posts" element={<ManageVideoPosts/>}/>
                   </>
                 ) : (
-                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/" element={<LoginPage />} />
                 )}
               </Routes>
             </main>

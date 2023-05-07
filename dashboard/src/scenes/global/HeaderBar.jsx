@@ -40,7 +40,7 @@ const HeaderBar = () => {
   if (logoutser.ok){
     clearAllCookies();
     dispatch(setLogout());
-    window.location.reload(navigate("/login"));
+    window.location.reload(navigate("/"));
   }
 
   } 
