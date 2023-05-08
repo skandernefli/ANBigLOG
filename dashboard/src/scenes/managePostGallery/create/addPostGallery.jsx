@@ -8,12 +8,9 @@ import { Input } from "@mui/material";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-import { getDownloadURL } from "firebase/storage";
 import Notification from "components/notification";
 import InputAdornment from '@mui/material/InputAdornment';
-import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
-import AudiotrackOutlinedIcon from '@mui/icons-material/AudiotrackOutlined';
-import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
+
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 const CreatePostPage = () => {
   const [categories, setCategories] = useState([]);
@@ -25,54 +22,7 @@ const CreatePostPage = () => {
 
 
 
-  const [elements, setElements] = useState([]);
-  const [value, setValue] = useState("");
-  const addElement = (elementType) => {
-    setElements([...elements, { type: elementType, value }]);
-  };
-  const [backlinks,setBacklinks]=useState([]);
-  
-  const addBackLink=(event,index)=>{
-    if (elements[index].type==="backlink"){
-      if (backlinks.length === 0) {
-        const newBackLinks = [{        index: index,        link: event.target.value      }];
-        setBacklinks(newBackLinks);
-        console.log("updated backlinks", newBackLinks);
-      } else{
-   backlinks.map((backlink,i)=>{
-    if(backlink.index===index){
-    const newBackLinks = [...backlinks];
-    const updatedbacklink = {
-      ...newBackLinks[i],
-      index:index,
-      link: event.target.value,
-    };
-    newBackLinks[i] = updatedbacklink;
-    setBacklinks(newBackLinks);
-    
-    console.log("passed by addBackLink if",backlinks)
-  }else{
-      const newBackLinks = [...backlinks];
-      newBackLinks.push({
-    
-      index:index,
-      link: event.target.value,
-    });
-    setBacklinks(newBackLinks);
-    console.log("passed by addBackLink else",backlinks)
-
-    }
-  
-  
-  })}
-   
-    console.log("passed by addBackLink",backlinks)}
-  }
-  
-  const getBackLink = (index) => {
-    const backlink = backlinks.find((backlink) => backlink.index === index);
-    return backlink ? backlink.link : '';
-  }
+ 
   useEffect(() => {
     fetch('http://localhost:8000/server/category')
       .then((response) => response.json())
@@ -84,45 +34,19 @@ const CreatePostPage = () => {
       });
   }, []);
  
-  const addValue = (event, index) => {
-    if (
-      elements[index].type === "image" ||
-      elements[index].type === "video" ||
-      elements[index].type === "file"  ||
-      elements[index].type === "audio"
-    ) {
-      const newElements = [...elements];
-      const updatedElement = {
-        ...newElements[index],
-        value: event.target.files[0],
-      };
-      console.log("this are event.target.files[0]", event.target.files[0]);
-      newElements[index] = updatedElement;
-      setElements(newElements);
-    } else  {
-      const newElements = [...elements];
-      const updatedElement = {
-        ...newElements[index],
-        value: event.target.value,
-      };
-      newElements[index] = updatedElement;
-      setElements(newElements);
-    }
-  };
-
+ 
   const postSchema = yup.object().shape({
     title: yup.string().required(),
-    picture: yup.string().required(),
-    thumbnail: yup.string().required(),
+    picture: yup.string(),
+    thumbnail: yup.string(),
     description: yup.string().required(),
     link: yup.string().required(),
 
     category: yup.object().shape({
-        name:yup.string().required(),
-        create_At:yup.string().required(),
+        name:yup.string(),
+        create_At:yup.string(),
       })
   });
-  const [content, setContent] = useState([]);
   const initialValuesPostSchema = {
     title: "",
     picture: "",
@@ -136,110 +60,76 @@ const CreatePostPage = () => {
       }
   };
 
-  const createPost = async (values, onSubmitProps) => {
+ 
+
+
+  const handleFormSubmit = async (values,onSubmitProps) => {
     try {
-    const formData = new FormData();
-
-    console.log("these are the values", values);
-    console.log("values.contetn", values.content);
-    for (let value in values) {
-      formData.append(value, values[value]);
+      console.log("passed by handleFormSubmit");
+      const pictureUrl = await handleFileUpload(values.picture);
+      const thumbnailUrl = await handleFileUpload(values.thumbnail);
+      const postData = {
+        title: values.title,
+        picture: pictureUrl,
+        thumbnail: thumbnailUrl,
+        description: values.description,
+        link: values.link,
+        category: {
+          name: values.name,
+          create_At: values.create_At,
+        },
+      };
+      await createPost(postData);
+      onSubmitProps.resetForm();
+      handleNotification('success!', 'success');
+    } catch (error) {
+      console.log("Error creating post: ", error);
+      handleNotification('Error while creating post!', 'error');
     }
+  };
+  
+  const handleFileUpload = async (file) => {
+    try {
+      const storage = getStorage();
 
-    const SavedPostResonse = await fetch("http://localhost:8000/server/post", {
+      const postId = uuidv4();
+
+      const storageRef = ref(
+        storage,
+        `galleryposts/${postId}`
+      );
+      await uploadBytes(storageRef, file);
+      console.log("file",file);
+      const url=`galleryposts/${postId}`
+      return url;
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+      throw new Error("Error uploading file!");
+    }
+  };
+  
+  const createPost = async (postData) => {
+  try {  const SavedPostResonse = await fetch("http://localhost:8000/server/postgalley", {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${"access_token"}`,
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify(postData),
     });
     if (!SavedPostResonse.ok) {
       throw new Error("Error creating pos:");
-    } 
+    } else{
+      return SavedPostResonse;
+    }
   
   } catch (error) {
       console.error("Error creating post:", error);
       throw new Error("Error creating post:");
     }
   };
-  const handleFileUpload = async (values) => {
-    try {
-    const storage = getStorage();
-    const categorie_name = values.categorie_name;
-    const postTitle = values.title;
-    const postId = uuidv4();
-    for (let index = 0; index < elements.length; index++) {
-      const element = elements[index];
-
-      if (
-        element.type === "image" ||
-        element.type === "video" ||
-        element.type === "file"  ||
-        element.type === "audio"
-      ) {
-        try {
-          console.log("File in process:", element.value.name);
-
-          const storageRef = ref(
-            storage,
-            `posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`
-          );
-          await uploadBytes(storageRef, element.value);
-          console.log("File uploaded:", element.value.name);
-          const  downloadlink= await getDownloadURL(storageRef);
-          const newElements = elements;
-          const updatedElement = {
-            ...newElements[index],
-            value:JSON.stringify({location:`posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`,downloadlink:downloadlink}),
-          };
-          newElements[index] = updatedElement;
-          setElements(newElements);
-          console.log(
-            "elements :new set elements 121 in handlefileUpload",
-            elements
-          );
-        } catch (error) {
-          console.error("Error uploading file:", error);
-        }
-      }else   if (
-        element.type === "backlink" ){
-const link=getBackLink(index);
-console.log("this is the link",link);
-          const newElements = elements;
-          const updatedElement = {
-            ...newElements[index],
-            value:JSON.stringify({textOfLink:element.value,backlinkLink:link}),
-          };
-          newElements[index] = updatedElement;
-          setElements(newElements);
-        }
-    }  } catch (error) {
-      console.error("Error uploading file:", error);
-      throw new Error("Failed to upload one or more files.");
-    }
-  };
-
-  const handleFormSubmit = async (values, onSubmitProps) => {
-    try {
-    await handleFileUpload(values);
-    const finalElements = elements.map((element) => ({
-      type: element.type,
-      value: element.value || "",
-    }));
-    values.content = finalElements;
-
-    await createPost(values, onSubmitProps);
   
-    handleNotification('success!', 'success');
-    onSubmitProps.resetForm();
-  } catch (error) {
-      console.error("Error while creating post!", error);
-      handleNotification('Error while creating post!', 'error');
-
-    }
-  };
   return (
     <BoxInsider>
       <Typography
@@ -279,7 +169,7 @@ console.log("this is the link",link);
           handleBlur,
           handleChange,
           handleSubmit,
-          resetForm,
+    
         }) => {
           return (
             <form id="myForm" onSubmit={handleSubmit}>
@@ -405,16 +295,9 @@ console.log("this is the link",link);
                         <Input
                           type="file"
                           onBlur={handleBlur}
-/*                           onChange={(event) => addValue(event, index)}
- */                         /*  key={element.id} */
-/*                           name={`${element.type}-${element.id}`}
- */                       /*    error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )} */
-                          placeholder="Insert an image"
+                          onChange={(event)=>{values.thumbnail=event.files}}
+/*                           value={values.picture}
+ */                          placeholder="Insert a picture"
                           inputProps={{ accept: "image/*" }}
                           overFlow="hidden"
                           sx={{
@@ -434,7 +317,7 @@ console.log("this is the link",link);
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload a Picture</Typography>
                               <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
                                 <AddPhotoAlternateOutlinedIcon />
                               </IconButton>
@@ -445,16 +328,9 @@ console.log("this is the link",link);
                         <Input
                           type="file"
                           onBlur={handleBlur}
-                         /*  onChange={(event) => addValue(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )} */
-                          placeholder="Insert an image"
+                          onChange={(event)=>{values.thumbnail=event.files}}
+/*                           value={values.thumbnail}
+ */                          placeholder="Insert an image"
                           inputProps={{ accept: "image/*" }}
                           overFlow="hidden"
                           sx={{
@@ -474,7 +350,7 @@ console.log("this is the link",link);
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
+<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload a thumbnail</Typography>
                               <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
                                 <AddPhotoAlternateOutlinedIcon />
                               </IconButton>

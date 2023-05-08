@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { useState ,useEffect} from "react";
 import { Input } from "@mui/material";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import "firebase/storage";
+import "firebase/storage"; 
 import { v4 as uuidv4 } from "uuid";
 import { getDownloadURL } from "firebase/storage";
 import Notification from "components/notification";
