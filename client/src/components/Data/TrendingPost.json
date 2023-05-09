@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "_id": "61810a96f94ed7881da838db",
+      "title": "Copa America: Luis Suarez From Devastated US",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "trending-news-1.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a96ed484972a85cc109",
+      "title": "A Night of Tradition: Gala fashion show",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "trending-news-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9659b5fc229a8c1389",
+      "title": "QRIUS inaugurates Winter Exhibition 2021",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "trending-news-3.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9688b5023a5fb07812",
+      "title": "Celebrating Bangladeshi cuisineS",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "trending-news-1.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a961523248bb75b0f33",
+      "title": "16 Days of Activism observed by Zonta Club of Dhaka III",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "trending-news-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    }
+  ]
+}

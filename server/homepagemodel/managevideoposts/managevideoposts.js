@@ -1,6 +1,6 @@
 const mongoose = require('../../db/MongodbConnection');
 const managevideopostsSchema=new mongoose.Schema({
-    data :{
+    data :[{
         title:{type: String, required: true},
         image:{type: String, required: true},
         category:{
@@ -14,7 +14,7 @@ const managevideopostsSchema=new mongoose.Schema({
         link:{type: String, required: true},
 
     
-    }
+    }]
 });
 
 const managevideoposts=mongoose.model('managevideoposts',managevideopostsSchema);

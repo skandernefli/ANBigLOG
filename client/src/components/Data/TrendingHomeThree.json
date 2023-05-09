@@ -1,0 +1,94 @@
+{
+  "data": [
+    {
+      "_id": "61810a96f94ed7881da838db",
+      "title": "Copa America: Luis Suarez From Devastated US",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "trending-thumb.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a96ed484972a85cc109",
+      "title": "Raikkonen ‘wouldn’t change a thing’",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "gallery-1.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9659b5fc229a8c1389",
+      "title": "Hamilton wins crazy Saudi GP",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "gallery-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9688b5023a5fb07812",
+      "title": "Russia in Davis Cup final",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "gallery-3.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a961523248bb75b0f33",
+      "title": "M. A. Jabbar Tennis Tournament from Dec 11",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "gallery-4.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a961523248bb75bfastg0f33",
+      "title": "Bangladesh Hockey Federation (BHF) yesterday disclosed a final 20-memebr squad for AHF Asian",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "gallery-5.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    }
+  ],
+  "buisness":[
+    {
+      "_id": "61810a961523248bb75bfastg0f33",
+      "title": "SAFF U-19 Women’s Championship starts today",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "trending-image-post-1.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a961523248bb75bfastg0f33",
+      "title": "We gave everything, says Zapata after CL exitS",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "trending-image-post-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    }
+  ]
+}

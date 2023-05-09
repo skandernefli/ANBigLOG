@@ -45,11 +45,10 @@ const PostsList = () => {
       .then((response) => response.json())
       .then((response) => setData(response[0].data))
       .catch((error) => console.log(error));
-    console.log("this is the data", data);
   }, []);
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 180 },
+    { field: "_id", headerName: "ID", width: 100 },
     { field: "title", headerName: "Title", width: 300 },
     { field: "description", headerName: "Description", width: 100 },
     { field: "link", headerName: "Link", width: 50 },
@@ -62,7 +61,6 @@ const PostsList = () => {
       headerName: "Category Name",
       width: 100,
       valueGetter: (params) => {
-        console.log({ params });
         let result = [];
         if (params.row.category) {
           if (params.row.category.name) {
@@ -79,7 +77,6 @@ const PostsList = () => {
       headerName: "Category Created At",
       width: 150,
       valueGetter: (params) => {
-        console.log({ params });
         let result = [];
         if (params.row.category) {
           if (params.row.category.create_At) {
@@ -99,7 +96,7 @@ const PostsList = () => {
         <>
           <IconButton
             aria-label="delete"
-            onClick={() => handleDelete(params.row.post_id)}
+            onClick={() => handleDelete(params.row._id)}
           >
             <RemoveCircleOutlineOutlinedIcon sx={{ color: "#fff" }} />
           </IconButton>
@@ -113,9 +110,8 @@ const PostsList = () => {
       ),
     },
   ];
-  const handleDelete = async (post_id) => {
-    console.log("this is a token", token);
-    fetch(`http://localhost:8000/server/post/${post_id}`, {
+  const handleDelete = async (_id) => {
+    fetch(`http://localhost:8000/server/postgalley/${_id}`, {
       method: "delete",
       credentials: "include",
       headers: {
@@ -124,7 +120,7 @@ const PostsList = () => {
       },
     })
       .then(() => {
-        const updatedData = data.filter((item) => item.post_id !== post_id);
+        const updatedData = data.filter((item) => item._id !== _id);
         setData(updatedData);
       })
       .catch((error) =>

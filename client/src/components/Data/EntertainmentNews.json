@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "_id": "61810a96f94ed7881da838db",
+      "title": "The Destinations Around The World Open…",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "entertainment-1.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a96ed484972a85cc109",
+      "title": "How Travelers Help To Protect The…",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "entertainment-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9659b5fc229a8c1389",
+      "title": "How Travelers Help To Protect The…",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "entertainment-3.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9688b5023a5fb07812",
+      "title": "The Purpose Is Share Strategies And…",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "entertainment-4.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a961523248bb75b0f33",
+      "title": "Improve Your Mood By Saving Money…",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "entertainment-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    }
+  ]
+}

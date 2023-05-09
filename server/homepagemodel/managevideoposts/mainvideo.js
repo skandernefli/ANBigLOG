@@ -1,8 +1,10 @@
 const mongoose = require('../../db/MongodbConnection');
 const MainVideoSchema=new mongoose.Schema({
-    data :{
+    data :[{
         title:{type: String, required: true},
         linkvideo:{type: String, required: true},
+        description:{type: String, required: true},
+
         image:{type: String, required: true},
         category:{
           
@@ -14,7 +16,7 @@ const MainVideoSchema=new mongoose.Schema({
         linkpost:{type: String, required: true},
 
     
-    }
+    }]
 });
 
 const mainVideo=mongoose.model('mainVideo',MainVideoSchema);

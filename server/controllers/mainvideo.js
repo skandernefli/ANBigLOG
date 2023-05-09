@@ -28,7 +28,7 @@ const postGalleryPost= async (req,res)=>{
             create_At: req.body.category.create_At
           },
           description: req.body.description,
-          linklinkpost: req.body.linklinkpost
+  linkpost: req.body.linkpost
         };
     
         const post = await mainVideo.findOneAndUpdate(
@@ -58,29 +58,32 @@ const getGalleryPosts=(req,res)=>{
       });
     });
 }
+
 const deleteGalleryPost=(req,res)=>{
 
-        const postId=req.params.id;
-        mainVideo.findByIdAndDelete(postId)
-    .then(mainVideo => {
-      if (!mainVideo) {
-        return res.status(404).json({
-          message: 'Post not found'
-        });
+
+
+  const postId = req.params.id;
+
+
+  
+  mainVideo.findOneAndUpdate(
+    { "data._id": postId }, // find document with matching data._id
+    { $pull: { data: { _id: postId } } } // remove object with matching _id from data array
+  )
+    .then((result) => {
+      if (result) {
+        console.log(`Deleted post with Id ${postId}`);
+        res.status(200).json({ message: "Post deleted successfully" });
+      } else {
+        console.log(`No post found with Id ${postId}`);
+        res.status(404).json({ message: "Post not found" });
       }
-
-      res.status(200).json({
-        message: 'Post deleted successfully',
-        mainVideo: mainVideo
-      });
     })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({
-        error: error
-      });
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Error deleting post" });
     });
-
 }
 const updateGalleryPost = (req, res) => {
     const postId = req.params.id;

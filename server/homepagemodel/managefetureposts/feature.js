@@ -1,6 +1,6 @@
 const mongoose = require('../../db/MongodbConnection');
 const FeatureSchema=new mongoose.Schema({
-    data :{
+    data :[{
         title:{type: String, required: true},
         image:{type: String, required: true},
         article:{type: String, required: true},
@@ -11,11 +11,10 @@ const FeatureSchema=new mongoose.Schema({
     
     
         },
-        article:{type: String, required: true},
         link:{type: String, required: true},
 
     
-    }
+    }]
 });
 
 const Feature=mongoose.model('featureposts',FeatureSchema);

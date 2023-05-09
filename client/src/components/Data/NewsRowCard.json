@@ -1,0 +1,70 @@
+{
+  "data": [
+    {
+      "_id": "6180f4ce53f049fa1062f8dd",
+      "title": "Copa America: Luis Suarez From Devastated US",
+      "trending":true,
+      "image": "gallery-1.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      },
+      "description": "People have been infected in United"
+    },
+    {
+      "_id": "6180f4cef73c61a8c9f8dd9c",
+      "title": "Bobby Brown Autopsy Reveals He Died From Alcohol, Cocaine And Fentanyl His Death",
+      "trending":true,
+      "image": "gallery-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      },
+      "description": "People have been infected in United"
+    },
+    {
+      "_id": "6180f4ced81388b73320d993",
+      "title": "Boost Your Lockdown Privacy Without Breaking The Bank With",
+      "trending":false,
+      "image": "gallery-3.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      },
+      "description": "People have been infected in United"
+    },
+    {
+      "_id": "6180f4cec31356a6589dc6d4",
+      "title": "Keep Your Vacuum Cleaner On Track With Expert Tips",
+      "trending":true,
+      "image": "gallery-4.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      },
+      "description": "People have been infected in United"
+    },
+    {
+      "_id": "6180f4ce2d23723fd5b44d39",
+      "title": " Mbappe Said I Showed Off Too Much And Didn’T Score… S",
+      "trending":false,
+      "image": "gallery-5.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      },
+      "description": "People have been infected in United"
+    },
+     {
+      "_id": "6180f4ced81388b73320d6546234993",
+      "title": "Inflation Slows In February Amid Falling Clothes Prices",
+      "trending":true,
+      "image": "gallery-3.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      },
+      "description": "People have been infected in United"
+    }
+  ]
+}

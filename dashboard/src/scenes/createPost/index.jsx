@@ -23,9 +23,7 @@ const CreatePostPage = () => {
     setNotification({ message, type, duration });
   };
 
-  const handleCloseNotification = () => {
-    setNotification(null);
-  };
+
 
   const [elements, setElements] = useState([]);
   const [value, setValue] = useState("");
@@ -229,7 +227,7 @@ const CreatePostPage = () => {
           const newElements = elements;
           const updatedElement = {
             ...newElements[index],
-            value:JSON.stringify({location:`posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`,downloadlink:downloadlink}),
+            value:downloadlink,
           };
           newElements[index] = updatedElement;
           setElements(newElements);

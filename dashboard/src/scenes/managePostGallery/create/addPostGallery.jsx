@@ -10,13 +10,15 @@ import "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import Notification from "components/notification";
 import InputAdornment from '@mui/material/InputAdornment';
+import { getDownloadURL } from "firebase/storage";
 
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 const CreatePostPage = () => {
   const [categories, setCategories] = useState([]);
 
   const [notification, setNotification] = useState(null);
-  const handleNotification = (message, type = 'error', duration = 3000) => {
+  const handleNotification = (message, type = 'error', duration = 9000) => {
+    console.log("passed by notification");
     setNotification({ message, type, duration });
   };
 
@@ -59,7 +61,9 @@ const CreatePostPage = () => {
         create_At:"",
       }
   };
-
+const Select=(event)=>{
+  return event.target.files[0];
+}
  
 
 
@@ -100,7 +104,7 @@ const CreatePostPage = () => {
       );
       await uploadBytes(storageRef, file);
       console.log("file",file);
-      const url=`galleryposts/${postId}`
+      const url=await getDownloadURL(storageRef);
       return url;
     } catch (error) {
       console.log("Error uploading file: ", error);
@@ -132,6 +136,12 @@ const CreatePostPage = () => {
   
   return (
     <BoxInsider>
+        {notification &&  <Notification
+             message={notification.message}
+             type={notification.type}
+             duration={notification.duration}
+             onClose={() => setNotification(null)}
+      />}
       <Typography
         variant={"h4"}
         color="rgba(255,75,75,1)"
@@ -156,7 +166,7 @@ const CreatePostPage = () => {
           </AnimatedButton>
         </Box>
       </Box>
-
+    
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValuesPostSchema}
@@ -295,7 +305,7 @@ const CreatePostPage = () => {
                         <Input
                           type="file"
                           onBlur={handleBlur}
-                          onChange={(event)=>{values.thumbnail=event.files}}
+                          onChange={(event)=>{values.picture=Select(event)}}
 /*                           value={values.picture}
  */                          placeholder="Insert a picture"
                           inputProps={{ accept: "image/*" }}
@@ -328,7 +338,7 @@ const CreatePostPage = () => {
                         <Input
                           type="file"
                           onBlur={handleBlur}
-                          onChange={(event)=>{values.thumbnail=event.files}}
+                          onChange={(event)=>{values.thumbnail=Select(event)}}
 /*                           value={values.thumbnail}
  */                          placeholder="Insert an image"
                           inputProps={{ accept: "image/*" }}
@@ -365,12 +375,7 @@ const CreatePostPage = () => {
           );
         }}
       </Formik>
-      {notification &&  <Notification
-             message={notification.message}
-             type={notification.type}
-             duration={notification.duration}
-             onClose={() => setNotification(null)}
-      />}
+    
 
     </BoxInsider>
     

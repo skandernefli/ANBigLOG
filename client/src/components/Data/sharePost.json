@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "_id": "61824af4c89c6a18eb841e7a",
+      "title": "Success is not a good food failure makes you humble",
+      "category": {
+        "name": "TECHNOLOGY",
+        "create_At": "March 26, 2020"
+      }
+    },
+    {
+      "_id": "61824af419ac66aaa61ccedf",
+      "title": "Time is Money",
+      "category": {
+        "name": "TECHNOLOGY",
+        "create_At": "March 26, 2020"
+      }
+    },
+    {
+      "_id": "61824af4f62dc7e55b754ae0",
+      "title": "Fire at Bangla Motor building",
+      "category": {
+        "name": "TECHNOLOGY",
+        "create_At": "March 26, 2020"
+      }
+    },
+    {
+      "_id": "61824af4b87893389eae7017",
+      "title": "Panchagarh-Cox’s Bazar direct train on the cards: Railways",
+      "category": {
+        "name": "TECHNOLOGY",
+        "create_At": "March 26, 2020"
+      }
+    },
+    {
+      "_id": "61824af493c59f909099f26e",
+      "title": "Human Rights Abuse: US sanctions Rab, seven top officials",
+      "category": {
+        "name": "TECHNOLOGY",
+        "create_At": "March 26, 2020"
+      }
+    },
+    {
+      "_id": "61824af499e053fc0c9b5b55",
+      "title": "Int’l human rights day: Return our loved ones",
+      "category": {
+        "name": "TECHNOLOGY",
+        "create_At": "March 26, 2020"
+      }
+    },
+    {
+      "_id": "61824af4faf8f03dbc6014d4",
+      "title": "BUET student abrar murder verdict: 20 students get death",
+      "category": {
+        "name": "TECHNOLOGY",
+        "create_At": "March 26, 2020"
+      }
+    }
+  ]
+}

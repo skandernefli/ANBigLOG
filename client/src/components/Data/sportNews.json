@@ -1,0 +1,83 @@
+{
+  "data": [
+    {
+      "_id": "61810a96f94ed7881da838db",
+      "title": "Copa America: Luis Suarez From Devastated US",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "sports-news.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a96ed484972a85cc109",
+      "title": "Disillusion affecting Shakib’s Test motivation?",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "sports-1.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9659b5fc229a8c1389",
+      "title": "Ruthless Australia crush England in first Ashes Test",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "sports-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a9688b5023a5fb07812",
+      "title": "Prepared to do anything for the country, says Taskin as Tigers reach",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"play",
+      "image": "sports-3.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    },
+    {
+      "_id": "61810a961523248bb75b0f33",
+      "title": "BCL in focus after international debacle",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "sports-4.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+      
+    },
+    {
+      "_id": "61810a961fafsf523248bb75b0f33",
+      "title": "Head pinching himself after Ashes ton",
+      "article": "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "sports-5.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+      
+    },
+     {
+      "_id": "618gsdgae10a9659b5fc229a8c1389",
+      "title": "Focus on T20s impacted Test performance, says chief selectorS",
+      "article": " The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower",
+      "action":"trending",
+      "image": "sports-2.jpg",
+      "category": {
+        "name": "Technology",
+        "create_At": "March 27, 2020"
+      }
+    }
+  ]
+}

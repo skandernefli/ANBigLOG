@@ -57,29 +57,32 @@ const getGalleryPosts=(req,res)=>{
       });
     });
 }
+
 const deleteGalleryPost=(req,res)=>{
 
-        const postId=req.params.id;
-        managevideoposts.findByIdAndDelete(postId)
-    .then(managevideoposts => {
-      if (!managevideoposts) {
-        return res.status(404).json({
-          message: 'Post not found'
-        });
-      }
+  const postId = req.params.id;
 
-      res.status(200).json({
-        message: 'Post deleted successfully',
-        managevideoposts: managevideoposts
-      });
+
+  
+  managevideoposts.findOneAndUpdate(
+    { "data._id": postId }, // find document with matching data._id
+    { $pull: { data: { _id: postId } } } // remove object with matching _id from data array
+  )
+    .then((result) => {
+      if (result) {
+        console.log(`Deleted post with Id ${postId}`);
+        res.status(200).json({ message: "Post deleted successfully" });
+      } else {
+        console.log(`No post found with Id ${postId}`);
+        res.status(404).json({ message: "Post not found" });
+      }
     })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({
-        error: error
-      });
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Error deleting post" });
     });
 
+ 
 }
 const updateGalleryPost = (req, res) => {
     const postId = req.params.id;
