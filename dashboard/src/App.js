@@ -69,7 +69,7 @@ function App() {
                     <Route path="/manage_video_posts" element={<Mainvideo/>}/>
                   </>
                 ) : (
-                  <Route path="/" element={<LoginPage />} />
+                  <Route path="/loginpage" element={<LoginPage />} />
                 )}
               </Routes>
             </main>

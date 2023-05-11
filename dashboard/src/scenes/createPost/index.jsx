@@ -31,7 +31,47 @@ const CreatePostPage = () => {
     setElements([...elements, { type: elementType, value }]);
   };
   const [backlinks,setBacklinks]=useState([]);
+  const [positions,setPosition]=useState([]);
+  const addPosition=(event,index)=>{
+    if (elements[index].type==="backlink"){
+      if (positions.length === 0) {
+        const newPosition = [{        index: index,        position: event.target.value      }];
+        setPosition(newPosition);
+        console.log("updated positions", newPosition);
+      } else{
+   positions.map((position,i)=>{
+    if(position.index===index){
+    const newPosition = [...positions];
+    const updatedposition = {
+      ...newPosition[i],
+      index:index,
+      position: event.target.value,
+    };
+    newPosition[i] = updatedposition;
+    setPosition(newPosition);
+    
+    console.log("passed by addposition if",positions)
+  }else{
+      const newPosition = [...positions];
+      newPosition.push({
+    
+      index:index,
+      position: event.target.value,
+    });
+    setPosition(newPosition);
+    console.log("passed by addposition else",positions)
+
+    }
   
+  
+  })}
+   
+    console.log("passed by addposition",positions)}
+  }
+  const getPosition = (index) => {
+    const position = positions.find((position) => position.index === index);
+    return position ? position.position : '';
+  }
   const addBackLink=(event,index)=>{
     if (elements[index].type==="backlink"){
       if (backlinks.length === 0) {
@@ -241,11 +281,12 @@ const CreatePostPage = () => {
       }else   if (
         element.type === "backlink" ){
 const link=getBackLink(index);
+const position=getPosition(index);
 console.log("this is the link",link);
           const newElements = elements;
           const updatedElement = {
             ...newElements[index],
-            value:JSON.stringify({textOfLink:element.value,backlinkLink:link}),
+            value:JSON.stringify({textOfLink:element.value,backlinkLink:link,position:position}),
           };
           newElements[index] = updatedElement;
           setElements(newElements);
@@ -1000,6 +1041,33 @@ type="file"
                        return (
                         
                         <Box >
+                                     <TextField
+        select
+      name="position"
+        label="position"
+        variant="filled"
+        onChange={(event) => addPosition(event, index)}
+        sx={{
+          gridColumn: 'span 2',
+          mb: '1rem',
+          backgroundColor: 'rgba(255,255,255,0.4)',
+          width: '90%',
+          borderColor: '#000',
+        }}
+        inputProps={{ style: { fontSize: 18, color: '#FFF' } }}
+        InputLabelProps={{
+          style: { fontSize: 16, color: 'rgba(255,75,75,1)' },
+        }}
+        SelectProps={{
+          style: { color: '#FFF' }
+        }}
+      >
+         <MenuItem value="start">Start</MenuItem>
+      <MenuItem value="middle">Middle</MenuItem>
+      <MenuItem value="end">End</MenuItem>
+      <MenuItem value="between">Between</MenuItem>
+     
+      </TextField>
                         <TextField
                           onBlur={handleBlur}
                           onChange={(event) => addValue(event, index)}

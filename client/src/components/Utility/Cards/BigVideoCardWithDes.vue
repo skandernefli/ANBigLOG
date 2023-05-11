@@ -3,7 +3,7 @@
     <div class="post_gallery_play">
       <div class="bg-image">
         <img
-          :src="require(`@/assets/images/${datas.thumbnail}`)"
+          :src="datas.thumbnail"
           alt=""
           style="width: 100%; height: 100%"
         />
@@ -43,6 +43,9 @@
 <script>
 export default {
   props: ["datas"],
+  mounted() {
+    console.log("datas.thumbnail", this.datas);
+  },
 };
 </script>
 
