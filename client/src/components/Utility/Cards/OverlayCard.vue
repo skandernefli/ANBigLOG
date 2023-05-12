@@ -5,7 +5,7 @@
     class="feature-post d-block"
   >
     <div class="feature-post-thumb">
-      <img :src="require(`@/assets/images/` + datas.image)" alt="feature" />
+      <img :src="datas.image" alt="feature" />
     </div>
     <div class="feature-post-content">
       <div class="post-meta">
@@ -26,7 +26,7 @@
     v-else-if="stype === 'big'"
     class="single-play-post-item d-block"
   >
-    <img :src="require(`@/assets/images/` + datas.image)" alt="feature" />
+    <img :src="datas.image" alt="feature" />
     <div class="single-play-post-content">
       <div class="post-meta">
         <div class="meta-categories">

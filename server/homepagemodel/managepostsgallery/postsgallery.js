@@ -4,6 +4,7 @@ const postGallerySchema=new mongoose.Schema({
     title:{type: String, required: true},
     picture:{type: String, required: true},
     thumbnail:{type: String, required: true},
+    video_link:{type: String, required: true},
     category:{
       
         name:{type: String, required: true},

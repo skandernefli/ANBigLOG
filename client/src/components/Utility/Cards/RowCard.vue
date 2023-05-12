@@ -1,10 +1,10 @@
 <template>
-  <router-link to="/posts/postOne" v-if="category" class="gallery_item">
+  <router-link to="/posts/posttwo" v-if="category" class="gallery_item">
     <template v-if="datas">
       <div class="gallery_item_thumb">
         <img
           v-if="datas.image"
-          :src="require(`@/assets/images/${datas.image}`)"
+          :src="datas.image"
           alt="gallery"
         />
       </div>
@@ -30,7 +30,7 @@
   >
     <div class="post-gallery-thumb">
       <img
-        :src="require(`@/assets/images/gallery-post/${datas.image}`)"
+        :src="datas.image"
         alt="gallery"
       />
       <span>{{ count }}</span>
@@ -53,7 +53,7 @@
     <div class="gallery_item_thumb">
       <img
         v-if="datas.image"
-        :src="require(`@/assets/images/${datas.image}`)"
+        :src="datas.image"
         alt="gallery"
       />
       <div v-if="datas.trending" class="icon"><i class="fas fa-bolt"></i></div>
@@ -101,8 +101,7 @@
     <template v-if="datas">
       <div class="gallery_item_thumb">
         <img
-          v-if="datas.image"
-          :src="require(`@/assets/images/sports/${datas.image}`)"
+          :src="datas.image"
           alt="gallery"
         />
       </div>
@@ -130,7 +129,7 @@
       <div class="post-thumb mb-3 mb-lg-0">
         <img
           v-if="datas.image"
-          :src="require(`@/assets/images/${datas.image}`)"
+          :src="datas.image"
           alt="post"
         />
       </div>

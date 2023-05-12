@@ -10,10 +10,11 @@
         <a
           :class="['nav-link', selectedGallery === 'trendy' ? 'active' : '']"
           data-toggle="pill"
+          href="#pills-profile"
           role="tab"
-          aria-controls="pills-home"
-          aria-selected="true"
-          >TRENDY</a
+          aria-controls="pills-profile"
+          aria-selected="false"
+          >trendy</a
         >
       </li>
       <li class="nav-item" @click.prevent="selectGalleryTab('latest')">
@@ -49,14 +50,9 @@
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <div class="post_gallery_items" v-if="datas && datas.length > 0">
+        <div v-if="datas && datas.length > 0" class="post_gallery_items">
           <template v-for="(small, index) in datas.slice(0, 5)">
-            <row-card
-              :class="[darkClass && 'item' in darkClass ? darkClass.item : '']"
-              :category="true"
-              :datas="small"
-              :key="index"
-            />
+            <row-card :category="true" :datas=small :key="index" />
           </template>
         </div>
       </div>
@@ -70,9 +66,9 @@
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <div v-if="datas && datas.length > 0" class="post_gallery_items">
-          <template v-for="(small, index) in datas.slice(0, 5)">
-            <row-card :category="true" :datas="small" :key="index" />
+        <div v-if="datas_2 && datas_2.length > 0" class="post_gallery_items">
+          <template v-for="(small, index) in datas_2.slice(0, 5)">
+            <row-card :category="true" :datas=small :key="index" />
           </template>
         </div>
       </div>
@@ -86,9 +82,9 @@
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <div v-if="datas && datas.length > 0" class="post_gallery_items">
-          <template v-for="(small, index) in datas.slice(0, 5)">
-            <row-card :category="true" :datas="small" :key="index" />
+        <div v-if="datas_3 && datas_3.length > 0" class="post_gallery_items">
+          <template v-for="(small, index) in datas_3.slice(0, 5)">
+            <row-card :category="true" :datas=small :key="index" />
           </template>
         </div>
       </div>
@@ -197,6 +193,15 @@ export default {
       type: Array,
       default: () => [],
     },
+    datas_2: {
+      type: Array,
+      default: () => [],
+    },
+    datas_3: {
+      type: Array,
+      default: () => [],
+    },
+
     darkClass: {
       type: Object,
       default: () => {},

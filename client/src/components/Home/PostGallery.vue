@@ -25,8 +25,8 @@
           </div>
         </div>
         <div class="col-lg-4">
-          <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
-            :darkClass="darkClass" role="sidebar" :datas="smallPostGallery" />
+          <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false " :sharePost="false"
+            :darkClass="darkClass" role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery" :datas_3="popularPostGallery" />
         </div>
       </div>
     </div>
@@ -38,8 +38,8 @@
  */
 /* import postGallery from "../Data/BigVideoCardWithDes";
  */import Slider from "../Helpers/Slider.vue";
-import smallPostGallery from "../Data/NewsRowCard";
-import BigVideoCardWithDes from "../Utility/Cards/BigVideoCardWithDes.vue";
+/* import smallPostGallery from "../Data/NewsRowCard";
+ */import BigVideoCardWithDes from "../Utility/Cards/BigVideoCardWithDes.vue";
 import HomeOne from "../Utility/Sidebar/StyleOne.vue";
 
 export default {
@@ -52,9 +52,11 @@ export default {
   },
   data: () => ({
     //post gallery
-    postGallery: "postGallery",
-    smallPostGallery: smallPostGallery.data,
-    selectedGallery: "trendy",
+    postGallery:"postGallery",
+    latestPostGallery:"latestPostGallery",
+    popularPostGallery:"popularPostGallery",
+    smallPostGallery: "smallPostGallery",
+    selectedGallery: 'trendy',
     miniCardsSettings: {
       slidesToShow: 8,
       slideToScroll: 1,
@@ -79,6 +81,11 @@ export default {
     },
   }),  async created() {
     await JSON.parse(JSON.stringify(this.fetchPostGallery()));
+    await JSON.parse(JSON.stringify(this.fetchsmallPostGallery()));
+    await JSON.parse(JSON.stringify(this.fetchlatestPostGallery()));
+    await JSON.parse(JSON.stringify(this.fetchpopularPostGallery()));
+
+
    
 
   },
@@ -100,6 +107,24 @@ export default {
       const data = response[0].data;
       console.log("110", data)
       return this.postGallery = data;
+    },
+    async fetchsmallPostGallery() {
+      const response = await fetch("http://localhost:8000/server/trendy").then(res => res.json());
+      const data = response[0].data;
+      console.log("trendy", data)
+      return this.smallPostGallery = data;
+    },
+    async fetchlatestPostGallery() {
+      const response = await fetch("http://localhost:8000/server/latest").then(res => res.json());
+      const data = response[0].data;
+      console.log("109", data)
+      return this.latestPostGallery = data;
+    },
+    async fetchpopularPostGallery() {
+      const response = await fetch("http://localhost:8000/server/popular").then(res => res.json());
+      const data = response[0].data;
+      console.log("109", data)
+      return this.popularPostGallery = data;
     },
 
   },

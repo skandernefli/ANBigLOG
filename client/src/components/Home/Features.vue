@@ -16,7 +16,7 @@
           ><i class="fal fa-angle-left"></i
         ></span>
         <slider :settings="featureSliderSettings" ref="featureSlider">
-          <template v-for="(data, index) in post.slice(1, 6)">
+          <template v-for="(data, index) in post.slice(0, 6)">
             <div class="px-2" :key="index">
               <overlay-card stype="small" :datas="data" />
             </div>
@@ -34,14 +34,14 @@
 </template>
 
 <script>
-import post from "../Data/post";
-import Slider from "../Helpers/Slider.vue";
+/* import post from "../Data/post";
+ */import Slider from "../Helpers/Slider.vue";
 import OverlayCard from "../Utility/Cards/OverlayCard.vue";
 export default {
   components: { Slider, OverlayCard },
   data: () => ({
     //feature
-    post: post.data,
+    post:"post",
     featureSliderSettings: {
       slidesToShow: 4,
       slideToScroll: 1,
@@ -63,8 +63,16 @@ export default {
         },
       ],
     },
-  }),
+  }),async created() {
+    await JSON.parse(JSON.stringify(this.fetchFeature()));
+  },
   methods: {
+     async fetchFeature() {
+      const response = await fetch("http://localhost:8000/server/feature").then(res => res.json());
+      const data = response[0].data;
+      console.log("fzature news",data)
+      return this.post = data;
+    },
     //feature
     featureSliderNext() {
       this.$refs.featureSlider.next();

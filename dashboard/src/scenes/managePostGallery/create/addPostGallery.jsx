@@ -42,6 +42,7 @@ const CreatePostPage = () => {
     picture: yup.string(),
     thumbnail: yup.string(),
     description: yup.string().required(),
+    video_link:yup.string(),
     link: yup.string().required(),
 
     category: yup.object().shape({
@@ -55,6 +56,7 @@ const CreatePostPage = () => {
     thumbnail: "",
     description: "",
     link: "",
+    video_link:"",
 
     category:{
         name:"",
@@ -78,6 +80,7 @@ const Select=(event)=>{
         thumbnail: thumbnailUrl,
         description: values.description,
         link: values.link,
+        video_link:values.video_link,
         category: {
           name: values.name,
           create_At: values.create_At,
@@ -242,6 +245,7 @@ const Select=(event)=>{
                       style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                     }}
                   />
+
                      <TextField
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -302,6 +306,26 @@ const Select=(event)=>{
                       style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                     }}
                   />    
+                   <TextField
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.video_link}
+                    name="video_link"
+                    error={Boolean(touched.video_link) && Boolean(errors.video_link)}
+                    variant="filled"
+                    label="video_link"
+                    sx={{
+                      gridColumn: "span 2",
+                      mb: "1rem",
+                      backgroundColor: "rgba(255,255,255,0.7)",
+                      width: "90%",
+                      borderColor: "#000",
+                    }}
+                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
+                    InputLabelProps={{
+                      style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                    }}
+                  />
                         <Input
                           type="file"
                           onBlur={handleBlur}

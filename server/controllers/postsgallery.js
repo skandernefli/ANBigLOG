@@ -23,6 +23,7 @@ const postGalleryPost= async (req,res)=>{
           title: req.body.title,
           picture: req.body.picture,
           thumbnail: req.body.thumbnail,
+          video_link: req.body.video_link,
           category: {
             name: req.body.category.name,
             create_At: req.body.category.create_At
