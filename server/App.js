@@ -12,6 +12,14 @@ const latestRoute=require('./routes/latest');
 const featureRoute=require('./routes/feature');
 const mainvideoRoute=require('./routes/mainvideo');
 const managevideopostsRoute=require('./routes/managevideoposts');
+const manageBigPostsRoute=require('./routes/manageBigPosts');
+const manageEntertainmentSectionRoute=require('./routes/manageEntertainmentSection');
+const manageMoviesSectionRoute=require('./routes/manageMoviesSection');
+const manageSidePostsRoute=require('./routes/manageSidePosts');
+const manageSideSportsSectionRoute=require('./routes/manageSideSportsSection');
+const manageSinglePlayPostRoute=require('./routes/manageSinglePlayPost');
+const manageSportsMainSectionRoute=require('./routes/manageSportsMainSection');
+
 
 require("dotenv").config();
 
@@ -56,5 +64,12 @@ App.use('/server/latest', latestRoute);
 App.use('/server/feature', featureRoute);
 App.use('/server/mainvideo', mainvideoRoute);
 App.use('/server/managevideoposts', managevideopostsRoute);
+App.use('/server/manageBigPosts', manageBigPostsRoute);
+App.use('/server/manageEntertainmentSection', manageEntertainmentSectionRoute);
+App.use('/server/manageMoviesSection', manageMoviesSectionRoute);
+App.use('/server/manageSidePosts', manageSidePostsRoute);
+App.use('/server/manageSideSportsSection', manageSideSportsSectionRoute);
+App.use('/server/manageSinglePlayPost', manageSinglePlayPostRoute);
+App.use('/server/manageSportsMainSection', manageSportsMainSectionRoute);
 
 module.exports = App;

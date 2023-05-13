@@ -22,7 +22,7 @@
                 ]"
               >
                 <div class="video-news-post-thumb">
-                  <img src="@/assets/images/video-post-thumb.jpg" alt="" />
+                  <img :src="mainvideo.image" alt="" />
                   <div class="play-btn">
                     <a
                       class="video-popup"
@@ -34,16 +34,15 @@
                 <div class="video-news-post-content">
                   <div class="post-meta">
                     <div class="meta-categories">
-                      <a href="#">TECHNOLOGY</a>
+                      <a href="#">{{ mainvideo.category.name }}</a>
                     </div>
                     <div class="meta-date">
-                      <span>March 26, 2020</span>
+                      <span>{{ mainvideo.category.create_At }}</span>
                     </div>
                   </div>
                   <h3 class="title">
                     <router-link to="/posts/postOne"
-                      >Riots Report Shows London Needs To Maintain Police
-                      Numbers, Says Mayor</router-link
+                      >{{ mainvideo.title }}r</router-link
                     >
                   </h3>
                 </div>
@@ -82,7 +81,7 @@
                   </div>
                   <div class="post_gallery_items">
                     <template
-                      v-for="(small, index) in smallPostGallery.slice(0, 4)"
+                      v-for="(small, index) in smallPostGallery.slice(4, 8)"
                     >
                       <row-card
                         :class="[
@@ -114,8 +113,8 @@
 </template>
 
 <script>
-import smallPostGallery from "../Data/NewsRowCard";
-import Slider from "../Helpers/Slider.vue";
+/* import smallPostGallery from "../Data/NewsRowCard";
+ */import Slider from "../Helpers/Slider.vue";
 import RowCard from "../Utility/Cards/RowCard.vue";
 export default {
   components: { Slider, RowCard },
@@ -125,14 +124,33 @@ export default {
     },
   },
   data: () => ({
-    smallPostGallery: smallPostGallery.data,
+    smallPostGallery: "smallPostGallery",
+    mainvideo:"mainvideo",
     videoNewsSlide: {
       arrows: false,
       slidesToShow: 1,
       slideToScroll: 1,
     },
   }),
+  async created() {
+    await JSON.parse(JSON.stringify(this.fetchsmallPostGallery()));
+    await JSON.parse(this.fetchmainvideo());
+
+
+  },
   methods: {
+    async fetchsmallPostGallery() {
+      const response = await fetch("http://localhost:8000/server/managevideoposts").then(res => res.json());
+      const data = response[0].data;
+      return this.smallPostGallery = data;
+    },
+    async fetchmainvideo() {
+      const response = await fetch("http://localhost:8000/server/mainvideo").then(res => res.json());
+      const data = response[0].data[0];
+
+      return this.mainvideo = data;
+      
+    },
     tssPrev() {
       this.$refs.trendingSidebarSlide.prev();
     },

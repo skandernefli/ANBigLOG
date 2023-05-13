@@ -116,7 +116,7 @@ const SideBar = () => {
             )}
           </MenuItem>
           {!isCollapsed &&(    <div style={{ display: 'flex',flexDirection:"column", justifyContent: 'center', alignItems: 'center' }}>
-  <Avatar src={profileimg} alt='Profile Photo' sx={{ width: 100, height: 100, boxShadow: "10px 0 10px rgba(0, 0, 0, 0.2)",marginBottom:"10px" }} />
+  <Avatar src={profileimg} alt='Profile Photo' sx={{ width: 70, height: 70, boxShadow: "10px 0 10px rgba(0, 0, 0, 0.2)",marginBottom:"10px" }} />
   <Typography variant="h5" color={"rgba(255,75,75,1)"} /* sx={{fontFamily: 'Newsreader'}} */ >Skander Nefli</Typography>
   <Typography variant="h6" color={"rgba(255,75,75,1)"} sx={{marginBottom:"20px"}} >Founder</Typography>
 
@@ -283,6 +283,107 @@ const SideBar = () => {
                   <Link to={"/popular_video"} />
                 </MenuItem>
               </SubMenu>
+              <SubMenu
+                active={selected === "manageSportsSection"}
+                style={{
+                  color: "rgba(255,75,75,1)",
+                }}
+                onClick={() => {
+                  setSelected("manageSportsSection");
+                }}
+                icon={<PlayCircleFilledOutlinedIcon />}
+                title="Sports Section"
+              >
+                <MenuItem
+                  active={selected === "manageSportsSection"}
+                  style={{
+                    color: "rgba(255,75,75,1)",
+                  }}
+                  onClick={() => setSelected("manageSportsSection")}
+                  icon={<PlayCircleFilledOutlinedIcon />}
+                >
+                  <Typography>Manage main post</Typography>
+                  <Link to={"/manageSportsMainSection"} />
+                </MenuItem>
+                <MenuItem
+                  active={selected === "manageSideSportsSection"}
+                  style={{
+                    color: "rgba(255,75,75,1)",
+                  }}
+                  onClick={() => setSelected("manageSideSportsSection")}
+                  icon={<TrendingUpOutlinedIcon />}
+                >
+                  <Typography>Manage Side Sports Section</Typography>
+                  <Link to={"/manageSideSportsSection"} />
+                </MenuItem>
+              </SubMenu>
+              <MenuItem
+                active={selected === "manageSinglePlayPost"}
+                style={{
+                  color: "rgba(255,75,75,1)",
+                }}
+                onClick={() => setSelected("manageSinglePlayPost")}
+                icon={<FeaturedPlayListOutlinedIcon />}
+              >
+                <Typography> Single Play Post</Typography>
+                <Link to={"/manageSinglePlayPost"} />
+              </MenuItem>
+              <SubMenu
+                active={selected === "manageTrendingSection"}
+                style={{
+                  color: "rgba(255,75,75,1)",
+                }}
+                onClick={() => {
+                  setSelected("manageTrendingSection");
+                }}
+                icon={<PlayCircleFilledOutlinedIcon />}
+                title=" Trending Section"
+              >
+                <MenuItem
+                  active={selected === "manageBigPosts"}
+                  style={{
+                    color: "rgba(255,75,75,1)",
+                  }}
+                  onClick={() => setSelected("manageBigPosts")}
+                  icon={<PlayCircleFilledOutlinedIcon />}
+                >
+                  <Typography>Manage Big Posts</Typography>
+                  <Link to={"/manageBigPosts"} />
+                </MenuItem>
+                <MenuItem
+                  active={selected === "manageSidePosts"}
+                  style={{
+                    color: "rgba(255,75,75,1)",
+                  }}
+                  onClick={() => setSelected("manageSidePosts")}
+                  icon={<TrendingUpOutlinedIcon />}
+                >
+                  <Typography>Manage Side Posts</Typography>
+                  <Link to={"/manageSidePosts"} />
+                </MenuItem>
+              </SubMenu>
+              <MenuItem
+                active={selected === "manageMoviesSection"}
+                style={{
+                  color: "rgba(255,75,75,1)",
+                }}
+                onClick={() => setSelected("manageMoviesSection")}
+                icon={<FeaturedPlayListOutlinedIcon />}
+              >
+                <Typography> Movies Section</Typography>
+                <Link to={"/manageMoviesSection"} />
+              </MenuItem>
+              <MenuItem
+                active={selected === "manageEntertainmentSection"}
+                style={{
+                  color: "rgba(255,75,75,1)",
+                }}
+                onClick={() => setSelected("manageEntertainmentSection")}
+                icon={<FeaturedPlayListOutlinedIcon />}
+              >
+                <Typography>Entertainment Section</Typography>
+                <Link to={"/manageEntertainmentSection"} />
+              </MenuItem>
             </Box>
           )}
         </Menu>   </Box></SidebarContent>

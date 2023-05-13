@@ -15,6 +15,13 @@ import ManageVideoPosts from "./scenes/manageVideoPosts/managevideoposts";
 import Mainvideo from "./scenes/manageVideoPosts/mainvideo";
 import Addvideo from "./scenes/manageVideoPosts/create/video";
 import Addvideoposts from "./scenes/manageVideoPosts/create/videopost";
+import ManageSideSportsSection from "./scenes/ManageSportsSection/manageSideSportsSection";
+import ManageSportsMainSection from "./scenes/ManageSportsSection/manageSportsMainSection";
+import Entertainment from "./scenes/entertainment/entertainment";
+import Movies from "./scenes/movies/movies";
+import ManageSinglePlayPost from "./scenes/manageSinglePlayPost/manageSinglePlayPost";
+import ManageBigPosts from "./scenes/manageTrendingSection/manageBigPosts";
+import ManageSidePosts from "./scenes/manageTrendingSection/manageSidePosts";
 import { useStore } from 'react-redux';
 import  AddPostGallery from "./scenes/managePostGallery/create/addPostGallery";
 import  Addtrendy from "./scenes/managePostGallery/create/addtrendy";
@@ -67,6 +74,16 @@ function App() {
                     <Route path="/manage_Feature_Posts" element={<ManageFeaturePosts/>}/>
                     <Route path="/manage_other_sections" element={<ManageOtherSections/>}/>
                     <Route path="/manage_video_posts" element={<Mainvideo/>}/>
+
+                    <Route path="/manageSinglePlayPost" element={<ManageSinglePlayPost/>}/>
+                    <Route path="/manageSideSportsSection" element={<ManageSideSportsSection/>}/>
+                    <Route path="/manageSportsMainSection" element={<ManageSportsMainSection/>}/>
+                    <Route path="/manageBigPosts" element={<ManageBigPosts/>}/>
+                    <Route path="/manageSidePosts" element={<ManageSidePosts/>}/>
+                    <Route path="/manageMoviesSection" element={<Movies/>}/>
+                    <Route path="/manageEntertainmentSection" element={<Entertainment/>}/>
+
+
                   </>
                 ) : (
                   <Route path="/loginpage" element={<LoginPage />} />

@@ -16,19 +16,44 @@
     <post-gallery />
 
     <!--====== POST GALLERY PART ENDS ======-->
-
+    <section class="all-post-area">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            
+            <Movies />
+          </div>
+          <div class="col-lg-4">
+            <div class="all-post-sidebar">
+              <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div>  <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div>
+                <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div></div></div>
+        </div>
+      </div>
+    </section>
     <!--====== FEATURE PART START ======-->
     <features />
 
     <!--====== FEATURE PART ENDS ======-->
 
     <!--====== TRENDING NEWS PART START ======-->
-    <!-- <trending-news /> -->
+    <trending-news />
 
     <!--====== TRENDING NEWS PART ENDS ======-->
 
     <!--====== SINGLE PLAY POST PART START ======-->
-    <!-- <single-play-post /> -->
+    <single-play-post />
 
     <!--====== VIDEO NEWS PART START ======-->
 
@@ -42,7 +67,17 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8">
+            <div class="post-add mt-30">
+              <a href="#"
+                ><img src="@/assets/images/ads/one_ad.png" alt="ad"
+              /></a>
+            </div>
             <entertainment-news />
+            <div class="post-add mt-30">
+              <a href="#"
+                ><img src="@/assets/images/ads/one_ad.png" alt="ad"
+              /></a>
+            </div>
             <sports-news />
             <div class="post-add mt-30">
               <a href="#"
@@ -53,131 +88,11 @@
           </div>
           <div class="col-lg-4">
             <div class="all-post-sidebar">
-              <share-post />
-              <div class="upcoming-matches-post mt-35">
-                <div
-                  class="
-                    section-title
-                    d-flex
-                    justify-content-between
-                    align-items-center
-                  "
-                >
-                  <h3 class="title">Upcoming Matches</h3>
-                  <a href="#">ALL SEE</a>
+              <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
                 </div>
-                <div class="upcoming-matches-post-items">
-                  <div
-                    class="upcoming-matches-post-item d-flex align-items-center"
-                  >
-                    <div class="upcoming-matches-flag">
-                      <img src="@/assets/images/flag/flag-1.png" alt="flag" />
-                    </div>
-                    <div class="upcoming-matches-content">
-                      <span>Germany <span>VS</span> France</span>
-                      <ul>
-                        <li>Tomorrow</li>
-                        <li>22:30 (CST)</li>
-                      </ul>
-                    </div>
-                    <div class="upcoming-matches-circle">
-                      <div class="circle-bar">
-                        <div class="first circle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="upcoming-matches-post-item d-flex align-items-center"
-                  >
-                    <div class="upcoming-matches-flag">
-                      <img src="@/assets/images/flag/flag-2.png" alt="flag" />
-                    </div>
-                    <div class="upcoming-matches-content">
-                      <span>Spain <span>VS</span> Portugal</span>
-                      <ul>
-                        <li>Tomorrow</li>
-                        <li>22:30 (CST)</li>
-                      </ul>
-                    </div>
-                    <div class="upcoming-matches-circle">
-                      <div class="circle-bar">
-                        <div class="first circle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="upcoming-matches-post-item d-flex align-items-center"
-                  >
-                    <div class="upcoming-matches-flag">
-                      <img src="@/assets/images/flag/flag-3.png" alt="flag" />
-                    </div>
-                    <div class="upcoming-matches-content">
-                      <span>Russia <span>VS</span> Italy</span>
-                      <ul>
-                        <li>Tomorrow</li>
-                        <li>22:30 (CST)</li>
-                      </ul>
-                    </div>
-                    <div class="upcoming-matches-circle">
-                      <div class="circle-bar">
-                        <div class="first circle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="upcoming-matches-post-item d-flex align-items-center"
-                  >
-                    <div class="upcoming-matches-flag">
-                      <img src="@/assets/images/flag/flag-4.png" alt="flag" />
-                    </div>
-                    <div class="upcoming-matches-content">
-                      <span>Croatia <span>VS</span> England</span>
-                      <ul>
-                        <li>Tomorrow</li>
-                        <li>22:30 (CST)</li>
-                      </ul>
-                    </div>
-                    <div class="upcoming-matches-circle">
-                      <div class="circle-bar">
-                        <div class="first circle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="upcoming-matches-post-item d-flex align-items-center"
-                  >
-                    <div class="upcoming-matches-flag">
-                      <img src="@/assets/images/flag/flag-5.png" alt="flag" />
-                    </div>
-                    <div class="upcoming-matches-content">
-                      <span>Germany <span>VS</span> France</span>
-                      <ul>
-                        <li>Tomorrow</li>
-                        <li>22:30 (CST)</li>
-                      </ul>
-                    </div>
-                    <div class="upcoming-matches-circle">
-                      <div class="circle-bar">
-                        <div class="first circle"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="newsletter-box mt-45">
-                <h5 class="title">Newsletter</h5>
-                <p>
-                  Your email address will not be this published. Required fields
-                  are News Today.
-                </p>
-                <form action="#">
-                  <div class="input-box">
-                    <input type="text" placeholder="Your email address" />
-                    <button type="button">SIGN UP</button>
-                  </div>
-                </form>
-                <span>We hate spam as much as you do</span>
-              </div>
               <div class="Categories-post mt-40">
                 <div
                   class="
@@ -217,6 +132,18 @@
                   </div>
                   <div class="item">
                     <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
                       src="@/assets/images/categories-3.jpg"
                       alt="categories"
                     />
@@ -241,6 +168,19 @@
                   </div>
                   <div class="item">
                     <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+               
+                  <div class="item">
+                    <img
                       src="@/assets/images/categories-5.jpg"
                       alt="categories"
                     />
@@ -259,6 +199,18 @@
                     <div class="Categories-content">
                       <a href="#">
                         <span>International’s</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
                         <img src="@/assets/images/arrow.svg" alt="" />
                       </a>
                     </div>
@@ -302,29 +254,29 @@ import HeaderOne from "../Utility/Header/index";
 import PostPartHomeOne from "./PostPartHomeOne.vue";
 import PostGallery from "./PostGallery.vue";
 import Features from "./Features.vue";
-// import TrendingNews from "./TrendingNews.vue";
-// import SinglePlayPost from "./SinglePlayPost.vue";
+import TrendingNews from "./TrendingNews.vue";
+import SinglePlayPost from "./SinglePlayPost.vue";
 import VideoNews from "./VideoNews.vue";
-// import EntertainmentNews from "./EntertainmentNews.vue";
+import EntertainmentNews from "./EntertainmentNews.vue";
+import Movies from "./Movies.vue";
 import SportsNews from "./SportsNews.vue";
 import BuisnessNews from "./BuisnessNews.vue";
-import SharePost from "./SharePost.vue";
 import FooterOne from "../Utility/Footer/FooterOne.vue";
 import Drawer from "../Mobile/Drawer.vue";
 import VideoPopUp from "../Utility/VideoPopUp.vue";
 export default {
   components: {
     HeaderOne,
+    Movies,
     PostPartHomeOne,
     PostGallery,
     Features,
-    // TrendingNews,
-    // SinglePlayPost,
+    TrendingNews,
+    SinglePlayPost,
     VideoNews,
-    // EntertainmentNews,
+    EntertainmentNews,
     SportsNews,
     BuisnessNews,
-    SharePost,
     FooterOne,
     Drawer,
     VideoPopUp,

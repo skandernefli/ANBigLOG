@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="col-lg-4">
-          <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false " :sharePost="false"
+          <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
             :darkClass="darkClass" role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery" :datas_3="popularPostGallery" />
         </div>
       </div>
