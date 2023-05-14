@@ -2,7 +2,7 @@
   <div v-if="stype === 'row'" class="row">
     <div class="col-lg-6 col-md-6">
       <div class="business-post-thumb">
-        <img :src="require(`@/assets/images/` + datas.image)" alt="feature" />
+        <img :src="datas.image" alt="feature" />
       </div>
     </div>
     <div class="col-lg-6 col-md-6">
@@ -32,7 +32,7 @@
   <div v-else-if="stype === 'row-style-2'" class="bussiness-post-item">
     <div class="bussiness-post-thumb">
       <img
-        :src="require(`@/assets/images/business-post/${datas.image}`)"
+        :src="datas.image"
         alt="business"
       />
     </div>
@@ -61,7 +61,7 @@
   </div>
   <div v-else-if="stype === 'col'" class="trending-news-item">
     <div class="trending-news-thumb">
-      <img :src="require(`@/assets/images/` + datas.image)" alt="feature" />
+      <img :src="datas.image" alt="feature" />
       <div v-if="datas.action === 'trending'" class="icon">
         <a href="#"><i class="fas fa-bolt"></i></a>
       </div>
@@ -87,7 +87,7 @@
   <div v-else-if="stype === 'col-style-2'" class="finance-item">
     <div class="finance-thumb">
       <img
-        :src="require(`@/assets/images/finance/${datas.image}`)"
+        :src="datas.image"
         alt="finance"
       />
       <div class="finance-date">
@@ -96,7 +96,7 @@
     </div>
     <div class="finance-content">
       <h3 class="title">
-        <router-link to="/posts/postOne">{{ datas.title }}}</router-link>
+        <router-link to="/posts/postOne">{{ datas.title }}</router-link>
       </h3>
       <p class="line-clumb">
         {{ datas.article }}

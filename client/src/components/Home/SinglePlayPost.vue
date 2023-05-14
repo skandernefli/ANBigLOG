@@ -10,7 +10,7 @@
             ><i class="fal fa-angle-left"></i
           ></span>
           <slider :settings="playPostSettings" ref="playPost">
-            <template v-for="(data, index) in playPostDatas">
+            <template v-for="(data, index) in ManageSinglePlayPosts">
               <div :key="index" class="px-3">
                 <overlay-card :datas="data" stype="big" />
               </div>
@@ -29,14 +29,13 @@
 </template>
 
 <script>
-import playPostDatas from "../Data/singlePlay";
 import Slider from "../Helpers/Slider.vue";
 import OverlayCard from "../Utility/Cards/OverlayCard.vue";
 export default {
   components: { OverlayCard, Slider },
   data: () => ({
     //playPost
-    playPostDatas: playPostDatas.data,
+    ManageSinglePlayPosts: "ManageSinglePlayPosts",
     playPostSettings: {
       arrows: false,
       slidesToShow: 2,
@@ -52,8 +51,21 @@ export default {
       ],
     },
   }),
+   async created() {
+    await JSON.parse(JSON.stringify(this.fetchManageSinglePlayPosts()));
+
+
+
+   
+
+  },
   methods: {
-    //playPost
+    async fetchManageSinglePlayPosts() {
+      const response = await fetch("http://localhost:8000/server/manageSinglePlayPost").then(res => res.json());
+      const data = response[0].data;
+      console.log("66", data)
+      return this.ManageSinglePlayPosts = data;
+    },
     playSliderPrev() {
       this.$refs.playPost.prev();
     },

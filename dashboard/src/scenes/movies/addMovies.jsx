@@ -1,6 +1,6 @@
 import BoxInsider from "components/box";
 import { TextField, Typography, Box ,MenuItem,IconButton  } from "@mui/material";
-import AnimatedButton from "../../../components/button";
+import AnimatedButton from "../../components/button";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useState ,useEffect} from "react";

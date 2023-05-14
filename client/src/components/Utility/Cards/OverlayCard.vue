@@ -45,7 +45,7 @@
         ><i class="fas fa-play"></i
       ></a>
     </div>
-    <div v-if="datas.action === 'trending'" class="trending-btn">
+    <div  class="trending-btn">
       <a href="#"><i class="fas fa-bolt"></i></a>
     </div>
   </router-link>

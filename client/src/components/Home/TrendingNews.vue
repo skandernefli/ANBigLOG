@@ -19,7 +19,7 @@
               ><i class="fal fa-angle-left"></i
             ></span>
             <slider :settings="trendingSettings" ref="trendingSlider">
-              <template v-for="(data, index) in TrendingPosts">
+              <template v-for="(data, index) in manageBigPosts">
                 <div :key="index" class="px-2">
                   <divide-card
                     :class="[
@@ -49,7 +49,7 @@
                 ]"
               >
                 <template
-                  v-for="(small, index) in smallPostGallery.slice(0, 3)"
+                  v-for="(small, index) in manageSidePosts.slice(0, 3)"
                 >
                   <row-card
                     :class="[
@@ -74,7 +74,7 @@
                 ]"
               >
                 <template
-                  v-for="(small, index) in smallPostGallery.slice(3, 6)"
+                  v-for="(small, index) in manageSidePosts.slice(3, 6)"
                 >
                   <row-card
                     :class="[
@@ -112,7 +112,7 @@
               >
                 <div class="post_gallery_items">
                   <template
-                    v-for="(small, index) in smallPostGallery.slice(0, 6)"
+                    v-for="(small, index) in manageSidePosts.slice(6, 12)"
                   >
                     <row-card
                       :class="[
@@ -129,7 +129,7 @@
                 </div>
                 <div class="post_gallery_items">
                   <template
-                    v-for="(small, index) in smallPostGallery.slice(0, 6)"
+                    v-for="(small, index) in manageSidePosts.slice(12, 18)"
                   >
                     <row-card
                       :class="[
@@ -162,8 +162,8 @@
 <script>
 import Slider from "../Helpers/Slider.vue";
 import DivideCard from "../Utility/Cards/DivideCard.vue";
-import TrendingPosts from "../Data/TrendingPost";
-import smallPostGallery from "../Data/NewsRowCard";
+/* import manageBigPosts from "../Data/TrendingPost";
+ *//* import smallPostGallery from "../Data/NewsRowCard"; */
 import RowCard from "../Utility/Cards/RowCard.vue";
 import FollowCount from "../Utility/FollowCount/index";
 export default {
@@ -174,8 +174,8 @@ export default {
     },
   },
   data: () => ({
-    smallPostGallery: smallPostGallery.data,
-    TrendingPosts: TrendingPosts.data,
+    manageSidePosts: "manageSidePosts",
+    manageBigPosts:"manageBigPosts",
     trendingSettings: {
       arrows: false,
       slidesToShow: 2,
@@ -196,7 +196,27 @@ export default {
       slideToScroll: 1,
     },
   }),
+  async created() {
+    await JSON.parse(JSON.stringify(this.fetchmanageBigPosts()));
+    await JSON.parse(JSON.stringify(this.fetchmanageSidePosts()));
+
+
+   
+
+  },
   methods: {
+    async fetchmanageBigPosts() {
+      const response = await fetch("http://localhost:8000/server/manageBigPosts").then(res => res.json());
+      const data = response[0].data;
+      console.log("110", data)
+      return this.manageBigPosts = data;
+    },
+    async fetchmanageSidePosts() {
+      const response = await fetch("http://localhost:8000/server/manageSidePosts").then(res => res.json());
+      const data = response[0].data;
+      console.log("110", data)
+      return this.manageSidePosts = data;
+    },
     //trending
     trandingPrev() {
       this.$refs.trendingSlider.prev();

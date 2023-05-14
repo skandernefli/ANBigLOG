@@ -13,7 +13,7 @@
         <divide-card
           :class="[darkClass && 'item' in darkClass ? darkClass.item : '']"
           stype="col"
-          :datas="sportNews[0]"
+          :datas="manageSportsMainSection[0]"
         />
       </div>
       <div class="col-lg-6 col-md-6">
@@ -25,7 +25,7 @@
           ></span>
           <slider :settings="trendingSidebarSlide" ref="sportSlider">
             <div class="post_gallery_items">
-              <template v-for="(data, index) in sportNews.slice(1, 6)">
+              <template v-for="(data, index) in manageSideSportsSection.slice(0, 5)">
                 <row-card
                   :class="[
                     darkClass && 'news_item' in darkClass
@@ -39,7 +39,7 @@
               </template>
             </div>
             <div class="post_gallery_items">
-              <template v-for="(data, index) in sportNews.slice(1, 6)">
+              <template v-for="(data, index) in manageSideSportsSection.slice(1, 6)">
                 <row-card
                   :class="[
                     darkClass && 'news_item' in darkClass
@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import sportNews from "../Data/sportNews";
 import Slider from "../Helpers/Slider.vue";
 import DivideCard from "../Utility/Cards/DivideCard.vue";
 import RowCard from "../Utility/Cards/RowCard.vue";
@@ -77,15 +76,35 @@ export default {
     },
   },
   data: () => ({
-    sportNews: sportNews.data,
+    "manageSportsMainSection": "manageSportsMainSection",
+    "manageSideSportsSection":"manageSideSportsSection",
     trendingSidebarSlide: {
       arrows: false,
       slidesToShow: 1,
       slideToScroll: 1,
       autoplay: true,
     },
-  }),
+  }),async created() {
+    await JSON.parse(JSON.stringify(this.fetchmanageSportsMainSection()));
+    await JSON.parse(JSON.stringify(this.fetchmanageSideSportsSection()));
+
+
+   
+
+  },
   methods: {
+    async fetchmanageSportsMainSection() {
+      const response = await fetch("http://localhost:8000/server/manageSportsMainSection").then(res => res.json());
+      const data = response[0].data;
+      console.log("99 manageSportsMainSection ", data)
+      return this.manageSportsMainSection = data;
+    },
+    async fetchmanageSideSportsSection() {
+      const response = await fetch("http://localhost:8000/server/manageSideSportsSection").then(res => res.json());
+      const data = response[0].data;
+      console.log("trendy", data)
+      return this.manageSideSportsSection = data;
+    },
     //sports
     sportSliderPrev() {
       this.$refs.sportSlider.prev();

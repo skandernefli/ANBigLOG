@@ -84,7 +84,7 @@
                 ><img src="@/assets/images/ads/one_ad.png" alt="ad"
               /></a>
             </div>
-            <buisness-news class="pt-40" />
+            <AllPosts/>
           </div>
           <div class="col-lg-4">
             <div class="all-post-sidebar">
@@ -260,7 +260,7 @@ import VideoNews from "./VideoNews.vue";
 import EntertainmentNews from "./EntertainmentNews.vue";
 import Movies from "./Movies.vue";
 import SportsNews from "./SportsNews.vue";
-import BuisnessNews from "./BuisnessNews.vue";
+import AllPosts from "./allPosts.vue"
 import FooterOne from "../Utility/Footer/FooterOne.vue";
 import Drawer from "../Mobile/Drawer.vue";
 import VideoPopUp from "../Utility/VideoPopUp.vue";
@@ -276,7 +276,8 @@ export default {
     VideoNews,
     EntertainmentNews,
     SportsNews,
-    BuisnessNews,
+    
+    AllPosts,
     FooterOne,
     Drawer,
     VideoPopUp,

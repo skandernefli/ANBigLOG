@@ -27,6 +27,14 @@ import  AddPostGallery from "./scenes/managePostGallery/create/addPostGallery";
 import  Addtrendy from "./scenes/managePostGallery/create/addtrendy";
 import  Addpopular from "./scenes/managePostGallery/create/addpopular";
 import  Addlatest from "./scenes/managePostGallery/create/addlatest";
+import  AddManageSideSportsSection from "./scenes/ManageSportsSection/create/addSide";
+import  AddManageSportsMainSection from "./scenes/ManageSportsSection/create/addMain";
+import  AddEntertainment from "./scenes/entertainment/addEntertainment";
+import  AddMovies from "./scenes/movies/addMovies";
+import  AddManageSinglePlayPost from "./scenes/manageSinglePlayPost/addSinglePlay";
+import  AddManageBigPosts from "./scenes/manageTrendingSection/create/addBig";
+import  AddManageSidePosts from "./scenes/manageTrendingSection/create/addSideTrending";
+
 import Addfeature from "./scenes/manageFeaturePosts/addFeature";
 import Latest from "./scenes/managePostGallery/latest";
 import Popular from "./scenes/managePostGallery/popular";
@@ -82,6 +90,15 @@ function App() {
                     <Route path="/manageSidePosts" element={<ManageSidePosts/>}/>
                     <Route path="/manageMoviesSection" element={<Movies/>}/>
                     <Route path="/manageEntertainmentSection" element={<Entertainment/>}/>
+
+                    
+                    <Route path="/addManageSideSportsSection" element={<AddManageSideSportsSection />}/>
+                    <Route path="/addManageSportsMainSection" element={<AddManageSportsMainSection />}/>
+                    <Route path="/addmanageEntertainmentSection" element={<AddEntertainment />}/>
+                    <Route path="/addmanageMoviesSection" element={<AddMovies />}/>
+                    <Route path="/addManageSinglePlayPost" element={<AddManageSinglePlayPost />}/>
+                    <Route path="/addManageBigPosts" element={<AddManageBigPosts />}/>
+                    <Route path="/addManageSidePosts" element={<AddManageSidePosts />}/>
 
 
                   </>

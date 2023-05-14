@@ -79,7 +79,7 @@
     class="gallery_item gallery_item-style-2"
   >
     <div class="gallery_item_thumb">
-      <img src="@/assets/images/most-post/most-1.jpg" alt="gallery" />
+      <img :src="datas.image" alt="gallery" />
       <div class="icon"><i class="fas fa-bolt"></i></div>
     </div>
     <div class="gallery_item_content">
