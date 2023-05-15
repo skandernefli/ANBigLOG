@@ -16,14 +16,16 @@
                 <div class="col-lg-12">
                   <div class="bussiness-post-item mb-40" v-for="(post,index) in postsToShow" :key="index">
                     <div class="bussiness-post-thumb">
-                      <img :src="post.image" :alt="post.title" />
+                      <img :src="coverToShow(post)" :alt="post.title" />
                     </div>
                     <div class="bussiness-post-content">
                       <h3 class="title">
-                        <router-link :to="post.link">{{ post.title }}</router-link>
+                       
+                        <router-link :to="'/posts/post/' + post._id" @click.prevent>{{ post.title }}</router-link>
                       </h3>
                       <div class="meta-date-link">
-                        <span>{{ post.category.create_At }}</span>
+                        <span>Created at {{ post.created_at }}</span>
+
                         <ul>
                           <li>
                             <a href="#"><i class="fal fa-bookmark"></i></a>
@@ -33,8 +35,9 @@
                           </li>
                         </ul>
                       </div>
-                      <p>{{ post.desciption }}</p>
-                      <a :href="post.link">LEARN MORE<img src="@/assets/images/arrow-2.svg" alt="" /></a>
+                      
+                      <p>{{ post.intro }}</p>
+                      <router-link :to="'/posts/post/' + post._id"  @click.prevent="$router.push({ name: 'PostOne', params: { id: post._id } })">LEARN MORE<img src="@/assets/images/arrow-2.svg" alt="" /></router-link>
                     </div>
                   </div>
                   <div class="col-lg-12">
@@ -54,33 +57,55 @@
  </div>
 </template>
 <script>
-import Posts from "../Data/TrendingHomeThree";
+
+/* import Posts from "../Data/TrendingHomeThree";
+ */
 
 export default {
+
   data: () => ({
-    posts:"posts",
-    visiblePosts: 2,
+    posts: "posts",
+    visiblePosts: 1,
   }),
   async created() {
-    await JSON.parse(JSON.stringify(this.fetchPosts()));
-   }, 
+    await this.fetchPosts();
+  },
   computed: {
     postsToShow() {
+
       return this.posts.slice(0, this.visiblePosts);
     },
+
+      coverToShow() {
+      return post => {
+        for (let i = 0; i < post.content.length; i++) {
+          if (post.content[i].type === "image") {
+            return post.content[i].value;
+          }
+        }
+        return "";
+      };
+    }
+
+
+
+
+
   },
   methods: {
-    async fetchPosts(){
-      const response = await fetch("http://localhost:8000/server/post/client/").then(res => res.json());
-      const data = response.data;
-      return this.posts = data;
-
-
+    async fetchPosts() {
+      try {
+        const response = await fetch("http://localhost:8000/server/post/client/");
+        this.posts = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
     },
     loadMore() {
-      this.visiblePosts += 2;
+      this.visiblePosts += 5;
     },
   },
 };
+
 </script>
 <style></style>

@@ -513,20 +513,35 @@
 <script>
 import Header from "../../Utility/Header/index";
 import StyleOne from "../../Utility/Sidebar/StyleOne.vue";
-import Posts from "../../Data/NewsRowCard";
 import FooterOne from "../../Utility/Footer/FooterOne.vue";
 import OurLatestNews from "../../Utility/Common/OurLatestNews.vue";
 import Drawer from "../../Mobile/Drawer.vue";
+
 export default {
+  props:{
+    id:{
+      type:String,
+    }
+  },
   components: { Header, StyleOne, FooterOne, OurLatestNews, Drawer },
   data: () => ({
-    Posts: Posts.data,
+    Posts: "Posts",
     sidebar: false,
   }),
-  created() {
+  async created() {
+    await this.fetchPosts();
     document.addEventListener("scroll", this.topToBottom);
   },
   methods: {
+    async fetchPosts() {
+      try {
+    const response = await fetch(`http://localhost:8000/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
+    this.Posts = await response.json();
+    console.log("post", this.Posts);
+  } catch (error) {
+    console.error(error);
+  }
+    },
     toggleSidebar() {
       this.sidebar = !this.sidebar;
     },
