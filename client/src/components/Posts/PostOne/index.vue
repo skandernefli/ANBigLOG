@@ -1,12 +1,18 @@
 <template>
-  <div>
+
+<div>
     <drawer @toggleSidebar="toggleSidebar" :sidebar="sidebar" />
     <Header @toggleSidebar="toggleSidebar" />
     <!--====== POST LAYOUT 1 PART START ======-->
-
+    <div class="thumb">
+  <img src="@/assets/images/1.jpg" alt="" style="width: 100%; height: auto;">
+</div>
     <section class="post-layout-1-area pb-80">
+      
       <div class="container">
+  
         <div class="row">
+          
           <div class="col-lg-12">
             <div class="about-author-content">
               <nav aria-label="breadcrumb">

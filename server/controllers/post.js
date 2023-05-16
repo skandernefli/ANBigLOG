@@ -25,6 +25,7 @@ const postPost=(req,res)=>{
             title: req.body.title,
             intro:req.body.intro,
             content:req.body.content,
+            categorie_name:req.body.categorie_name,
         });
         post.save()
         .then((result)=>{

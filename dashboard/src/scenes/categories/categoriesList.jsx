@@ -38,55 +38,23 @@ import {
     }, []);
     const store = useStore();
     const token = store.getState().token;
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const navigate = useNavigate();
     useEffect(() => {
       fetch("http://localhost:8000/server/category")
         .then((response) => response.json())
-        .then((response) => setData(response[0].data))
+        .then((response) => setData(response))
         .catch((error) => console.log(error));
     }, []);
   
     const columns = [
-      { field: "_id", headerName: "ID", width: 180 },
+      { field: "id", headerName: "ID", width: 180 },
       { field: "admin_id", headerName: "admin_id", width: 180 },
-      { field: "name", headerName: "name", width: 300 },
+      { field: "name", headerName: "name", width: 500 },
   
   
   
   
-      {
-        field: "name",
-        headerName: "Category Name",
-        width: 100,
-        valueGetter: (params) => {
-          let result = [];
-          if (params.row.category) {
-            if (params.row.category.name) {
-              result.push(params.row.category.name);
-            }
-          } else {
-            result = ["Unknown"];
-          }
-          return result;
-        },
-      },
-      {
-        field: "create_At",
-        headerName: "Category Created At",
-        width: 150,
-        valueGetter: (params) => {
-          let result = [];
-          if (params.row.category) {
-            if (params.row.category.create_At) {
-              result.push(params.row.category.create_At);
-            }
-          } else {
-            result = ["Unknown"];
-          }
-          return result;
-        },
-      },
       {
         field: "actions",
         headerName: "Actions",
@@ -95,7 +63,7 @@ import {
           <>
             <IconButton
               aria-label="delete"
-              onClick={() => handleDelete(params.row._id)}
+              onClick={() => handleDelete(params.row.id)}
             >
               <RemoveCircleOutlineOutlinedIcon sx={{ color: "#fff" }} />
             </IconButton>
@@ -109,8 +77,8 @@ import {
         ),
       },
     ];
-    const handleDelete = async (_id) => {
-      fetch(`http://localhost:8000/server/category/${_id}`, {
+    const handleDelete = async (id) => {
+      fetch(`http://localhost:8000/server/category/${id}`, {
         method: "delete",
         credentials: "include",
         headers: {
@@ -119,7 +87,7 @@ import {
         },
       })
         .then(() => {
-          const updatedData = data.filter((item) => item._id !== _id);
+          const updatedData = data.filter((item) => item.id !== id);
           setData(updatedData);
         })
         .catch((error) =>
@@ -160,7 +128,7 @@ import {
           <DataGrid
             columns={columns}
             rows={data}
-            getRowId={(row) => row._id}
+            getRowId={(row) => row. id}
             autoHeight={true}
             getRowSpacing={getRowSpacing}
             getColumnHeaderParams={getColumnHeaderParams}

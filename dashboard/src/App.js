@@ -7,6 +7,7 @@ import SideBar from "./scenes/global/SideBar";
 import CreatePostPage from "scenes/createPost";
 import Background from "components/background";
 import LoginPage from "./scenes/auth";
+import Categories from "./scenes/categories/categoriesList";
 import ManageFeaturePosts  from "./scenes/manageFeaturePosts/managefeatureposts";
 import ManageOtherSections from "./scenes/manageOtherSections/index";
 import ManagePostGallery from "./scenes/managePostGallery/managepostsgallery";
@@ -34,7 +35,7 @@ import  AddMovies from "./scenes/movies/addMovies";
 import  AddManageSinglePlayPost from "./scenes/manageSinglePlayPost/addSinglePlay";
 import  AddManageBigPosts from "./scenes/manageTrendingSection/create/addBig";
 import  AddManageSidePosts from "./scenes/manageTrendingSection/create/addSideTrending";
-
+import CreateCategory from "./scenes/categories/createCategory";
 import Addfeature from "./scenes/manageFeaturePosts/addFeature";
 import Latest from "./scenes/managePostGallery/latest";
 import Popular from "./scenes/managePostGallery/popular";
@@ -82,6 +83,10 @@ function App() {
                     <Route path="/manage_Feature_Posts" element={<ManageFeaturePosts/>}/>
                     <Route path="/manage_other_sections" element={<ManageOtherSections/>}/>
                     <Route path="/manage_video_posts" element={<Mainvideo/>}/>
+                    
+                    <Route path="/categories" element={<Categories/>}/>
+                    createCategory
+                    <Route path="/createCategory" element={<CreateCategory/>}/>
 
                     <Route path="/manageSinglePlayPost" element={<ManageSinglePlayPost/>}/>
                     <Route path="/manageSideSportsSection" element={<ManageSideSportsSection/>}/>

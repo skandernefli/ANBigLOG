@@ -145,7 +145,17 @@ const SideBar = () => {
               >
                 Dashboard
               </Typography>
-
+              <MenuItem
+                active={selected === "categories"}
+                style={{
+                  color: "rgba(255,75,75,1)",
+                }}
+                onClick={() => setSelected("categories")}
+                icon={<FeaturedPlayListOutlinedIcon />}
+              >
+                <Typography>categories</Typography>
+                <Link to={"/categories"} />
+              </MenuItem>
               <SubMenu
                 active={selected === "postsList"}
                 style={{

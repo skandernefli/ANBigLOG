@@ -310,6 +310,17 @@ body {
   justify-content: space-between;
   
 }
+.controllersLayout_2{
+  position: fixed;
+  right: 150px;
+  bottom: 9px;
+  width: fit-content;
+ height: auto;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
 .buttonform {
   box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.3);
 

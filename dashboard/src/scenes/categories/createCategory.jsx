@@ -1,20 +1,14 @@
 import BoxInsider from "components/box";
-import { TextField, Typography, Box ,MenuItem,IconButton  } from "@mui/material";
-import AnimatedButton from "../../../components/button";
+import { TextField, Typography, Box   } from "@mui/material";
+import AnimatedButton from "../../components/button";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useState ,useEffect} from "react";
-import { Input } from "@mui/material";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
-import Notification from "components/notification";
-import InputAdornment from '@mui/material/InputAdornment';
-import { getDownloadURL } from "firebase/storage";
+import { useState } from "react";
 
-import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
+import "firebase/storage";
+import Notification from "components/notification";
+
 const CreatePostPage = () => {
-  const [categories, setCategories] = useState([]);
 
   const [notification, setNotification] = useState(null);
   const handleNotification = (message, type = 'error', duration = 9000) => {
@@ -25,60 +19,26 @@ const CreatePostPage = () => {
 
 
  
-  useEffect(() => {
-    fetch('http://localhost:8000/server/category')
-      .then((response) => response.json())
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching categories:', error);
-      });
-  }, []);
  
  
   const postSchema = yup.object().shape({
-    title: yup.string().required(),
-    image: yup.string(),
-    description: yup.string().required(),
-    link: yup.string().required(),
-
-    category: yup.object().shape({
-        name:yup.string(),
-        create_At:yup.string(),
-      })
+    name: yup.string().required(),
+  
   });
   const initialValuesPostSchema = {
-    title: "",
-    image: "",
-    description: "",
-    link: "",
-
-    category:{
-        name:"",
-        create_At:"",
-      }
+    name: "",
+ 
   };
-const Select=(event)=>{
-  return event.target.files[0];
-}
+
  
 
 
   const handleFormSubmit = async (values,onSubmitProps) => {
     try {
-      console.log("passed by handleFormSubmit");
-      const pictureUrl = await handleFileUpload(values.image);
 
       const postData = {
-        title: values.title,
-        image: pictureUrl,
-        description: values.description,
-        link: values.link,
-        category: {
-          name: values.name,
-          create_At: values.create_At,
-        },
+        name: values.name,
+   
       };
       await createPost(postData);
       onSubmitProps.resetForm();
@@ -89,28 +49,10 @@ const Select=(event)=>{
     }
   };
   
-  const handleFileUpload = async (file) => {
-    try {
-      const storage = getStorage();
 
-      const postId = uuidv4();
-
-      const storageRef = ref(
-        storage,
-        `latest/${postId}`
-      );
-      await uploadBytes(storageRef, file);
-      console.log("file",file);
-      const url=await getDownloadURL(storageRef);
-      return url;
-    } catch (error) {
-      console.log("Error uploading file: ", error);
-      throw new Error("Error uploading file!");
-    }
-  };
   
   const createPost = async (postData) => {
-  try {  const SavedPostResonse = await fetch("http://localhost:8000/server/latest", {
+  try {  const SavedPostResonse = await fetch("http://localhost:8000/server/category", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -144,7 +86,7 @@ const Select=(event)=>{
         color="rgba(255,75,75,1)"
         sx={{ margin: "30px" }}
       >
-        Dashboard/Manage_Posts_Gallery/Add_Latest/
+        Dashboard/Categories/
       </Typography>
       <Box className="controllersLayoutHomePageForm">
         <Box>
@@ -171,9 +113,8 @@ const Select=(event)=>{
       >
         {({
           values,
-          errors,
-          touched,
-          handleBlur,
+      
+          
           handleChange,
           handleSubmit,
     
@@ -191,7 +132,7 @@ const Select=(event)=>{
               >
                 <>
                 <TextField
-        select
+        
          value={values.name}
       name="name"
         label="Category name"
@@ -212,126 +153,9 @@ const Select=(event)=>{
           style: { color: '#FFF' }
         }}
       >
-        {categories.map((category) => (
-          <MenuItem key={category.id} value={category.name}>
-            {category.name}
-          </MenuItem>
-        ))}
+ 
       </TextField>
-                
-                  <TextField
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.title}
-                    name="title"
-                    error={Boolean(touched.title) && Boolean(errors.title)}
-                    variant="filled"
-                    label="Title"
-                    sx={{
-                      gridColumn: "span 2",
-                      mb: "1rem",
-                      backgroundColor: "rgba(255,255,255,0.7)",
-                      width: "90%",
-                      borderColor: "#000",
-                    }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
-                    InputLabelProps={{
-                      style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                    }}
-                  />
-                     <TextField
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.description}
-                    name="description"
-                    error={Boolean(touched.description) && Boolean(errors.description)}
-                    variant="filled"
-                    label="description"
-                    sx={{
-                      gridColumn: "span 2",
-                      mb: "1rem",
-                      backgroundColor: "rgba(255,255,255,0.7)",
-                      width: "90%",
-                      borderColor: "#000",
-                    }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
-                    InputLabelProps={{
-                      style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                    }}
-                  />
-                      <TextField
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.link}
-                    name="link"
-                    error={Boolean(touched.link) && Boolean(errors.link)}
-                    variant="filled"
-                    label="link"
-                    sx={{
-                      gridColumn: "span 2",
-                      mb: "1rem",
-                      backgroundColor: "rgba(255,255,255,0.7)",
-                      width: "90%",
-                      borderColor: "#000",
-                    }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
-                    InputLabelProps={{
-                      style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                    }}
-                  />            
-                  <TextField
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.create_At}
-                    name="create_At"
-                    error={Boolean(touched.create_At) && Boolean(errors.create_At)}
-                    variant="filled"
-                    label="create_At"
-                    sx={{
-                      gridColumn: "span 2",
-                      mb: "1rem",
-                      backgroundColor: "rgba(255,255,255,0.7)",
-                      width: "90%",
-                      borderColor: "#000",
-                    }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
-                    InputLabelProps={{
-                      style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                    }}
-                  />    
-                        <Input
-                          type="file"
-                          onBlur={handleBlur}
-                          onChange={(event)=>{values.image=Select(event)}}
-/*                           value={values.picture}
- */                          placeholder="Insert a picture"
-                          inputProps={{ accept: "image/*" }}
-                          overFlow="hidden"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(0,0,0,0.1)",
-                            width: "90%",
-                            borderColor: "#000",
-                            "& .MuiInputBase-input": {
-                              fontSize: 18,
-                              color: "#FFF",
-                            },
-                            "& .MuiInputLabel-root": {
-                              fontSize: 16,
-                              color: "rgba(255,75,75,1)",
-                            },
-                          }}
-                          startAdornment={
-                            <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload a Picture</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
-                                <AddPhotoAlternateOutlinedIcon />
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                        />
-                        
+      
                     
                 
                 </>
