@@ -1,26 +1,25 @@
 <template>
-
-<div>
+  <div>
     <drawer @toggleSidebar="toggleSidebar" :sidebar="sidebar" />
     <Header @toggleSidebar="toggleSidebar" />
     <!--====== POST LAYOUT 1 PART START ======-->
     <div class="thumb">
-  <img src="@/assets/images/1.jpg" alt="" style="width: 100%; height: auto;">
-</div>
+      <img :src=headerimage.value :alt="headerimage.title" style="width: 100%; height: auto;">
+    </div>
     <section class="post-layout-1-area pb-80">
-      
+
       <div class="container">
-  
+
         <div class="row">
-          
+
           <div class="col-lg-12">
             <div class="about-author-content">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                  <li class="breadcrumb-item"><a href="#">Worldnews</a></li>
+                  <li class="breadcrumb-item"><a href="index.html">title:{{ headerimage.title }}</a></li>
+                  <li class="breadcrumb-item"><a href="#">desciption:{{ headerimage.title }}</a></li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    Health
+                    source:{{ headerimage.source }}
                   </li>
                 </ol>
               </nav>
@@ -28,46 +27,38 @@
           </div>
           <div class="col-lg-8">
             <div class="post-layout-top-content">
-              <div
-                class="
+              <div class="
                   post-categories
                   d-flex
                   justify-content-between
                   align-content-center
-                "
-              >
+                ">
                 <div class="categories-item">
-                  <span>HEALTH</span>
+                  <span>{{ Posts.categorie_name }}</span>
                 </div>
-                <div class="categories-share">
-                  <ul>
-                    <li><i class="fas fa-comment"></i>45020</li>
-                    <li><i class="fas fa-fire"></i>45020</li>
-                  </ul>
-                </div>
+
               </div>
               <div class="post-content">
                 <h3 class="title">
-                  Japan’s virus success has puzzled the world. Is its luck
-                  running out?
+                  {{ Posts.title }}
                 </h3>
                 <p>
-                  The property, complete with 30-seat screening from room, a
-                  100-seat amphitheater and a swimming pond with sandy shower…
+                  {{ Posts.intro }}
                 </p>
-                <div class="thumb">
-                  <img src="@/assets/images/post-layout.png" alt="" />
-                </div>
+                <template v-for="(data, index) in Posts.content">
+                  <div v-if="data.type === 'image'" :key="index" class="thumb">
+                    <img :src="data.value" alt="" />
+                  </div>
+                </template>
               </div>
               <div class="post-author">
                 <div class="author-info">
                   <div class="thumb">
                     <img src="@/assets/images/author1.png" alt="" />
                   </div>
-                  <h5 class="title">Rafiqul islam</h5>
+                  <h5 class="title">Alexander.N</h5>
                   <ul>
-                    <li>March 26, 2020</li>
-                    <li>Updated 1:58 p.m. ET</li>
+                    <li>Created {{ Posts.created_at }}</li>
                   </ul>
                 </div>
                 <div class="author-social">
@@ -96,6 +87,56 @@
                   </ul>
                 </div>
               </div>
+              <template v-for="(data, index) in Posts.content">
+                <div v-if="index > 0" :key="index">
+                  <div v-if="Posts.content[index - 1].type === 'backlink'">
+                    <div v-if="JSON.parse(Posts.content[index - 1].value).position === 'start'">
+                      <div v-if="data.type === 'text'" class="post-text mt-30">
+                        <p>
+                          <a :href="JSON.parse(Posts.content[index - 1].value).backlinkLink"><u>{{
+                            JSON.parse(Posts.content[index - 1].value).textOfLink }}</u></a> {{ data.value }}
+                        </p>
+                      </div>
+                    </div>
+                    <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'end'">
+                      <div v-if="data.type === 'text'" class="post-text mt-30">
+                        <p>
+                          {{ data.value }} <a :href="JSON.parse(Posts.content[index - 1].value).backlinkLink"><u>{{
+                            JSON.parse(Posts.content[index - 1].value).textOfLink }}</u></a>
+                        </p>
+                      </div>
+                    </div>
+                    <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'middle' || JSON.parse(Posts.content[index + 1].value).position === 'middle' ">
+                      <div v-if="data.type === 'text'" class="post-text mt-30">
+                        <p>
+                          {{ data.value }} <a :href="JSON.parse(Posts.content[index - 1].value).backlinkLink"><u>{{
+                            JSON.parse(Posts.content[index - 1].value).textOfLink }}</u></a>
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <ul>
+                    <li><a href="#">Should more of us wear face masks?</a></li>
+                    <li>
+                      <a href="#"><u>Why some countries wear face masks and others don’t</u></a>
+                    </li>
+                    <li>
+                      <a href="#">Coronavirus: Are homemade face masks safe?</a>
+                    </li>
+                  </ul>
+                  <p>
+                    The comments from Dr Fauci, who heads the National Institute
+                    of Allergy and Infectious Diseases, appeared to contradict
+                    those of President Trump, who has consistently dismissed the
+                    notion of a nationwide lockdown.
+                  </p>
+                  <p>
+                    “It’s awfully tough to say, ‘close it down.’ We have to have a
+                    little bit of flexibility,” Mr Trump said on Wednesday.
+                  </p>
+                </div>
+              </template>
               <div class="post-text mt-30">
                 <p>
                   Entilators will be taken from certain New York hospitals and
@@ -134,11 +175,7 @@
                 <ul>
                   <li><a href="#">Should more of us wear face masks?</a></li>
                   <li>
-                    <a href="#"
-                      ><u
-                        >Why some countries wear face masks and others don’t</u
-                      ></a
-                    >
+                    <a href="#"><u>Why some countries wear face masks and others don’t</u></a>
                   </li>
                   <li>
                     <a href="#">Coronavirus: Are homemade face masks safe?</a>
@@ -211,10 +248,8 @@
                   “It could be a scarf. It could be something you create
                   yourself at home. It could be a bandana,” he said. Governor
                   Cuomo weighed in on Friday, saying
-                  <span class="quote-text"
-                    >“i think it’s fair to say that the masks couldn’t hurt
-                    unless they gave you a false sense of security.”</span
-                  >
+                  <span class="quote-text">“i think it’s fair to say that the masks couldn’t hurt
+                    unless they gave you a false sense of security.”</span>
                 </p>
                 <p>
                   Meanwhile, residents in Laredo, Texas will now face a $1,000
@@ -239,9 +274,7 @@
                 </p>
                 <div class="thumb pt-20 pb-35">
                   <img src="@/assets/images/post-thumb-3.jpg" alt="" />
-                  <span
-                    >I just had a baby - now I’m going to the frontline.</span
-                  >
+                  <span>I just had a baby - now I’m going to the frontline.</span>
                 </div>
                 <p>
                   Masks may also help lower the risk of individuals catching the
@@ -332,10 +365,8 @@
                     <div class="post-reader-prev">
                       <span>PREVIOUS NEWS</span>
                       <h4 class="title">
-                        <a href="#"
-                          >Kushner puts himself in middle of white house’s
-                          chaotic coronavirus response.</a
-                        >
+                        <a href="#">Kushner puts himself in middle of white house’s
+                          chaotic coronavirus response.</a>
                       </h4>
                     </div>
                   </div>
@@ -343,10 +374,8 @@
                     <div class="post-reader-prev">
                       <span>NEXT NEWS</span>
                       <h4 class="title">
-                        <a href="#"
-                          >C.I.A. Hunts for authentic virus totals in china,
-                          dismissing government tallies</a
-                        >
+                        <a href="#">C.I.A. Hunts for authentic virus totals in china,
+                          dismissing government tallies</a>
                       </h4>
                     </div>
                   </div>
@@ -393,13 +422,7 @@
                   </div>
                   <div class="col-lg-12">
                     <div class="input-box">
-                      <textarea
-                        name="#"
-                        id="#"
-                        cols="30"
-                        rows="10"
-                        placeholder="Tell us about your opinion…"
-                      ></textarea>
+                      <textarea name="#" id="#" cols="30" rows="10" placeholder="Tell us about your opinion…"></textarea>
                       <button class="main-btn" type="button">
                         POST OPINION
                       </button>
@@ -524,29 +547,43 @@ import OurLatestNews from "../../Utility/Common/OurLatestNews.vue";
 import Drawer from "../../Mobile/Drawer.vue";
 
 export default {
-  props:{
-    id:{
-      type:String,
+  props: {
+    id: {
+      type: String,
     }
   },
   components: { Header, StyleOne, FooterOne, OurLatestNews, Drawer },
   data: () => ({
     Posts: "Posts",
+    headerimage: "headerimage",
     sidebar: false,
   }),
   async created() {
     await this.fetchPosts();
     document.addEventListener("scroll", this.topToBottom);
+  }, computed: {
+    coverToShow() {
+      return post => {
+        for (let i = 0; i < post.content.length; i++) {
+          if (post.content[i].type === "headerimage") {
+            return post.content[i];
+          }
+        }
+        return "";
+      };
+    }
+
   },
   methods: {
     async fetchPosts() {
       try {
-    const response = await fetch(`http://localhost:8000/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
-    this.Posts = await response.json();
-    console.log("post", this.Posts);
-  } catch (error) {
-    console.error(error);
-  }
+        const response = await fetch(`http://localhost:8000/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
+        this.Posts = await response.json();
+        this.headerimage = this.coverToShow(this.Posts);
+        console.log("post", this.Posts);
+      } catch (error) {
+        console.error(error);
+      }
     },
     toggleSidebar() {
       this.sidebar = !this.sidebar;

@@ -4,7 +4,7 @@ const postSchema=new mongoose.Schema({
     intro:{type: String, required: true},
     categorie_name:{type: String, required: true},
     content:[{
-        type: { type: String, enum: ['text','audio', 'image','headerimage','coverimage','thumb','backlink', 'title', 'subtitle', 'code', 'quote','points','video','headervideo','file' ,'externalImage','postquote',
+        type: { type: String, enum: ['text','audio', 'image','headerimage','coverimage','thumb','backlink', 'title', 'subtitle', 'code', 'quote','points','video','headervideo','file' ,'externalImage','postquote',"tag","headervideoupload",
         'externalVideo',
         'externalAudio',
         'externalFile','externalLink'] },

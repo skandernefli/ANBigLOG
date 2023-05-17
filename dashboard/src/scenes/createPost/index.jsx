@@ -1,309 +1,298 @@
 import BoxInsider from "components/box";
-import { TextField, Typography, Box ,MenuItem,IconButton  } from "@mui/material";
+import {
+  TextField,
+  Typography,
+  Box,
+  MenuItem,
+  IconButton,
+} from "@mui/material";
 import AnimatedButton from "../../components/button";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@mui/material";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import "firebase/storage"; 
+import "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { getDownloadURL } from "firebase/storage";
 import Notification from "components/notification";
-import InputAdornment from '@mui/material/InputAdornment';
-import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
-import AudiotrackOutlinedIcon from '@mui/icons-material/AudiotrackOutlined';
-import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
-import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
+import InputAdornment from "@mui/material/InputAdornment";
+import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
+import AudiotrackOutlinedIcon from "@mui/icons-material/AudiotrackOutlined";
+import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 const CreatePostPage = () => {
   const [categories, setCategories] = useState([]);
 
   const [notification, setNotification] = useState(null);
-  const handleNotification = (message, type = 'error', duration = 3000) => {
+  const handleNotification = (message, type = "error", duration = 3000) => {
     setNotification({ message, type, duration });
   };
-
-
 
   const [elements, setElements] = useState([]);
   const [value, setValue] = useState("");
   const addElement = (elementType) => {
     setElements([...elements, { type: elementType, value }]);
   };
-  const [backlinks,setBacklinks]=useState([]);
-  const [positions,setPosition]=useState([]);
-  const addPosition=(event,index)=>{
-    if (elements[index].type==="backlink"){
+  const [backlinks, setBacklinks] = useState([]);
+  const [positions, setPosition] = useState([]);
+  const addPosition = (event, index) => {
+    if (elements[index].type === "backlink") {
       if (positions.length === 0) {
-        const newPosition = [{        index: index,        position: event.target.value      }];
+        const newPosition = [{ index: index, position: event.target.value }];
         setPosition(newPosition);
         console.log("updated positions", newPosition);
-      } else{
-   positions.map((position,i)=>{
-    if(position.index===index){
-    const newPosition = [...positions];
-    const updatedposition = {
-      ...newPosition[i],
-      index:index,
-      position: event.target.value,
-    };
-    newPosition[i] = updatedposition;
-    setPosition(newPosition);
-    
-    console.log("passed by addposition if",positions)
-  }else{
-      const newPosition = [...positions];
-      newPosition.push({
-    
-      index:index,
-      position: event.target.value,
-    });
-    setPosition(newPosition);
-    console.log("passed by addposition else",positions)
+      } else {
+        positions.map((position, i) => {
+          if (position.index === index) {
+            const newPosition = [...positions];
+            const updatedposition = {
+              ...newPosition[i],
+              index: index,
+              position: event.target.value,
+            };
+            newPosition[i] = updatedposition;
+            setPosition(newPosition);
 
+            console.log("passed by addposition if", positions);
+          } else {
+            const newPosition = [...positions];
+            newPosition.push({
+              index: index,
+              position: event.target.value,
+            });
+            setPosition(newPosition);
+            console.log("passed by addposition else", positions);
+          }
+        });
+      }
+
+      console.log("passed by addposition", positions);
     }
-  
-  
-  })}
-   
-    console.log("passed by addposition",positions)}
-  }
+  };
   const getPosition = (index) => {
     const position = positions.find((position) => position.index === index);
-    return position ? position.position : '';
-  }
+    return position ? position.position : "";
+  };
   /************************************************************************************** */
   /**************************************************************************************** */
-  const [desciptions,setDescription]=useState([]);
-  const addDescription=(event,index)=>{
-    if (elements[index].type === "image" ||
-    elements[index].type === "video" ||
-    elements[index].type === "file"  ||
-    elements[index].type === "audio" ||
-    elements[index].type === "headerimage"  ||
-    elements[index].type=== "coverimage"  ||
-    elements[index].type === "thumb"  ||
-    elements[index].type === "postquote"  
-
-    
-    ){
+  const [desciptions, setDescription] = useState([]);
+  const addDescription = (event, index) => {
+    if (
+      elements[index].type === "image" ||
+      elements[index].type === "video" ||
+      elements[index].type === "file" ||
+      elements[index].type === "audio" ||
+      elements[index].type === "headerimage" ||
+      elements[index].type === "coverimage" ||
+      elements[index].type === "thumb" ||
+      elements[index].type === "postquote" ||
+      elements[index].type === "headervideoupload"
+    ) {
       if (desciptions.length === 0) {
-        const newDesciption = [{        index: index,        desciption: event.target.value      }];
+        const newDesciption = [
+          { index: index, desciption: event.target.value },
+        ];
         setDescription(newDesciption);
         console.log("updated desciptions", newDesciption);
-      } else{
-   desciptions.map((desciption,i)=>{
-    if(desciption.index===index){
-    const newDesciption = [...desciptions];
-    const updatedDescription = {
-      ...newDesciption[i],
-      index:index,
-      desciption: event.target.value,
-    };
-    newDesciption[i] = updatedDescription;
-    setDescription(newDesciption);
-    
-    console.log("passed by addposition if",desciptions)
-  }else{
-      const newDesciption = [...desciptions];
-      newDesciption.push({
-    
-      index:index,
-      desciption: event.target.value,
-    });
-    setDescription(newDesciption);
-    console.log("passed by addposition else",desciptions)
+      } else {
+        desciptions.map((desciption, i) => {
+          if (desciption.index === index) {
+            const newDesciption = [...desciptions];
+            const updatedDescription = {
+              ...newDesciption[i],
+              index: index,
+              desciption: event.target.value,
+            };
+            newDesciption[i] = updatedDescription;
+            setDescription(newDesciption);
 
+            console.log("passed by addposition if", desciptions);
+          } else {
+            const newDesciption = [...desciptions];
+            newDesciption.push({
+              index: index,
+              desciption: event.target.value,
+            });
+            setDescription(newDesciption);
+            console.log("passed by addposition else", desciptions);
+          }
+        });
+      }
+
+      console.log("passed by addposition", desciptions);
     }
-  
-  
-  })}
-   
-    console.log("passed by addposition",desciptions)}
-  }
+  };
   const getDescription = (index) => {
-    const desciption = desciptions.find((desciption) => desciption.index === index);
-    return desciption ? desciption.desciption : '';
-  }
+    const desciption = desciptions.find(
+      (desciption) => desciption.index === index
+    );
+    return desciption ? desciption.desciption : "";
+  };
 
-
-
-
-
-  const [titles,setTitles]=useState([]);
-  const addTitle=(event,index)=>{
-    if (elements[index].type === "image" ||
-    elements[index].type === "video" ||
-    elements[index].type === "file"  ||
-    elements[index].type === "audio" ||
-    elements[index].type === "headerimage"  ||
-    elements[index].type=== "coverimage"  ||
-    elements[index].type === "thumb"  ||
-    elements[index].type === "postquote"  
-
-    
-    ){
+  const [titles, setTitles] = useState([]);
+  const addTitle = (event, index) => {
+    if (
+      elements[index].type === "image" ||
+      elements[index].type === "video" ||
+      elements[index].type === "file" ||
+      elements[index].type === "audio" ||
+      elements[index].type === "headerimage" ||
+      elements[index].type === "coverimage" ||
+      elements[index].type === "thumb" ||
+      elements[index].type === "postquote" ||
+      elements[index].type === "headervideoupload"
+    ) {
       if (titles.length === 0) {
-        const newTitle = [{        index: index,        title: event.target.value      }];
+        const newTitle = [{ index: index, title: event.target.value }];
         setTitles(newTitle);
         console.log("updated titles", newTitle);
-      } else{
-   titles.map((title,i)=>{
-    if(title.index===index){
-    const newTitle = [...titles];
-    const updatedTitle = {
-      ...newTitle[i],
-      index:index,
-      title: event.target.value,
-    };
-    newTitle[i] = updatedTitle;
-    setTitles(newTitle);
-    
-    console.log("passed by addposition if",titles)
-  }else{
-      const newTitle = [...titles];
-      newTitle.push({
-    
-      index:index,
-      title: event.target.value,
-    });
-    setTitles(newTitle);
-    console.log("passed by addposition else",titles)
+      } else {
+        titles.map((title, i) => {
+          if (title.index === index) {
+            const newTitle = [...titles];
+            const updatedTitle = {
+              ...newTitle[i],
+              index: index,
+              title: event.target.value,
+            };
+            newTitle[i] = updatedTitle;
+            setTitles(newTitle);
 
+            console.log("passed by addposition if", titles);
+          } else {
+            const newTitle = [...titles];
+            newTitle.push({
+              index: index,
+              title: event.target.value,
+            });
+            setTitles(newTitle);
+            console.log("passed by addposition else", titles);
+          }
+        });
+      }
+
+      console.log("passed by addposition", titles);
     }
-  
-  
-  })}
-   
-    console.log("passed by addposition",titles)}
-  }
+  };
   const getTitle = (index) => {
     const title = titles.find((title) => title.index === index);
-    return title ? title.title : '';
-  }
-  
-  
+    return title ? title.title : "";
+  };
 
-
-
-  const [sources,setSource]=useState([]);
-  const addSource=(event,index)=>{
-    if (elements[index].type === "image" ||
-    elements[index].type === "video" ||
-    elements[index].type === "file"  ||
-    elements[index].type === "audio" ||
-    elements[index].type === "headerimage"  ||
-    elements[index].type=== "coverimage"  ||
-    elements[index].type === "thumb"  ||
-    elements[index].type === "postquote"  
-
-    
-    ){
+  const [sources, setSource] = useState([]);
+  const addSource = (event, index) => {
+    if (
+      elements[index].type === "image" ||
+      elements[index].type === "video" ||
+      elements[index].type === "file" ||
+      elements[index].type === "audio" ||
+      elements[index].type === "headerimage" ||
+      elements[index].type === "coverimage" ||
+      elements[index].type === "thumb" ||
+      elements[index].type === "postquote" ||
+      elements[index].type === "headervideoupload"
+    ) {
       if (sources.length === 0) {
-        const newSource = [{        index: index,        source: event.target.value      }];
+        const newSource = [{ index: index, source: event.target.value }];
         setSource(newSource);
         console.log("updated sources", newSource);
-      } else{
-   sources.map((source,i)=>{
-    if(source.index===index){
-    const newSource = [...sources];
-    const updatedSource = {
-      ...newSource[i],
-      index:index,
-      source: event.target.value,
-    };
-    newSource[i] = updatedSource;
-    setSource(newSource);
-    
-    console.log("passed by addposition if",sources)
-  }else{
-      const newSource = [...sources];
-      newSource.push({
-    
-      index:index,
-      source: event.target.value,
-    });
-    setSource(newSource);
-    console.log("passed by addposition else",sources)
+      } else {
+        sources.map((source, i) => {
+          if (source.index === index) {
+            const newSource = [...sources];
+            const updatedSource = {
+              ...newSource[i],
+              index: index,
+              source: event.target.value,
+            };
+            newSource[i] = updatedSource;
+            setSource(newSource);
 
+            console.log("passed by addposition if", sources);
+          } else {
+            const newSource = [...sources];
+            newSource.push({
+              index: index,
+              source: event.target.value,
+            });
+            setSource(newSource);
+            console.log("passed by addposition else", sources);
+          }
+        });
+      }
+
+      console.log("passed by addposition", sources);
     }
-  
-  
-  })}
-   
-    console.log("passed by addposition",sources)}
-  }
+  };
   const getSource = (index) => {
     const source = sources.find((source) => source.index === index);
-    return source ? source.source : '';
-  }
-
+    return source ? source.source : "";
+  };
 
   /***************************************************************************************** */
   /****************************************************************************************** */
-  const addBackLink=(event,index)=>{
-    if (elements[index].type==="backlink"){
+  const addBackLink = (event, index) => {
+    if (elements[index].type === "backlink") {
       if (backlinks.length === 0) {
-        const newBackLinks = [{        index: index,        link: event.target.value      }];
+        const newBackLinks = [{ index: index, link: event.target.value }];
         setBacklinks(newBackLinks);
         console.log("updated backlinks", newBackLinks);
-      } else{
-   backlinks.map((backlink,i)=>{
-    if(backlink.index===index){
-    const newBackLinks = [...backlinks];
-    const updatedbacklink = {
-      ...newBackLinks[i],
-      index:index,
-      link: event.target.value,
-    };
-    newBackLinks[i] = updatedbacklink;
-    setBacklinks(newBackLinks);
-    
-    console.log("passed by addBackLink if",backlinks)
-  }else{
-      const newBackLinks = [...backlinks];
-      newBackLinks.push({
-    
-      index:index,
-      link: event.target.value,
-    });
-    setBacklinks(newBackLinks);
-    console.log("passed by addBackLink else",backlinks)
+      } else {
+        backlinks.map((backlink, i) => {
+          if (backlink.index === index) {
+            const newBackLinks = [...backlinks];
+            const updatedbacklink = {
+              ...newBackLinks[i],
+              index: index,
+              link: event.target.value,
+            };
+            newBackLinks[i] = updatedbacklink;
+            setBacklinks(newBackLinks);
 
+            console.log("passed by addBackLink if", backlinks);
+          } else {
+            const newBackLinks = [...backlinks];
+            newBackLinks.push({
+              index: index,
+              link: event.target.value,
+            });
+            setBacklinks(newBackLinks);
+            console.log("passed by addBackLink else", backlinks);
+          }
+        });
+      }
+
+      console.log("passed by addBackLink", backlinks);
     }
-  
-  
-  })}
-   
-    console.log("passed by addBackLink",backlinks)}
-  }
-  
+  };
+
   const getBackLink = (index) => {
     const backlink = backlinks.find((backlink) => backlink.index === index);
-    return backlink ? backlink.link : '';
-  }
+    return backlink ? backlink.link : "";
+  };
   useEffect(() => {
-    fetch('http://localhost:8000/server/category')
+    fetch("http://localhost:8000/server/category")
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
       })
       .catch((error) => {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       });
   }, []);
- 
+
   const addValue = (event, index) => {
     if (
       elements[index].type === "image" ||
       elements[index].type === "video" ||
-      elements[index].type === "file"  ||
+      elements[index].type === "file" ||
       elements[index].type === "audio" ||
-      elements[index].type === "headerimage"  ||
-      elements[index].type=== "coverimage"  ||
-      elements[index].type === "thumb"  ||
-      elements[index].type === "postquote"  
-  
+      elements[index].type === "headerimage" ||
+      elements[index].type === "coverimage" ||
+      elements[index].type === "thumb" ||
+      elements[index].type === "postquote" ||
+      elements[index].type === "headervideoupload"
     ) {
       const newElements = [...elements];
       const updatedElement = {
@@ -313,7 +302,7 @@ const CreatePostPage = () => {
       console.log("this are event.target.files[0]", event.target.files[0]);
       newElements[index] = updatedElement;
       setElements(newElements);
-    } else  {
+    } else {
       const newElements = [...elements];
       const updatedElement = {
         ...newElements[index],
@@ -349,13 +338,19 @@ const CreatePostPage = () => {
             "externalVideo",
             "externalAudio",
             "externalFile",
-            "externalLink","headerimage","coverimage","thumb","postquote","headervideo","tag"
-
+            "externalLink",
+            "headerimage",
+            "coverimage",
+            "thumb",
+            "postquote",
+            "headervideo",
+            "tag",
+            "headervideoupload",
           ]),
         value: yup.string(),
-        desciption:yup.string(),
-        title:yup.string(),
-        source:yup.string(),
+        desciption: yup.string(),
+        title: yup.string(),
+        source: yup.string(),
       })
     ),
   });
@@ -370,96 +365,102 @@ const CreatePostPage = () => {
 
   const createPost = async (values, onSubmitProps) => {
     try {
-    const formData = new FormData();
+      const formData = new FormData();
 
-    console.log("these are the values", values);
-    console.log("values.contetn", values.content);
-    for (let value in values) {
-      formData.append(value, values[value]);
-    }
+      console.log("these are the values", values);
+      console.log("values.contetn", values.content);
+      for (let value in values) {
+        formData.append(value, values[value]);
+      }
 
-    const SavedPostResonse = await fetch("http://localhost:8000/server/post", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${"access_token"}`,
-      },
-      body: JSON.stringify(values),
-    });
-    if (!SavedPostResonse.ok) {
-      throw new Error("Error creating pos:");
-    } 
-  
-  } catch (error) {
+      const SavedPostResonse = await fetch(
+        "http://localhost:8000/server/post",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${"access_token"}`,
+          },
+          body: JSON.stringify(values),
+        }
+      );
+      if (!SavedPostResonse.ok) {
+        throw new Error("Error creating pos:");
+      }
+    } catch (error) {
       console.error("Error creating post:", error);
       throw new Error("Error creating post:");
     }
   };
   const handleFileUpload = async (values) => {
     try {
-    const storage = getStorage();
-    const categorie_name = values.categorie_name;
-    const postTitle = values.title;
-    const postId = uuidv4();
-    for (let index = 0; index < elements.length; index++) {
-      const element = elements[index];
+      const storage = getStorage();
+      const categorie_name = values.categorie_name;
+      const postTitle = values.title;
+      const postId = uuidv4();
+      for (let index = 0; index < elements.length; index++) {
+        const element = elements[index];
 
-      if (
-   
-        element.type === "image" ||
-        element.type  === "video" ||
-        element.type  === "file"  ||
-        element.type  === "audio" ||
-        element.type  === "headerimage"  ||
-        element.type === "coverimage"  ||
-        element.type  === "thumb"  ||
-        element.type  === "postquote"  
-      ) {
-        try {
-          console.log("File in process:", element.value.name);
+        if (
+          element.type === "image" ||
+          element.type === "video" ||
+          element.type === "file" ||
+          element.type === "audio" ||
+          element.type === "headerimage" ||
+          element.type === "coverimage" ||
+          element.type === "thumb" ||
+          element.type === "postquote" ||
+          elements[index].type === "headervideoupload"
+        ) {
+          try {
+            console.log("File in process:", element.value.name);
 
-          const storageRef = ref(
-            storage,
-            `posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`
-          );
-          await uploadBytes(storageRef, element.value);
-          console.log("File uploaded:", element.value.name);
-          const  downloadlink= await getDownloadURL(storageRef);
-          const desciption=getDescription(index);
-          const title=getTitle(index);
-          const source=getSource(index);
+            const storageRef = ref(
+              storage,
+              `posts/${categorie_name}/${postTitle}/${postId}/${element.value.name}`
+            );
+            await uploadBytes(storageRef, element.value);
+            console.log("File uploaded:", element.value.name);
+            const downloadlink = await getDownloadURL(storageRef);
+            const desciption = getDescription(index);
+            const title = getTitle(index);
+            const source = getSource(index);
+            const newElements = elements;
+            const updatedElement = {
+              ...newElements[index],
+              value: downloadlink,
+              desciption: desciption,
+              title: title,
+              source: source,
+            };
+            newElements[index] = updatedElement;
+            setElements(newElements);
+            console.log(
+              "elements :new set elements 121 in handlefileUpload",
+              elements
+            );
+          } catch (error) {
+            console.error("Error uploading file:", error);
+          }
+        } else if (element.type === "backlink") {
+          const link = getBackLink(index);
+          const position = getPosition(index);
+          console.log("this is the link", link);
           const newElements = elements;
           const updatedElement = {
             ...newElements[index],
-            value:downloadlink,
-            desciption:desciption,
-            title:title,
-            source:source,
-          };
-          newElements[index] = updatedElement;
-          setElements(newElements);
-          console.log(
-            "elements :new set elements 121 in handlefileUpload",
-            elements
-          );
-        } catch (error) {
-          console.error("Error uploading file:", error);
-        }
-      }else   if (
-        element.type === "backlink" ){
-const link=getBackLink(index);
-const position=getPosition(index);
-console.log("this is the link",link);
-          const newElements = elements;
-          const updatedElement = {
-            ...newElements[index],
-            value:JSON.stringify({textOfLink:element.value,backlinkLink:link,position:position}),
+            value: JSON.stringify({
+              textOfLink: element.value,
+              backlinkLink: link,
+              position: position,
+            }),
           };
           newElements[index] = updatedElement;
           setElements(newElements);
         }
-    }  } catch (error) {
+      }
+    } catch (error) {
       console.error("Error uploading file:", error);
       throw new Error("Failed to upload one or more files.");
     }
@@ -467,25 +468,24 @@ console.log("this is the link",link);
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     try {
-    await handleFileUpload(values);
-    const finalElements = elements.map((element) => ({
-      type: element.type,
-      value: element.value || "",
-      desciption:element.desciption || "",
-      title:element.title  || "",
-      source:element.source  || "",
+      await handleFileUpload(values);
+      const finalElements = elements.map((element) => ({
+        type: element.type,
+        value: element.value ,
+        desciption: element.desciption ,
+        title: element.title ,
+        source: element.source ,
+      }));
+      values.content = finalElements;
 
-    }));
-    values.content = finalElements;
+      await createPost(values, onSubmitProps);
 
-    await createPost(values, onSubmitProps);
-  
-    handleNotification('success!', 'success');
-    onSubmitProps.resetForm();
-  } catch (error) {
+      handleNotification("success!", "success");
+      onSubmitProps.resetForm();
+      
+    } catch (error) {
       console.error("Error while creating post!", error);
-      handleNotification('Error while creating post!', 'error');
-
+      handleNotification("Error while creating post!", "error");
     }
   };
   return (
@@ -499,7 +499,8 @@ console.log("this is the link",link);
       </Typography>
       <Box className="controllersLayout">
         <Box>
-          <AnimatedButton className="button"
+          <AnimatedButton
+            className="button"
             onClick={() => {
               addElement("text");
             }}
@@ -508,12 +509,18 @@ console.log("this is the link",link);
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("title")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("title")}
+          >
             add title
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("subtitle")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("subtitle")}
+          >
             add sub
           </AnimatedButton>
         </Box>
@@ -523,32 +530,50 @@ console.log("this is the link",link);
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("quote")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("quote")}
+          >
             add quotes
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("points")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("points")}
+          >
             add points
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("image")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("image")}
+          >
             add image
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("externalImage")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("externalImage")}
+          >
             add external image
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("video")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("video")}
+          >
             add video
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("externalVideo")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("externalVideo")}
+          >
             add extenal video
           </AnimatedButton>
         </Box>
@@ -558,82 +583,117 @@ console.log("this is the link",link);
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("externalFile")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("externalFile")}
+          >
             add external file
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("audio")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("audio")}
+          >
             add audio
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("externalAudio")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("externalAudio")}
+          >
             add external audio
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("backlink")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("backlink")}
+          >
             add link
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("externalLink")}>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("externalLink")}
+          >
             add external link
           </AnimatedButton>
         </Box>
-  
+
         <Box>
-                <AnimatedButton
-                className="button"
-                  type="submit"
-                  form="myForm"
-                  sx={{
-                    "& .button .top, .button .bottom, .button .left, .button .right":
-                      { backgroundColor: "#ebff33" },
-                    "& .button .border": { border: "1px solid #ebff33" },
-                    "& .button": { color: "#ebff33" },
-                  }}
-                >
-                  Submit
-                </AnimatedButton>
-              </Box>
+          <AnimatedButton
+            className="button"
+            type="submit"
+            form="myForm"
+            sx={{
+              "& .button .top, .button .bottom, .button .left, .button .right":
+                { backgroundColor: "#ebff33" },
+              "& .button .border": { border: "1px solid #ebff33" },
+              "& .button": { color: "#ebff33" },
+            }}
+          >
+            Submit
+          </AnimatedButton>
+        </Box>
       </Box>
       <Box className="controllersLayout_2">
         <Box>
-          <AnimatedButton className="button"
+          <AnimatedButton
+            className="button"
             onClick={() => {
               addElement("headervideo");
             }}
           >
-          Header video
+            Header video
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("headerimage")}>
-          Header Image          </AnimatedButton>
-        </Box>
-        <Box>
-          <AnimatedButton className="button" onClick={() => addElement("coverimage")}>
-          Cover Image
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("headerimage")}
+          >
+            Header Image{" "}
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("thumb")}>
-          thumb
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("coverimage")}
+          >
+            Cover Image
           </AnimatedButton>
         </Box>
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("quotetext")}>
-          Quote Text          </AnimatedButton>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("thumb")}
+          >
+            thumb
+          </AnimatedButton>
         </Box>
+     
         <Box>
-          <AnimatedButton className="button" onClick={() => addElement("postquote")}>
-          Post Quote          </AnimatedButton>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("postquote")}
+          >
+            Post Quote{" "}
+          </AnimatedButton>
         </Box>
         <Box>
           <AnimatedButton className="button" onClick={() => addElement("tag")}>
-           tag
+            tag
+          </AnimatedButton>
+        </Box>
+        <Box>
+          <AnimatedButton
+            className="button"
+            onClick={() => addElement("headervideoupload")}
+          >
+            H.Video Upload
           </AnimatedButton>
         </Box>
       </Box>
@@ -663,35 +723,35 @@ console.log("this is the link",link);
                 }}
               >
                 <>
-                <TextField
-        select
-         value={values.categorie_name}
-      name="categorie_name"
-        label="Category"
-        variant="filled"
-        onChange={handleChange}
-        sx={{
-          gridColumn: 'span 2',
-          mb: '1rem',
-          backgroundColor: 'rgba(255,255,255,0.4)',
-          width: '90%',
-          borderColor: '#000',
-        }}
-        inputProps={{ style: { fontSize: 18, color: '#FFF' } }}
-        InputLabelProps={{
-          style: { fontSize: 16, color: 'rgba(255,75,75,1)' },
-        }}
-        SelectProps={{
-          style: { color: '#FFF' }
-        }}
-      >
-        {categories.map((category) => (
-          <MenuItem key={category.id} value={category.name}>
-            {category.name}
-          </MenuItem>
-        ))}
-      </TextField>
-                
+                  <TextField
+                    select
+                    value={values.categorie_name}
+                    name="categorie_name"
+                    label="Category"
+                    variant="filled"
+                    onChange={handleChange}
+                    sx={{
+                      gridColumn: "span 2",
+                      mb: "1rem",
+                      backgroundColor: "rgba(255,255,255,0.4)",
+                      width: "90%",
+                      borderColor: "#000",
+                    }}
+                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }}
+                    InputLabelProps={{
+                      style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                    }}
+                    SelectProps={{
+                      style: { color: "#FFF" },
+                    }}
+                  >
+                    {categories.map((category) => (
+                      <MenuItem key={category.id} value={category.name}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+
                   <TextField
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -707,7 +767,7 @@ console.log("this is the link",link);
                       width: "90%",
                       borderColor: "#000",
                     }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
+                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }}
                     InputLabelProps={{
                       style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                     }}
@@ -729,14 +789,13 @@ console.log("this is the link",link);
                       width: "90%",
                       height: "20",
                     }}
-                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }} 
+                    inputProps={{ style: { fontSize: 18, color: "#FFF" } }}
                     InputLabelProps={{
                       style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                     }}
                   />
                   {elements.map((element, index) => {
                     if (element.type === "text") {
-                    
                       return (
                         <TextField
                           onBlur={handleBlur}
@@ -795,7 +854,7 @@ console.log("this is the link",link);
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -825,7 +884,7 @@ console.log("this is the link",link);
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -927,6 +986,14 @@ console.log("this is the link",link);
                       );
                     } else if (element.type === "image") {
                       return (
+                        <Box>
+                              <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                 Image
+                          </Typography>
                         <Input
                           type="file"
                           onBlur={handleBlur}
@@ -959,16 +1026,126 @@ console.log("this is the link",link);
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                              <Typography
+                                variant="h5"
+                                sx={{
+                                  color: "rgba(255,75,75,1)",
+                                  width: "600px",
+                                }}
+                              >
+                                upload an Image
+                              </Typography>
+                              <IconButton
+                                sx={{ color: "rgba(255,75,75,1)" }}
+                                component="span"
+                              >
                                 <AddPhotoAlternateOutlinedIcon />
                               </IconButton>
                             </InputAdornment>
                           }
                         />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
                       );
                     } else if (element.type === "video") {
                       return (
+                        <Box>
+                              <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                            video
+                          </Typography>
                         <Input
                           onBlur={handleBlur}
                           onChange={(event) => addValue(event, index)}
@@ -982,7 +1159,7 @@ console.log("this is the link",link);
                           )}
                           placeholder="Insert an image"
                           inputProps={{ accept: "video/*" }}
-type="file"
+                          type="file"
                           overFlow="hidden"
                           sx={{
                             gridColumn: "span 2",
@@ -1001,16 +1178,125 @@ type="file"
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload a video</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                              <Typography
+                                variant="h5"
+                                sx={{
+                                  color: "rgba(255,75,75,1)",
+                                  width: "600px",
+                                }}
+                              >
+                                upload a video
+                              </Typography>
+                              <IconButton
+                                sx={{ color: "rgba(255,75,75,1)" }}
+                                component="span"
+                              >
                                 <VideoLibraryOutlinedIcon />
                               </IconButton>
                             </InputAdornment>
                           }
                         />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
                       );
                     } else if (element.type === "file") {
                       return (
+                        <Box>
+                              <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                        file                          </Typography>
                         <Input
                           onBlur={handleBlur}
                           onChange={(event) => addValue(event, index)}
@@ -1042,22 +1328,131 @@ type="file"
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload a file</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                              <Typography
+                                variant="h5"
+                                sx={{
+                                  color: "rgba(255,75,75,1)",
+                                  width: "600px",
+                                }}
+                              >
+                                upload a file
+                              </Typography>
+                              <IconButton
+                                sx={{ color: "rgba(255,75,75,1)" }}
+                                component="span"
+                              >
                                 <FileCopyOutlinedIcon />
                               </IconButton>
                             </InputAdornment>
                           }
                         />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
                       );
                     } else if (element.type === "audio") {
                       return (
+                        <Box>
+                              <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                            Audio
+                          </Typography>
                         <Input
                           onBlur={handleBlur}
                           onChange={(event) => addValue(event, index)}
                           key={element.id}
                           variant="filled"
-
                           name={`${element.type}-${element.id}`}
                           error={Boolean(
                             touched.content &&
@@ -1086,16 +1481,117 @@ type="file"
                           }}
                           startAdornment={
                             <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an audio</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
+                              <Typography
+                                variant="h5"
+                                sx={{
+                                  color: "rgba(255,75,75,1)",
+                                  width: "600px",
+                                }}
+                              >
+                                upload an audio
+                              </Typography>
+                              <IconButton
+                                sx={{ color: "rgba(255,75,75,1)" }}
+                                component="span"
+                              >
                                 <AudiotrackOutlinedIcon />
                               </IconButton>
                             </InputAdornment>
                           }
                         />
-                       
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
                       );
-                    }else if (element.type === "externalImage") {
+                    } else if (element.type === "externalImage") {
                       return (
                         <TextField
                           onBlur={handleBlur}
@@ -1119,26 +1615,624 @@ type="file"
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
                         />
                       );
-                    }
-/********************************************************************************************************* */                    
-                    else if (element.type === "headerimage") {
+                    } else if (element.type === "headerimage") {
+                    /********************************************************************************************************* */
                       return (
                         <Box>
-                             <Typography
-        variant={"h6"}
-        color="#ebff33"
-        sx={{ margin: "30px" }}
-      >
-       Header Image
-      </Typography>
-                   <Input
-                          type="file"
+                          <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                            Header Image
+                          </Typography>
+                          <Input
+                            type="file"
+                            onBlur={handleBlur}
+                            onChange={(event) => addValue(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            placeholder="Insert an image"
+                            inputProps={{ accept: "image/*" }}
+                            overFlow="hidden"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(0,0,0,0.1)",
+                              width: "90%",
+                              borderColor: "#000",
+                              "& .MuiInputBase-input": {
+                                fontSize: 18,
+                                color: "#FFF",
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                            startAdornment={
+                              <InputAdornment position="start">
+                                <Typography
+                                  variant="h5"
+                                  sx={{
+                                    color: "rgba(255,75,75,1)",
+                                    width: "600px",
+                                  }}
+                                >
+                                  upload an Image
+                                </Typography>
+                                <IconButton
+                                  sx={{ color: "rgba(255,75,75,1)" }}
+                                  component="span"
+                                >
+                                  <AddPhotoAlternateOutlinedIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
+                      );
+                    } else if (element.type === "coverimage") {
+                      return (
+                        <Box>
+                          <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                            Cover image
+                          </Typography>
+                          <Input
+                            type="file"
+                            onBlur={handleBlur}
+                            onChange={(event) => addValue(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            placeholder="Insert an image"
+                            inputProps={{ accept: "image/*" }}
+                            overFlow="hidden"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(0,0,0,0.1)",
+                              width: "90%",
+                              borderColor: "#000",
+                              "& .MuiInputBase-input": {
+                                fontSize: 18,
+                                color: "#FFF",
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                            startAdornment={
+                              <InputAdornment position="start">
+                                <Typography
+                                  variant="h5"
+                                  sx={{
+                                    color: "rgba(255,75,75,1)",
+                                    width: "600px",
+                                  }}
+                                >
+                                  upload an Image
+                                </Typography>
+                                <IconButton
+                                  sx={{ color: "rgba(255,75,75,1)" }}
+                                  component="span"
+                                >
+                                  <AddPhotoAlternateOutlinedIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
+                      );
+                    } else if (element.type === "thumb") {
+                      return (
+                        <Box>
+                          <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                            Thumb
+                          </Typography>
+                          <Input
+                            type="file"
+                            onBlur={handleBlur}
+                            onChange={(event) => addValue(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            placeholder="Insert an image"
+                            inputProps={{ accept: "image/*" }}
+                            overFlow="hidden"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(0,0,0,0.1)",
+                              width: "90%",
+                              borderColor: "#000",
+                              "& .MuiInputBase-input": {
+                                fontSize: 18,
+                                color: "#FFF",
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                            startAdornment={
+                              <InputAdornment position="start">
+                                <Typography
+                                  variant="h5"
+                                  sx={{
+                                    color: "rgba(255,75,75,1)",
+                                    width: "600px",
+                                  }}
+                                >
+                                  upload an Image
+                                </Typography>
+                                <IconButton
+                                  sx={{ color: "rgba(255,75,75,1)" }}
+                                  component="span"
+                                >
+                                  <AddPhotoAlternateOutlinedIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
+                      );
+                    } else if (element.type === "postquote") {
+                      return (
+                        <Box>
+                          <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                            postquote
+                          </Typography>
+                          <Input
+                            type="file"
+                            onBlur={handleBlur}
+                            onChange={(event) => addValue(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            placeholder="Insert an image"
+                            inputProps={{ accept: "image/*" }}
+                            overFlow="hidden"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(0,0,0,0.1)",
+                              width: "90%",
+                              borderColor: "#000",
+                              "& .MuiInputBase-input": {
+                                fontSize: 18,
+                                color: "#FFF",
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                            startAdornment={
+                              <InputAdornment position="start">
+                                <Typography
+                                  variant="h5"
+                                  sx={{
+                                    color: "rgba(255,75,75,1)",
+                                    width: "600px",
+                                  }}
+                                >
+                                  upload an Image
+                                </Typography>
+                                <IconButton
+                                  sx={{ color: "rgba(255,75,75,1)" }}
+                                  component="span"
+                                >
+                                  <AddPhotoAlternateOutlinedIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
+                      );
+                    } else if (element.type === "headervideo") {
+                      return (
+                        <TextField
                           onBlur={handleBlur}
                           onChange={(event) => addValue(event, index)}
                           key={element.id}
@@ -1149,46 +2243,8 @@ type="file"
                               errors.content &&
                               errors.content[index]
                           )}
-                          placeholder="Insert an image"
-                          inputProps={{ accept: "image/*" }}
-                          overFlow="hidden"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(0,0,0,0.1)",
-                            width: "90%",
-                            borderColor: "#000",
-                            "& .MuiInputBase-input": {
-                              fontSize: 18,
-                              color: "#FFF",
-                            },
-                            "& .MuiInputLabel-root": {
-                              fontSize: 16,
-                              color: "rgba(255,75,75,1)",
-                            },
-                          }}
-                          startAdornment={
-                            <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
-                                <AddPhotoAlternateOutlinedIcon />
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                        />
-       <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addTitle(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
                           variant="filled"
-                          label="title"
+                          label="headervideo"
                           sx={{
                             gridColumn: "span 2",
                             mb: "1rem",
@@ -1198,487 +2254,168 @@ type="file"
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
                         />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addDescription(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="description"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addSource(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="Source"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                           
-                        </Box>
-                        
                       );
-                    }
-
-                    else if (element.type === "coverimage") {
+                    } else if (element.type === "headervideoupload") {
                       return (
                         <Box>
-                           <Typography
-        variant={"h6"}
-        color="#ebff33"
-        sx={{ margin: "30px" }}
-      >
-      Cover image
-      </Typography>
-                   <Input
-                          type="file"
-                          onBlur={handleBlur}
-                          onChange={(event) => addValue(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          placeholder="Insert an image"
-                          inputProps={{ accept: "image/*" }}
-                          overFlow="hidden"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(0,0,0,0.1)",
-                            width: "90%",
-                            borderColor: "#000",
-                            "& .MuiInputBase-input": {
-                              fontSize: 18,
-                              color: "#FFF",
-                            },
-                            "& .MuiInputLabel-root": {
-                              fontSize: 16,
-                              color: "rgba(255,75,75,1)",
-                            },
-                          }}
-                          startAdornment={
-                            <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
-                                <AddPhotoAlternateOutlinedIcon />
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                        />
-       <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addTitle(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="title"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addDescription(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="description"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addSource(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="Source"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                           
+                          <Typography
+                            variant={"h6"}
+                            color="#ebff33"
+                            sx={{ margin: "30px" }}
+                          >
+                            Header video upload
+                          </Typography>
+                          <Input
+                            onBlur={handleBlur}
+                            onChange={(event) => addValue(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            placeholder="Insert a vido"
+                            inputProps={{ accept: "video/*" }}
+                            type="file"
+                            overFlow="hidden"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(0,0,0,0.1)",
+                              width: "90%",
+                              borderColor: "#000",
+                              "& .MuiInputBase-input": {
+                                fontSize: 18,
+                                color: "#FFF",
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                            startAdornment={
+                              <InputAdornment position="start">
+                                <Typography
+                                  variant="h5"
+                                  sx={{
+                                    color: "rgba(255,75,75,1)",
+                                    width: "600px",
+                                  }}
+                                >
+                                  upload a video
+                                </Typography>
+                                <IconButton
+                                  sx={{ color: "rgba(255,75,75,1)" }}
+                                  component="span"
+                                >
+                                  <VideoLibraryOutlinedIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addTitle(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="title"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addDescription(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="description"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addSource(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="Source"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
                         </Box>
-                        
                       );
-                    }
-                    else if (element.type === "thumb") {
+                    } else if (element.type === "externalVideo") {
+
+                    /******************************************************************************************************************************* */
                       return (
-                        <Box>
-                           <Typography
-        variant={"h6"}
-        color="#ebff33"
-        sx={{ margin: "30px" }}
-      >
-      Thumb
-      </Typography>
-                   <Input
-                          type="file"
-                          onBlur={handleBlur}
-                          onChange={(event) => addValue(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          placeholder="Insert an image"
-                          inputProps={{ accept: "image/*" }}
-                          overFlow="hidden"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(0,0,0,0.1)",
-                            width: "90%",
-                            borderColor: "#000",
-                            "& .MuiInputBase-input": {
-                              fontSize: 18,
-                              color: "#FFF",
-                            },
-                            "& .MuiInputLabel-root": {
-                              fontSize: 16,
-                              color: "rgba(255,75,75,1)",
-                            },
-                          }}
-                          startAdornment={
-                            <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
-                                <AddPhotoAlternateOutlinedIcon />
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                        />
-       <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addTitle(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="title"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addDescription(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="description"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addSource(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="Source"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                           
-                        </Box>
-                        
-                      );
-                    }
-                    else if (element.type === "postquote") {
-                      return (
-                        <Box>
-                           <Typography
-        variant={"h6"}
-        color="#ebff33"
-        sx={{ margin: "30px" }}
-      >
-     postquote
-      </Typography>
-                   <Input
-                          type="file"
-                          onBlur={handleBlur}
-                          onChange={(event) => addValue(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          placeholder="Insert an image"
-                          inputProps={{ accept: "image/*" }}
-                          overFlow="hidden"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(0,0,0,0.1)",
-                            width: "90%",
-                            borderColor: "#000",
-                            "& .MuiInputBase-input": {
-                              fontSize: 18,
-                              color: "#FFF",
-                            },
-                            "& .MuiInputLabel-root": {
-                              fontSize: 16,
-                              color: "rgba(255,75,75,1)",
-                            },
-                          }}
-                          startAdornment={
-                            <InputAdornment position="start">
-<Typography variant="h5" sx={{color:"rgba(255,75,75,1)" ,width:"600px"}}>upload an Image</Typography>
-                              <IconButton sx={{color:"rgba(255,75,75,1)"}} component="span">
-                                <AddPhotoAlternateOutlinedIcon />
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                        />
-       <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addTitle(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="title"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addDescription(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="description"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                                  <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addSource(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="Source"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} 
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                           
-                        </Box>
-                        
-                      );
-                    }
-                    
-
-
-
-
-
-                    
-/******************************************************************************************************************************* */               
-                    else if (element.type === "externalVideo") {
-                      return (
-
                         <TextField
                           onBlur={handleBlur}
                           onChange={(event) => addValue(event, index)}
@@ -1701,7 +2438,38 @@ type="file"
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
+                          InputLabelProps={{
+                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
+                          }}
+                        />
+                      );
+                    } 
+                    else if (element.type === "tag") {
+                      return (
+                        <TextField
+                          onBlur={handleBlur}
+                          onChange={(event) => addValue(event, index)}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          variant="filled"
+                          label="tag"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(255,255,255,0.7)",
+                            width: "90%",
+                            borderColor: "#000",
+                          }}
+                          inputProps={{
+                            style: { fontSize: 18, color: "#FFF" },
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
@@ -1731,13 +2499,13 @@ type="file"
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
                         />
                       );
-                    }else if (element.type === "externalLink") {
+                    } else if (element.type === "externalLink") {
                       return (
                         <TextField
                           onBlur={handleBlur}
@@ -1761,14 +2529,13 @@ type="file"
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
                         />
                       );
-                    }
-                    else if (element.type === "externalFile") {
+                    } else if (element.type === "externalFile") {
                       return (
                         <TextField
                           onBlur={handleBlur}
@@ -1792,119 +2559,125 @@ type="file"
                           }}
                           inputProps={{
                             style: { fontSize: 18, color: "#FFF" },
-                          }} 
+                          }}
                           InputLabelProps={{
                             style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
                         />
                       );
-                    }
-                     else if (element.type === "backlink") { 
-
-                       return (
-                        
-                        <Box >
-                                     <TextField
-        select
-      name="position"
-        label="position"
-        variant="filled"
-        onChange={(event) => addPosition(event, index)}
-        sx={{
-          gridColumn: 'span 2',
-          mb: '1rem',
-          backgroundColor: 'rgba(255,255,255,0.4)',
-          width: '90%',
-          borderColor: '#000',
-        }}
-        inputProps={{ style: { fontSize: 18, color: '#FFF' } }}
-        InputLabelProps={{
-          style: { fontSize: 16, color: 'rgba(255,75,75,1)' },
-        }}
-        SelectProps={{
-          style: { color: '#FFF' }
-        }}
-      >
-         <MenuItem value="start">Start</MenuItem>
-      <MenuItem value="middle">Middle</MenuItem>
-      <MenuItem value="end">End</MenuItem>
-      <MenuItem value="between">Between</MenuItem>
-     
-      </TextField>
-                        <TextField
-                          onBlur={handleBlur}
-                          onChange={(event) => addValue(event, index)}
-                          key={element.id}
-                          name={`${element.type}-${element.id}`}
-                          error={Boolean(
-                            touched.content &&
-                              touched.content[index] &&
-                              errors.content &&
-                              errors.content[index]
-                          )}
-                          variant="filled"
-                          label="text of the link"
-                          sx={{
-                            gridColumn: "span 2",
-                            mb: "1rem",
-                            backgroundColor: "rgba(255,255,255,0.7)",
-                            width: "90%",
-                            borderColor: "#000",
-                          }}
-                          inputProps={{
-                            style: { fontSize: 18, color: "#FFF" },
-                          }} // font size of input text
-                          InputLabelProps={{
-                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                          }}
-                        />
-                        <TextField
-                        onBlur={handleBlur}
-                        onChange={(event) => addBackLink(event, index)}
-                        key={element.id+1}
-                        name={`${element.type}-${element.id}+1`}
-                        error={Boolean(
-                          touched.content &&
-                            touched.content[index] &&
-                            errors.content &&
-                            errors.content[index]
-                        )}
-                        variant="filled"
-                        label="back link"
-                        sx={{
-                          gridColumn: "span 2",
-                          mb: "1rem",
-                          backgroundColor: "rgba(255,255,255,0.7)",
-                          width: "90%",
-                          borderColor: "#000",
-                        }}
-                        inputProps={{
-                          style: { fontSize: 18, color: "#FFF" },
-                        }} // font size of input text
-                        InputLabelProps={{
-                          style: { fontSize: 16, color: "rgba(255,75,75,1)" },
-                        }}
-                      />
-                      </Box>
+                    } else if (element.type === "backlink") {
+                      return (
+                        <Box>
+                          <TextField
+                            select
+                            name="position"
+                            label="position"
+                            variant="filled"
+                            onChange={(event) => addPosition(event, index)}
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.4)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }}
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                            SelectProps={{
+                              style: { color: "#FFF" },
+                            }}
+                          >
+                            <MenuItem value="start">Start</MenuItem>
+                            <MenuItem value="middle">Middle</MenuItem>
+                            <MenuItem value="end">End</MenuItem>
+                            <MenuItem value="between">Between</MenuItem>
+                          </TextField>
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addValue(event, index)}
+                            key={element.id}
+                            name={`${element.type}-${element.id}`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="text of the link"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }} // font size of input text
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                          <TextField
+                            onBlur={handleBlur}
+                            onChange={(event) => addBackLink(event, index)}
+                            key={element.id + 1}
+                            name={`${element.type}-${element.id}+1`}
+                            error={Boolean(
+                              touched.content &&
+                                touched.content[index] &&
+                                errors.content &&
+                                errors.content[index]
+                            )}
+                            variant="filled"
+                            label="back link"
+                            sx={{
+                              gridColumn: "span 2",
+                              mb: "1rem",
+                              backgroundColor: "rgba(255,255,255,0.7)",
+                              width: "90%",
+                              borderColor: "#000",
+                            }}
+                            inputProps={{
+                              style: { fontSize: 18, color: "#FFF" },
+                            }} // font size of input text
+                            InputLabelProps={{
+                              style: {
+                                fontSize: 16,
+                                color: "rgba(255,75,75,1)",
+                              },
+                            }}
+                          />
+                        </Box>
                       );
                     }
                   })}
                 </>
               </Box>
-            
             </form>
           );
         }}
       </Formik>
-      {notification &&  <Notification
-             message={notification.message}
-             type={notification.type}
-             duration={notification.duration}
-             onClose={() => setNotification(null)}
-      />}
-
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          duration={notification.duration}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </BoxInsider>
-    
   );
 };
 export default CreatePostPage;

@@ -79,7 +79,7 @@ export default {
       coverToShow() {
       return post => {
         for (let i = 0; i < post.content.length; i++) {
-          if (post.content[i].type === "image") {
+          if (post.content[i].type === "coverimage") {
             return post.content[i].value;
           }
         }
