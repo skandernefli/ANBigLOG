@@ -174,8 +174,8 @@ export default {
     },
   },
   data: () => ({
-    manageSidePosts: "manageSidePosts",
-    manageBigPosts:"manageBigPosts",
+    manageSidePosts: [],
+    manageBigPosts: [],
     trendingSettings: {
       arrows: false,
       slidesToShow: 2,
@@ -197,8 +197,8 @@ export default {
     },
   }),
   async created() {
-    await JSON.parse(JSON.stringify(this.fetchmanageBigPosts()));
-    await JSON.parse(JSON.stringify(this.fetchmanageSidePosts()));
+    await this.fetchmanageBigPosts();
+    await this.fetchmanageSidePosts();
 
 
    

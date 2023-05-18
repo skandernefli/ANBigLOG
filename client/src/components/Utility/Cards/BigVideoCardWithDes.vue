@@ -21,8 +21,7 @@
           <a href="#">{{ datas.title }}</a>
         </h2>
         <p>
-          The property, complete with a 30-seat screening room, a 100-seat
-          amphitheater and a swimming pond with sandy beach and outdoor shower…
+          {{ datas.description }}
         </p>
       </div>
       <div
@@ -42,11 +41,14 @@
 
 <script>
 export default {
-  props: ["datas"],
-  mounted() {
-    console.log("datas.thumbnail", this.datas);
+  props: {
+    datas: {
+      type: Object,
+    }
+ 
   },
 };
+
 </script>
 
 <style></style>

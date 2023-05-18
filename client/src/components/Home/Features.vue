@@ -41,7 +41,7 @@ export default {
   components: { Slider, OverlayCard },
   data: () => ({
     //feature
-    post:"post",
+    post:[{}],
     featureSliderSettings: {
       slidesToShow: 4,
       slideToScroll: 1,

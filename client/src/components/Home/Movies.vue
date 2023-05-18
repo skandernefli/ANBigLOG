@@ -32,9 +32,9 @@ export default {
     },
   },
   data: () => ({
-    moviesDatas: "moviesDatas",
+    moviesDatas: [{}],
   }),async created() {
-    await JSON.parse(JSON.stringify(this.fetchMoviesDatas()));
+    await this.fetchMoviesDatas();
    }, methods: {
     async fetchMoviesDatas() {
       const response = await fetch("http://localhost:8000/server/manageMoviesSection").then(res => res.json());

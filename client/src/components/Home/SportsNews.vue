@@ -76,8 +76,8 @@ export default {
     },
   },
   data: () => ({
-    "manageSportsMainSection": "manageSportsMainSection",
-    "manageSideSportsSection":"manageSideSportsSection",
+    manageSportsMainSection: [{}],
+    manageSideSportsSection:[{}],
     trendingSidebarSlide: {
       arrows: false,
       slidesToShow: 1,
@@ -85,8 +85,8 @@ export default {
       autoplay: true,
     },
   }),async created() {
-    await JSON.parse(JSON.stringify(this.fetchmanageSportsMainSection()));
-    await JSON.parse(JSON.stringify(this.fetchmanageSideSportsSection()));
+    await this.fetchmanageSportsMainSection();
+    await this.fetchmanageSideSportsSection();
 
 
    

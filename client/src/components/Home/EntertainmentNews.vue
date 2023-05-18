@@ -33,7 +33,7 @@ import DivideCard from "../Utility/Cards/DivideCard.vue";
     },
   },
   data: () => ({
-    manageEntertainmentSection: "manageEntertainmentSection",
+    manageEntertainmentSection: [{}],
   }),async created() {
     
     await JSON.parse(JSON.stringify(this.fetchmanageEntertainmentSection()));

@@ -45,7 +45,7 @@
                 <p>
                   {{ Posts.intro }}
                 </p>
-                <template v-for="(data, index) in Posts.content">
+                <template v-for="(data, index) in content">
                   <div v-if="data.type === 'image'" :key="index" class="thumb">
                     <img :src="data.value" :alt="Posts.title" />
                   </div>
@@ -87,49 +87,51 @@
                   </ul>
                 </div>
               </div>
-              <template v-if="Posts.content.length!==0" v-for="(data, index) in Posts.content">
+    <div  >
+
+      <div v-for="(data, index) in content" v-bind:key="data._id">
+
     
-    
-    <div v-if="index===0" :key="index">
+    <div v-if="index===0" >
         <div v-if="data.type==='backlink'" class="post-text mt-30">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'start'">
+                 <div v-if="JSON.parse(content[index + 1].value).position === 'start'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a> 
                         </p>
-                        {{ skip_1(index) }}
+                        {{ assignSkip_1(index) }}
 
                 </div>
          
     </div>
         <div v-if="data.type==='text'" class="post-text mt-30">
-            <div v-if="Posts.content[index + 1].type === 'backlink'">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'end'">
+            <div v-if="content[index + 1].type === 'backlink'">
+                 <div v-if="JSON.parse(content[index + 1].value).position === 'end'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a> 
                         </p>
 
                 </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'middle'">
+                <div v-else-if="JSON.parse(content[index + 1].value).position === 'middle'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> {{ Posts.content[index + 2] }}
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a> {{ content[index + 2] }}
                         </p>
-                        {{ skip_2(index) }}
+                        {{ assignSkip_2(index) }}
                 </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'between'">
+                <div v-else-if="JSON.parse(content[index + 1].value).position === 'between'">
                         <p>
                             {{ data.value }}
                         </p>
                         <p>
-                         :)<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a>
+                         :)<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a>
                         </p>
                         <p>
-                            {{ Posts.content[index + 2] }}
+                            {{ content[index + 2] }}
                         </p>
-                        {{ skip_2(index) }}
+                        {{ assignSkip_2(index) }}
                 </div>
             </div>
             <div v-else >
@@ -195,7 +197,7 @@
                   </div>
                 </div>
         </div>
-        <div v-else-if="data.type==='video'" class="post_gallery_play">
+       <!--  <div v-else-if="data.type==='video'" class="post_gallery_play">
       <div class="bg-image">
         <img
           :src="coverimage.value"
@@ -260,7 +262,7 @@
           ><i class="fas fa-play"></i
         ></a>
       </div>
-        </div>
+        </div> -->
         <div v-else-if="data.type==='file' || data.type==='audio' || data.type==='externalAudio' ||data.type==='externalFile' ||data.type==='externalLink' " > 
             <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
         </div>
@@ -269,7 +271,7 @@
         </div>
         
     </div>
-    <div v-else-if="index===Posts.content.length-1" >
+    <div v-else-if="index===content.length-1" >
         <div v-if="index!==skip_1 || index!==skip_2">
 
         <div v-if="data.type==='text'" class="post-text mt-30">
@@ -335,7 +337,7 @@
                   </div>
                 </div>
         </div>
-        <div v-else-if="data.type==='video'" class="post_gallery_play">
+      <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
       <div class="bg-image">
         <img
           :src="coverimage.value"
@@ -400,7 +402,7 @@
           ><i class="fas fa-play"></i
         ></a>
       </div>
-        </div>
+        </div> -->
         <div v-else-if="data.type==='file' || data.type==='audio' || data.type==='externalAudio' ||data.type==='externalFile' ||data.type==='externalLink' " > 
             <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
         </div>
@@ -411,11 +413,11 @@
     </div></div>
     <div v-else-if="index!==skip_1 || index!==skip_2 ">
         <div v-if="data.type==='backlink'" class="post-text mt-30">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'start'">
+                 <div v-if="JSON.parse(content[index + 1].value).position === 'start'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
-                            {{ skip_1(index) }}
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a> 
+                            {{ assignSkip_1(index) }}
                         </p>
 
                 </div>
@@ -423,33 +425,33 @@
     </div>
 
         <div v-if="data.type==='text'" class="post-text mt-30">
-            <div v-if="Posts.content[index + 1].type === 'backlink'">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'end'">
+            <div v-if="content[index + 1].type === 'backlink'">
+                 <div v-if="JSON.parse(content[index + 1].value).position === 'end'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a> 
                         </p>
 
                 </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'middle'">
+                <div v-else-if="JSON.parse(content[index + 1].value).position === 'middle'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> {{ Posts.content[index + 2] }}
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a> {{ content[index + 2] }}
                         </p>
-                        {{ skip_2(index) }}
+                        {{ assignSkip_2(index) }}
                 </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'between'">
+                <div v-else-if="JSON.parse(content[index + 1].value).position === 'between'">
                         <p>
                             {{ data.value }}
                         </p>
                         <p>
-                         :)<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a>
+                         :)<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index +1].value).textOfLink }}</u></a>
                         </p>
                         <p>
-                            {{ Posts.content[index + 2] }}
+                            {{ content[index + 2] }}
                         </p>
-                        {{ skip_2(index) }}
+                        {{ assignSkip_2(index) }}
                 </div>
             </div>
             <div v-else >
@@ -515,7 +517,7 @@
                   </div>
                 </div>
         </div>
-        <div v-else-if="data.type==='video'" class="post_gallery_play">
+      <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
       <div class="bg-image">
         <img
           :src="coverimage.value"
@@ -580,7 +582,7 @@
           ><i class="fas fa-play"></i
         ></a>
       </div>
-        </div>
+        </div> -->
         <div v-else-if="data.type==='file' || data.type==='audio' || data.type==='externalAudio' ||data.type==='externalFile' ||data.type==='externalLink' " > 
             <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
         </div>
@@ -595,7 +597,8 @@
 
 
     </div>
-  </template>
+  </div>
+    </div>
               
               <div class="post-tags">
                 <ul>
@@ -802,7 +805,8 @@ export default {
   },
   components: { Header, StyleOne, FooterOne, OurLatestNews, Drawer },
   data: () => ({
-    Posts: "Posts",
+    Posts:[{}],
+    content:[{}],
     headerimage: "headerimage",
     coverimage:"coverimage",
     skip_1:-1,
@@ -811,6 +815,7 @@ export default {
   }),
   async created() {
     await this.fetchPosts();
+     this.content=JSON.parse(JSON.stringify(this.Posts.content));
     document.addEventListener("scroll", this.topToBottom);
   }, computed: {
     coverToShow() {
@@ -861,11 +866,14 @@ export default {
         result.classList.remove("active");
       }
     },
-    skip_1(index){
+    assignSkip_1(index){
             this.skip_1=index+1;
+            console.log("passed by skip1");
     },
-    skip_2(index){
+    assignSkip_2(index){
             this.skip_2=index+2;
+            console.log("passed by skip1");
+
     },    
 
   },

@@ -64,7 +64,7 @@
 export default {
 
   data: () => ({
-    posts: "posts",
+    posts:[{}],
     visiblePosts: 1,
   }),
   async created() {

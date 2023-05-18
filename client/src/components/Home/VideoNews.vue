@@ -124,8 +124,8 @@ export default {
     },
   },
   data: () => ({
-    smallPostGallery: "smallPostGallery",
-    mainvideo:"mainvideo",
+    smallPostGallery: [],
+    mainvideo: [],
     videoNewsSlide: {
       arrows: false,
       slidesToShow: 1,
@@ -133,8 +133,8 @@ export default {
     },
   }),
   async created() {
-    await JSON.parse(JSON.stringify(this.fetchsmallPostGallery()));
-    await JSON.parse(this.fetchmainvideo());
+    await this.fetchsmallPostGallery();
+    await this.fetchmainvideo();
 
 
   },

@@ -22,7 +22,7 @@
             <router-link to="/posts/postOne">{{ datas.title }}</router-link>
           </h3>
           <p class="text">
-            {{ datas.article }}
+            {{ datas.description }}
           </p>
           <a v-if="readMore" href="#">Read more</a>
         </div>
@@ -52,7 +52,7 @@
         </ul>
       </div>
       <p>
-        {{ datas.article }}
+        {{ datas.description }}
       </p>
       <a href="#"
         >LEARN MORE <img src="@/assets/images/arrow-2.svg" alt=""
@@ -79,7 +79,7 @@
         <router-link to="/posts/postOne">{{ datas.title }}</router-link>
       </h3>
       <p class="text">
-        {{ datas.article }}
+        {{ datas.description }}
       </p>
       <a v-if="readMore" href="#">Read more</a>
     </div>

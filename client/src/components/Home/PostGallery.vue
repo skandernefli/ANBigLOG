@@ -16,7 +16,7 @@
             <slider :settings="miniCardsSettings" ref="miniCards">
               <template v-for="(multi, index) in postGallery">
                 <div class="item" :key="index">
-                  <img :src="multi.picture" alt="" />
+                  <img :src="multi.picture" :alt="multi.title" />
                 </div>
               </template>
             </slider>
@@ -34,12 +34,8 @@
 </template>
 
 <script>
-/* import axios from "axios";
- */
-/* import postGallery from "../Data/BigVideoCardWithDes";
- */import Slider from "../Helpers/Slider.vue";
-/* import smallPostGallery from "../Data/NewsRowCard";
- */import BigVideoCardWithDes from "../Utility/Cards/BigVideoCardWithDes.vue";
+import Slider from "../Helpers/Slider.vue";
+import BigVideoCardWithDes from "../Utility/Cards/BigVideoCardWithDes.vue";
 import HomeOne from "../Utility/Sidebar/StyleOne.vue";
 
 export default {
@@ -52,14 +48,14 @@ export default {
   },
   data: () => ({
     //post gallery
-    postGallery:"postGallery",
-    latestPostGallery:"latestPostGallery",
-    popularPostGallery:"popularPostGallery",
-    smallPostGallery: "smallPostGallery",
+    postGallery:[],
+    latestPostGallery:[],
+    popularPostGallery:[],
+    smallPostGallery: [],
     selectedGallery: 'trendy',
     miniCardsSettings: {
       slidesToShow: 8,
-      slideToScroll: 1,
+      slideToScroll: 0,
       autoplay: true,
       arrows: false,
       responsive: [
@@ -80,10 +76,10 @@ export default {
       arrows: false,
     },
   }),  async created() {
-    await JSON.parse(JSON.stringify(this.fetchPostGallery()));
-    await JSON.parse(JSON.stringify(this.fetchsmallPostGallery()));
-    await JSON.parse(JSON.stringify(this.fetchlatestPostGallery()));
-    await JSON.parse(JSON.stringify(this.fetchpopularPostGallery()));
+    await this.fetchPostGallery();
+    await this.fetchsmallPostGallery();
+    await this.fetchlatestPostGallery();
+    await this.fetchpopularPostGallery();
 
 
    
@@ -103,10 +99,10 @@ export default {
     },
     //post gallery
     async fetchPostGallery() {
-      const response = await fetch("http://localhost:8000/server/postgalley").then(res => res.json());
-      const data = response[0].data;
-      console.log("110", data)
-      return this.postGallery = data;
+      const response = await fetch("http://localhost:8000/server/postgalley");
+      const data= await response.json();
+      this.postGallery=data[0].data;
+
     },
     async fetchsmallPostGallery() {
       const response = await fetch("http://localhost:8000/server/trendy").then(res => res.json());

@@ -35,7 +35,7 @@ export default {
   components: { OverlayCard, Slider },
   data: () => ({
     //playPost
-    ManageSinglePlayPosts: "ManageSinglePlayPosts",
+    ManageSinglePlayPosts: [{}],
     playPostSettings: {
       arrows: false,
       slidesToShow: 2,
@@ -52,7 +52,7 @@ export default {
     },
   }),
    async created() {
-    await JSON.parse(JSON.stringify(this.fetchManageSinglePlayPosts()));
+    await this.fetchManageSinglePlayPosts();
 
 
 
