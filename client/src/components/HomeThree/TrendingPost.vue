@@ -1,5 +1,6 @@
 <template>
   <section class="trending-3-area">
+    
     <div class="container custom-container">
       <div class="row">
         <div class="col-lg-8">
@@ -33,6 +34,8 @@
                         <ul>
                           <li>
                             <a href="#"><i class="fal fa-bookmark"></i></a>
+                            <button class="main-btn">SEND MESSAGE</button>
+
                           </li>
                           <li>
                             <a href="#"><i class="fas fa-share"></i></a>

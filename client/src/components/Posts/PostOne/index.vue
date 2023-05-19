@@ -45,9 +45,9 @@
                 <p>
                   {{ Posts.intro }}
                 </p>
-                <template v-for="(data, index) in Posts.content">
+                <template v-for="(data, index) in content">
                   <div v-if="data.type === 'image'" :key="index" class="thumb">
-                    <img :src="data.value" alt="" />
+                    <img :src="data.value" :alt="Posts.title" />
                   </div>
                 </template>
               </div>
@@ -87,268 +87,523 @@
                   </ul>
                 </div>
               </div>
-              <template v-for="(data, index) in Posts.content">
-                <div v-if="index > 0" :key="index">
-                  <div v-if="Posts.content[index - 1].type === 'backlink'">
-                    <div v-if="JSON.parse(Posts.content[index - 1].value).position === 'start'">
-                      <div v-if="data.type === 'text'" class="post-text mt-30">
+              <div>
+
+                <div v-for="(data, index) in content" v-bind:key="data._id">
+
+
+                  <div v-if="index === 0">
+                    <div v-if="data.type === 'backlink'" class="post-text mt-30">
+                      <div v-if="JSON.parse(JSON.stringify(content[index + 1].value)).position === 'start'">
                         <p>
-                          <a :href="JSON.parse(Posts.content[index - 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index - 1].value).textOfLink }}</u></a> {{ data.value }}
+                          {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                        </p>
+                        {{ assignSkip_1(index) }}
+
+                      </div>
+
+                    </div>
+                    <div v-if="data.type === 'text'" class="post-text mt-30">
+                      <div v-if="content[index + 1].type === 'backlink'">
+                        <div v-if="JSON.parse(content[index + 1].value).position === 'end'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'middle'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a> {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'between'">
+                          <p>
+                            {{ data.value }}
+                          </p>
+                          <p>
+                            :)<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+                          <p>
+                            {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                      </div>
+                      <div v-else>
+                        <p>
+                          {{ data.value }}
                         </p>
                       </div>
                     </div>
-                    <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'end'">
-                      <div v-if="data.type === 'text'" class="post-text mt-30">
-                        <p>
-                          {{ data.value }} <a :href="JSON.parse(Posts.content[index - 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index - 1].value).textOfLink }}</u></a>
-                        </p>
+                    <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                      <ul>
+                        <li><a>{{ data.value }}</a></li>
+                      </ul>
+                    </div>
+                    <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                      <h3 class="title">{{ data.value }}</h3>
+                    </div>
+                    <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                      <h5 class="title">{{ data.value }}</h5>
+                    </div>
+                    <div v-else-if="data.type === 'thumb'" class="row pt-10">
+                      <div class="col-lg-6">
+                        <div class="post-thumb">
+                          <img :src="data.value" :alt="data.title" />
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="text">
+                          <p>
+                            {{ data.desciption }}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'middle' || JSON.parse(Posts.content[index + 1].value).position === 'middle' ">
-                      <div v-if="data.type === 'text'" class="post-text mt-30">
-                        <p>
-                          {{ data.value }} <a :href="JSON.parse(Posts.content[index - 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index - 1].value).textOfLink }}</u></a>
-                        </p>
+                    <div v-else-if="data.type === 'quote'" class="post-text pt-20">
+                      <p>
+                        <span class="quote-text">{{ data.value }}</span>
+                      </p>
+                    </div>
+                    <div v-else-if="data.type === 'image'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                        <span>{{ data.title }}</span>
+                        <span>{{ data.desciption }}</span>
                       </div>
+                    </div>
+                    <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
+                      <div class="thumb">
+                        <img :src="data.value" :alt="data.title" />
+                      </div>
+                      <div class="post-quote-content">
+                        <img src="@/assets/images/quote-icon.png" alt="" />
+                        <p>
+                          {{ data.desciption }}
+                        </p>
+                        <div class="user">
+                          <h5 class="title">{{ data.title }}</h5>
+                          <span>{{ data.source }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  <div v-else-if="data.type==='video'" class="post_gallery_play">
+      <div class="bg-image">
+        <img
+          :src="coverimage.value"
+          :alt="coverimage.title"
+          style="width: 100%; height: 100%"
+        />
+      </div>
+      <div class="post__gallery_play_content" style="z-index: 10">
+        <div class="post-meta">
+          <div class="meta-categories">
+            <a >{{ Posts.categorie_name }}</a>
+          </div>
+          <div class="meta-date">
+            <span>{{  Posts.created_at }}</span>
+          </div>
+        </div>
+        <h2 class="title">
+          <a >{{ data.title }}</a>
+        </h2>
+        <p>
+          {{ data.desciption }}
+        </p>
+      </div>
+      <div
+        class="post_play_btn"
+        @click.prevent="$store.dispatch('toggleVideo')"
+      >
+        <a
+          class="video-popup"
+          :href="data.value"
+          a
+          ><i class="fas fa-play"></i
+        ></a>
+      </div>
+        </div>
+        <div v-else-if="data.type==='externalVideo'" class="post_gallery_play">
+      <div class="bg-image">
+        <img
+          :src="coverimage.value"
+          :alt="coverimage.title"
+          style="width: 100%; height: 100%"
+        />
+      </div>
+      <div class="post__gallery_play_content" style="z-index: 10">
+        <div class="post-meta">
+          <div class="meta-categories">
+            <a >{{ Posts.categorie_name }}</a>
+          </div>
+          <div class="meta-date">
+            <span>{{  Posts.created_at }}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="post_play_btn"
+        @click.prevent="$store.dispatch('toggleVideo')"
+      >
+        <a
+          class="video-popup"
+          :href="data.value"
+          a
+          ><i class="fas fa-play"></i
+        ></a>
+      </div>
+        </div> -->
+                    <div
+                      v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                      <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
+                    </div>
+                    <div v-if="data.type === 'code'" class="post-text mt-30">
+                      <div v-html="data.value"></div>
                     </div>
 
                   </div>
-                  <ul>
-                    <li><a href="#">Should more of us wear face masks?</a></li>
-                    <li>
-                      <a href="#"><u>Why some countries wear face masks and others don’t</u></a>
-                    </li>
-                    <li>
-                      <a href="#">Coronavirus: Are homemade face masks safe?</a>
-                    </li>
-                  </ul>
-                  <p>
-                    The comments from Dr Fauci, who heads the National Institute
-                    of Allergy and Infectious Diseases, appeared to contradict
-                    those of President Trump, who has consistently dismissed the
-                    notion of a nationwide lockdown.
-                  </p>
-                  <p>
-                    “It’s awfully tough to say, ‘close it down.’ We have to have a
-                    little bit of flexibility,” Mr Trump said on Wednesday.
-                  </p>
-                </div>
-              </template>
-              <div class="post-text mt-30">
-                <p>
-                  Entilators will be taken from certain New York hospitals and
-                  redistributed to the worst-hit parts of the state under an
-                  order to be signed by Governor Andrew Cuomo.
-                </p>
-                <p>
-                  New York saw its highest single-day increase in deaths, up by
-                  562 to 2,935 - nearly half of all virus-related US deaths
-                  recorded yesterday. The White House may advise those in virus
-                  hotspots to wear face coverings in public to help stem the
-                  spread.
-                </p>
-                <p>The US now has 245,658 Covid-19 cases.</p>
-                <p>
-                  A shortage of several hundred ventilators in New York City,
-                  the epicentre of the outbreak in the US, prompted Mr Cuomo to
-                  say that he will order the machines be taken from various
-                  parts of the state and give them to harder-hit areas.
-                </p>
-                <p>
-                  Amid a deepening crisis, top health official
-                  <span class="user">Dr Anthony Fauci</span> has said he
-                  believes all states should issue stay-at-home orders.
-                </p>
-                <p>
-                  “I don’t understand why that’s not happening,” Dr Fauci told
-                  CNN on Thursday. “If you look at what’s going on in this
-                  country, I just don’t understand why we’re not doing that.”
-                </p>
-                <p>
-                  “You’ve got to put your foot on the accelerator to bring that
-                  number down,” he added, referring to infection and death
-                  rates.
-                </p>
-                <ul>
-                  <li><a href="#">Should more of us wear face masks?</a></li>
-                  <li>
-                    <a href="#"><u>Why some countries wear face masks and others don’t</u></a>
-                  </li>
-                  <li>
-                    <a href="#">Coronavirus: Are homemade face masks safe?</a>
-                  </li>
-                </ul>
-                <p>
-                  The comments from Dr Fauci, who heads the National Institute
-                  of Allergy and Infectious Diseases, appeared to contradict
-                  those of President Trump, who has consistently dismissed the
-                  notion of a nationwide lockdown.
-                </p>
-                <p>
-                  “It’s awfully tough to say, ‘close it down.’ We have to have a
-                  little bit of flexibility,” Mr Trump said on Wednesday.
-                </p>
-              </div>
-              <div class="post-text pt-20">
-                <h5 class="title">What’s the debate over masks?</h5>
-                <p>
-                  Both the US Centers for Disease Control (CDC) and the World
-                  Health Organization (WHO) are reassessing their guidance on
-                  face masks, as experts race to find ways to fight the highly
-                  contagious virus.
-                </p>
-                <p>
-                  Covid-19 is carried in airborne droplets from people coughing
-                  or sneezing, but there is some dispute over how far people
-                  should distance themselves from each other, and whether masks
-                  are useful when used by the public.
-                </p>
-                <div class="row pt-10">
-                  <div class="col-lg-6">
-                    <div class="post-thumb">
-                      <img src="@/assets/images/post-thumb-2.png" alt="" />
+                  <div v-else-if="index === content.length - 1">
+                    <div v-if="index !== skip_1 && index !== skip_2">
+
+                      <div v-if="data.type === 'text'" class="post-text mt-30">
+                        <p>
+                          {{ data.value }}
+                        </p>
+
+                      </div>
+                      <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                        <ul>
+                          <li><a>{{ data.value }}</a></li>
+                        </ul>
+                      </div>
+                      <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                        <h3 class="title">{{ data.value }}</h3>
+                      </div>
+                      <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                        <h5 class="title">{{ data.value }}</h5>
+                      </div>
+                      <div v-else-if="data.type === 'thumb'" class="row pt-10">
+                        <div class="col-lg-6">
+                          <div class="post-thumb">
+                            <img :src="data.value" :alt="data.title" />
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="text">
+                            <p>
+                              {{ data.desciption }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else-if="data.type === 'quote'" class="post-text pt-20">
+                        <p>
+                          <span class="quote-text">{{ data.value }}</span>
+                        </p>
+                      </div>
+                      <div v-else-if="data.type === 'image'" class="post-text pt-20">
+                        <div class="thumb pt-20 pb-35">
+                          <img :src="data.value" alt="" />
+                          <span>{{ data.title }}</span>
+                          <span>{{ data.desciption }}</span>
+                        </div>
+                      </div>
+                      <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
+                        <div class="thumb pt-20 pb-35">
+                          <img :src="data.value" alt="" />
+                        </div>
+                      </div>
+                      <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
+                        <div class="thumb">
+                          <img :src="data.value" :alt="data.title" />
+                        </div>
+                        <div class="post-quote-content">
+                          <img src="@/assets/images/quote-icon.png" alt="" />
+                          <p>
+                            {{ data.desciption }}
+                          </p>
+                          <div class="user">
+                            <h5 class="title">{{ data.title }}</h5>
+                            <span>{{ data.source }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
+      <div class="bg-image">
+        <img
+          :src="coverimage.value"
+          :alt="coverimage.title"
+          style="width: 100%; height: 100%"
+        />
+      </div>
+      <div class="post__gallery_play_content" style="z-index: 10">
+        <div class="post-meta">
+          <div class="meta-categories">
+            <a >{{ Posts.categorie_name }}</a>
+          </div>
+          <div class="meta-date">
+            <span>{{  Posts.created_at }}</span>
+          </div>
+        </div>
+        <h2 class="title">
+          <a >{{ data.title }}</a>
+        </h2>
+        <p>
+          {{ data.desciption }}
+        </p>
+      </div>
+      <div
+        class="post_play_btn"
+        @click.prevent="$store.dispatch('toggleVideo')"
+      >
+        <a
+          class="video-popup"
+          :href="data.value"
+          a
+          ><i class="fas fa-play"></i
+        ></a>
+      </div>
+        </div>
+        <div v-else-if="data.type==='externalVideo'" class="post_gallery_play">
+      <div class="bg-image">
+        <img
+          :src="coverimage.value"
+          :alt="coverimage.title"
+          style="width: 100%; height: 100%"
+        />
+      </div>
+      <div class="post__gallery_play_content" style="z-index: 10">
+        <div class="post-meta">
+          <div class="meta-categories">
+            <a >{{ Posts.categorie_name }}</a>
+          </div>
+          <div class="meta-date">
+            <span>{{  Posts.created_at }}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="post_play_btn"
+        @click.prevent="$store.dispatch('toggleVideo')"
+      >
+        <a
+          class="video-popup"
+          :href="data.value"
+          a
+          ><i class="fas fa-play"></i
+        ></a>
+      </div>
+        </div> -->
+                      <div
+                        v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                        <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
+                      </div>
+                      <div v-if="data.type === 'code'" class="post-text mt-30">
+                        <div v-html="data.value"></div>
+                      </div>
+
                     </div>
                   </div>
-                  <div class="col-lg-6">
-                    <div class="text">
+                  <div v-else-if="index !== skip_1 && index !== skip_2">
+                    <div v-if="data.type === 'backlink'" class="post-text mt-30">
+                      <div v-if="JSON.parse(content[index + 1].value).position === 'start'">
+                        <p>
+                          {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          {{ assignSkip_1(index) }}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                    <div v-if="data.type === 'text'" class="post-text mt-30">
+                      <div v-if="content[index + 1].type === 'backlink'">
+                        <div v-if="JSON.parse(content[index + 1].value).position === 'end'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'middle'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a> {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'between'">
+                          <p>
+                            {{ data.value }}
+                          </p>
+                          <p>
+                            :)<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+                          <p>
+                            {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                      </div>
+                      <div v-else>
+                        <p>
+                          {{ data.value }}
+                        </p>
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                      <ul>
+                        <li><a>{{ data.value }}</a></li>
+                      </ul>
+                    </div>
+                    <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                      <h3 class="title">{{ data.value }}</h3>
+                    </div>
+                    <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                      <h5 class="title">{{ data.value }}</h5>
+                    </div>
+                    <div v-else-if="data.type === 'thumb'" class="row pt-10">
+                      <div class="col-lg-6">
+                        <div class="post-thumb">
+                          <img :src="data.value" :alt="data.title" />
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="text">
+                          <p>
+                            {{ data.desciption }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'quote'" class="post-text pt-20">
                       <p>
-                        The WHO advises that ordinary face masks are only
-                        effective if combined with careful hand-washing and
-                        social-distancing, and so far it does not recommend them
-                        generally for healthy people.
-                      </p>
-                      <p>
-                        However, more and more health experts now say there are
-                        benefits. They argue that the public use of masks can
-                        primarily help by preventing asymptomatic patients -
-                        people who have been infected with Covid-19 but are not
-                        aware, and not displaying any symptoms - from
-                        unknowingly spreading the virus to others.
+                        <span class="quote-text">{{ data.value }}</span>
                       </p>
                     </div>
+                    <div v-else-if="data.type === 'image'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                        <span>{{ data.title }}</span>
+                        <span>{{ data.desciption }}</span>
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
+                      <div class="thumb">
+                        <img :src="data.value" :alt="data.title" />
+                      </div>
+                      <div class="post-quote-content">
+                        <img src="@/assets/images/quote-icon.png" alt="" />
+                        <p>
+                          {{ data.desciption }}
+                        </p>
+                        <div class="user">
+                          <h5 class="title">{{ data.title }}</h5>
+                          <span>{{ data.source }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
+      <div class="bg-image">
+        <img
+          :src="coverimage.value"
+          :alt="coverimage.title"
+          style="width: 100%; height: 100%"
+        />
+      </div>
+      <div class="post__gallery_play_content" style="z-index: 10">
+        <div class="post-meta">
+          <div class="meta-categories">
+            <a >{{ Posts.categorie_name }}</a>
+          </div>
+          <div class="meta-date">
+            <span>{{  Posts.created_at }}</span>
+          </div>
+        </div>
+        <h2 class="title">
+          <a >{{ data.title }}</a>
+        </h2>
+        <p>
+          {{ data.desciption }}
+        </p>
+      </div>
+      <div
+        class="post_play_btn"
+        @click.prevent="$store.dispatch('toggleVideo')"
+      >
+        <a
+          class="video-popup"
+          :href="data.value"
+          a
+          ><i class="fas fa-play"></i
+        ></a>
+      </div>
+        </div>
+        <div v-else-if="data.type==='externalVideo'" class="post_gallery_play">
+      <div class="bg-image">
+        <img
+          :src="coverimage.value"
+          :alt="coverimage.title"
+          style="width: 100%; height: 100%"
+        />
+      </div>
+      <div class="post__gallery_play_content" style="z-index: 10">
+        <div class="post-meta">
+          <div class="meta-categories">
+            <a >{{ Posts.categorie_name }}</a>
+          </div>
+          <div class="meta-date">
+            <span>{{  Posts.created_at }}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="post_play_btn"
+        @click.prevent="$store.dispatch('toggleVideo')"
+      >
+        <a
+          class="video-popup"
+          :href="data.value"
+          a
+          ><i class="fas fa-play"></i
+        ></a>
+      </div>
+        </div> -->
+                    <div
+                      v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                      <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
+                    </div>
+                    <div v-if="data.type === 'code'" class="post-text mt-30">
+                      <div v-html="data.value"></div>
+                    </div>
+
+
+
+
+
+
+
                   </div>
                 </div>
               </div>
-              <div class="post-text pt-20">
-                <p>
-                  Masks may also help lower the risk of individuals catching the
-                  virus through the droplets from another person’s sneeze or a
-                  cough - and people can be taught how put masks on and take
-                  them off correctly, they argue.
-                </p>
-                <p>
-                  On Thursday New York mayor Bill de Blasio urged all New
-                  Yorkers to cover their faces when outside and near others, but
-                  not to use surgical masks, which are in short supply.
-                </p>
-                <p>
-                  “It could be a scarf. It could be something you create
-                  yourself at home. It could be a bandana,” he said. Governor
-                  Cuomo weighed in on Friday, saying
-                  <span class="quote-text">“i think it’s fair to say that the masks couldn’t hurt
-                    unless they gave you a false sense of security.”</span>
-                </p>
-                <p>
-                  Meanwhile, residents in Laredo, Texas will now face a $1,000
-                  (£816) fine if they fail to cover their noses and mouths while
-                  outside, after city officials issued an emergency ordinance to
-                  its approximately 250,000 residents this week.
-                </p>
-              </div>
-              <div class="post-text pt-20">
-                <h5 class="title">Which states are not in lockdown?</h5>
-                <p>
-                  Both the US Centers for Disease Control (CDC) and the World
-                  Health Organization (WHO) are reassessing their guidance on
-                  face masks, as experts race to find ways to fight the highly
-                  contagious virus.
-                </p>
-                <p>
-                  Covid-19 is carried in airborne droplets from people coughing
-                  or sneezing, but there is some dispute over how far people
-                  should distance themselves from each other, and whether masks
-                  are useful when used by the public.
-                </p>
-                <div class="thumb pt-20 pb-35">
-                  <img src="@/assets/images/post-thumb-3.jpg" alt="" />
-                  <span>I just had a baby - now I’m going to the frontline.</span>
-                </div>
-                <p>
-                  Masks may also help lower the risk of individuals catching the
-                  virus through the droplets from another person’s sneeze or a
-                  cough - and people can be taught how put masks on and take
-                  them off correctly, they argue.
-                </p>
-                <p>
-                  On Thursday New York mayor Bill de Blasio urged all New
-                  Yorkers to cover their faces when outside and near others, but
-                  not to use surgical masks, which are in short supply.
-                </p>
-                <p>
-                  Meanwhile, residents in Laredo, Texas will now face a $1,000
-                  (£816) fine if they fail to cover their noses and mouths while
-                  outside, after city officials issued an emergency ordinance to
-                  its approximately 250,000 residents this week.
-                </p>
-              </div>
-              <div class="post-quote d-block d-md-flex align-items-center">
-                <div class="thumb">
-                  <img src="@/assets/images/post-quote.jpg" alt="" />
-                </div>
-                <div class="post-quote-content">
-                  <img src="@/assets/images/quote-icon.png" alt="" />
-                  <p>
-                    I must explain to you how all this mistake idea denouncing
-                    pleasure and praising pain was born and I will give you a
-                    complete account of the system, and expound the actual
-                    teachings of the great explorer of the truth, the
-                    master-builder of human happiness. No one rejects, dislikes,
-                    or avoids pleasure because it is pleasure.
-                  </p>
-                  <div class="user">
-                    <img src="@/assets/images/author1.png" alt="" />
-                    <h5 class="title">Rafiqul islam</h5>
-                    <span>Frontend Developer</span>
-                  </div>
-                </div>
-              </div>
-              <div class="post-text mt-35">
-                <p>
-                  The next day I came back to my team and said, This is what I
-                  just heard, we have to get ready, he said. We knew that it
-                  wasn’t going to be long before we were going to have to deal
-                  with it.
-                </p>
-                <p>
-                  Mr. Hogan has also leaned on his wife, Yumi Hogan, a Korean
-                  immigrant, who was also at the governor’s convention, which
-                  included a dinner at the Korean ambassador’s home. As the
-                  first Korean first lady in American history, Ms. Hogan has
-                  become something of an icon in South Korea. I just grabbed my
-                  wife and said, Look, you speak Korean. You know the president.
-                  You know the first lady. You know the ambassador. Let’s talk
-                  to them in Korean, and tell them we need their help. Companies
-                  in South Korea said would tests.
-                </p>
-                <div class="thumb pt-10 pb-35">
-                  <img src="@/assets/images/post-thumb-4.png" alt="" />
-                </div>
-                <p>
-                  In global terms the US has the most Covid-19 cases - more than
-                  245,000. And on Thursday the US authorities said more than
-                  1,000 had died in the past 24 hours - the highest daily toll
-                  so far in the world.
-                </p>
-                <p>
-                  Hospitals and morgues in New York are struggling to cope with
-                  the pandemic, and New York Governor Andrew Cuomo has warned
-                  that New York risks running out of ventilators for patients in
-                  six days.
-                </p>
-              </div>
+
               <div class="post-tags">
                 <ul>
                   <li>
@@ -554,15 +809,31 @@ export default {
   },
   components: { Header, StyleOne, FooterOne, OurLatestNews, Drawer },
   data: () => ({
-    Posts: "Posts",
+    Posts: [],
+    content: [],
     headerimage: "headerimage",
+    coverimage: "coverimage",
+    skip_1: -1,
+    skip_2: -1,
     sidebar: false,
   }),
   async created() {
     await this.fetchPosts();
+    this.content = this.Posts.content;
+    console.log("content", this.content);
     document.addEventListener("scroll", this.topToBottom);
   }, computed: {
     coverToShow() {
+      return post => {
+        for (let i = 0; i < post.content.length; i++) {
+          if (post.content[i].type === "coverimage") {
+            return post.content[i];
+          }
+        }
+        return "";
+      };
+    },
+    headerImage() {
       return post => {
         for (let i = 0; i < post.content.length; i++) {
           if (post.content[i].type === "headerimage") {
@@ -579,7 +850,8 @@ export default {
       try {
         const response = await fetch(`http://localhost:8000/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
         this.Posts = await response.json();
-        this.headerimage = this.coverToShow(this.Posts);
+        this.headerimage = this.headerImage(this.Posts);
+        this.coverimage = this.coverToShow(this.Posts);
         console.log("post", this.Posts);
       } catch (error) {
         console.error(error);
@@ -599,8 +871,17 @@ export default {
         result.classList.remove("active");
       }
     },
+    assignSkip_1(index) {
+      this.skip_1 = index + 1;
+      console.log("passed by skip1");
+    },
+    assignSkip_2(index) {
+      this.skip_2 = index + 2;
+      console.log("passed by skip1");
+
+    },
+
   },
 };
 </script>
-
 <style></style>

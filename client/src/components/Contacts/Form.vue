@@ -39,7 +39,6 @@
                       rows="10"
                       placeholder="Tell us about your message…"
                     ></textarea>
-                    <button class="main-btn">SEND MESSAGE</button>
                   </div>
                 </div>
               </div>
@@ -47,6 +46,8 @@
           </div>
         </div>
         <div class="col-lg-4">
+          <button class="main-btn">SEND MESSAGE</button>
+
           <div class="contact-sidebar">
             <FromCount />
             <signup-style-one />

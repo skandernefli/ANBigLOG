@@ -1,52 +1,51 @@
 <template>
-  <router-link to="/posts/postOne" class="d-block">
+  <a :href="datas.link" class="d-block">
     <div class="post_gallery_play">
       <div class="bg-image">
         <img
           :src="datas.thumbnail"
-          alt=""
+          :alt="datas.title"
           style="width: 100%; height: 100%"
         />
       </div>
       <div class="post__gallery_play_content" style="z-index: 10">
         <div class="post-meta">
           <div class="meta-categories">
-            <a href="#">{{ datas.category.name }}</a>
+            <a :href="datas.link">{{ datas.category.name }}</a>
           </div>
           <div class="meta-date">
             <span>{{ datas.category.create_At }}</span>
           </div>
         </div>
         <h2 class="title">
-          <a href="#">{{ datas.title }}</a>
+          <a :href="datas.link">{{ datas.title }}</a>
         </h2>
         <p>
-          The property, complete with a 30-seat screening room, a 100-seat
-          amphitheater and a swimming pond with sandy beach and outdoor shower…
+          {{ datas.description }}
         </p>
       </div>
       <div
+      v-if="datas && datas.video_link" 
         class="post_play_btn"
         @click.prevent="$store.dispatch('toggleVideo')"
       >
         <a
           class="video-popup"
-          href="https://www.youtube.com/watch?v=4mGyYNuG6us"
+          :href= "datas.video_link"
           a
           ><i class="fas fa-play"></i
         ></a>
       </div>
+      
     </div>
-  </router-link>
+  </a>
 </template>
 
 <script>
 export default {
-  props: ["datas"],
-  mounted() {
-    console.log("datas.thumbnail", this.datas);
-  },
+  props: ["datas","datas_2"],
 };
+
 </script>
 
 <style></style>

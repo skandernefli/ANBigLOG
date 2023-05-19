@@ -2,14 +2,15 @@
   <div class="most-share-post-item">
     <div class="post-meta">
       <div class="meta-categories">
-        <a href="#">{{ datas.category.name }}</a>
+        <a :href="datas.link">{{ datas.category.name }}</a>
       </div>
       <div class="meta-date">
         <span>{{ datas.category.create_At }}</span>
       </div>
     </div>
     <h3 class="title">
-      <router-link to="/posts/postOne">{{ datas.title }}</router-link>
+      <a :href="datas.link"    >
+    {{ datas.title }}</a>
     </h3>
     <ul>
       <li><i class="fab fa-twitter"></i> 2.2K</li>

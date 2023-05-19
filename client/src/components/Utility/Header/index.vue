@@ -1,27 +1,35 @@
 <template>
   <header class="header-area">
     <div class="header-centerbar">
-      <div class="container">
-        <div class="row align-items-center">
+      <div >
+        <div class="row align-items-center ">
           <div class="col-lg-4">
-            <div class="logo">
+            <div class="logo mar-left">
               <router-link to="/">
                 <img :src="require(`@/assets/images/` + image)" alt="feature" />
               </router-link>
             </div>
           </div>
-          <div class="col-lg-8">
+          <div class="col-lg-4">
             <div class="header-centerbar-ad">
               <a href="#">
                 <img src="@/assets/images/ads/one_ad.png" alt=""
               /></a>
             </div>
           </div>
+          <div class="col-lg-4">
+            <div class="header-centerbar-ad">
+              <a href="#">
+                <img src="@/assets/images/ads/one_ad.png" alt=""
+              /></a>
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>
     <div class="header-menubar">
-      <div class="container">
+      <div class="mar-left">
         <div class="row align-items-center">
           <div class="col-lg-8 col-sm-3 col-3">
             <svg
@@ -111,5 +119,8 @@ export default {
   color: #17191d;
   outline: none;
   border-radius: 7px;
+}
+.mar-left{
+  margin-left: 10px;
 }
 </style>

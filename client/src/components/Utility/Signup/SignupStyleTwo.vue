@@ -7,7 +7,6 @@
     </p>
     <form action="#">
       <div class="input-box">
-        <input type="text" placeholder="Your email address" />
         <button type="button">SIGN UP</button>
       </div>
     </form>
