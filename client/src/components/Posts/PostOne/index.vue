@@ -45,7 +45,7 @@
                 <p>
                   {{ Posts.intro }}
                 </p>
-                <template v-for="(data, index) in Posts.content">
+                <template v-for="(data, index) in content">
                   <div v-if="data.type === 'image'" :key="index" class="thumb">
                     <img :src="data.value" :alt="Posts.title" />
                   </div>
@@ -87,115 +87,117 @@
                   </ul>
                 </div>
               </div>
-              <template v-if="Posts.content.length!==0" v-for="(data, index) in Posts.content">
-    
-    
-    <div v-if="index===0" :key="index">
-        <div v-if="data.type==='backlink'" class="post-text mt-30">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'start'">
-                        <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
-                        </p>
-                        {{ skip_1(index) }}
+              <div>
 
-                </div>
-         
-    </div>
-        <div v-if="data.type==='text'" class="post-text mt-30">
-            <div v-if="Posts.content[index + 1].type === 'backlink'">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'end'">
-                        <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
-                        </p>
+                <div v-for="(data, index) in content" v-bind:key="data._id">
 
-                </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'middle'">
+
+                  <div v-if="index === 0">
+                    <div v-if="data.type === 'backlink'" class="post-text mt-30">
+                      <div v-if="JSON.parse(JSON.stringify(content[index + 1].value)).position === 'start'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> {{ Posts.content[index + 2] }}
+                          {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index + 1].value).textOfLink }}</u></a>
                         </p>
-                        {{ skip_2(index) }}
-                </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'between'">
-                        <p>
+                        {{ assignSkip_1(index) }}
+
+                      </div>
+
+                    </div>
+                    <div v-if="data.type === 'text'" class="post-text mt-30">
+                      <div v-if="content[index + 1].type === 'backlink'">
+                        <div v-if="JSON.parse(content[index + 1].value).position === 'end'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'middle'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a> {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'between'">
+                          <p>
                             {{ data.value }}
-                        </p>
+                          </p>
+                          <p>
+                            :)<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+                          <p>
+                            {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                      </div>
+                      <div v-else>
                         <p>
-                         :)<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a>
+                          {{ data.value }}
                         </p>
-                        <p>
-                            {{ Posts.content[index + 2] }}
-                        </p>
-                        {{ skip_2(index) }}
-                </div>
-            </div>
-            <div v-else >
-            <p>
-                {{ data.value }}
-            </p>
-            </div>
-        </div>
-        <div v-else-if="data.type==='points'"  class="post-text mt-30">
-            <ul>
-                  <li><a>{{ data.value }}</a></li>
-            </ul>
-        </div>  
-        <div  v-else-if="data.type==='title'"  class="post-text pt-20">
-                <h3 class="title">{{ data.value }}</h3>
-        </div>
-        <div  v-else-if="data.type==='subtitle'" class="post-text pt-20">
-                <h5 class="title">{{ data.value }}</h5>
-        </div>
-        <div  v-else-if="data.type==='thumb'" class="row pt-10">
-                  <div class="col-lg-6">
-                    <div class="post-thumb">
-                      <img :src="data.value" :alt="data.title" />
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="text">
+                    <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                      <ul>
+                        <li><a>{{ data.value }}</a></li>
+                      </ul>
+                    </div>
+                    <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                      <h3 class="title">{{ data.value }}</h3>
+                    </div>
+                    <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                      <h5 class="title">{{ data.value }}</h5>
+                    </div>
+                    <div v-else-if="data.type === 'thumb'" class="row pt-10">
+                      <div class="col-lg-6">
+                        <div class="post-thumb">
+                          <img :src="data.value" :alt="data.title" />
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="text">
+                          <p>
+                            {{ data.desciption }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'quote'" class="post-text pt-20">
                       <p>
-                     {{ data.desciption }}
+                        <span class="quote-text">{{ data.value }}</span>
                       </p>
                     </div>
-                  </div>
-        </div>
-        <div  v-else-if="data.type==='quote'"  class="post-text pt-20">
-               <p>
-                  <span class="quote-text">{{ data.value }}</span>
-                </p>
-        </div>
-        <div v-else-if="data.type==='image'" class="post-text pt-20">
-               <div class="thumb pt-20 pb-35">
-                  <img :src="data.value" alt="" />
-                  <span>{{ data.title }}</span>
-                    <span>{{ data.desciption }}</span>
-                </div>
-        </div>
-        <div v-else-if="data.type==='externalImage'" class="post-text pt-20">
-               <div class="thumb pt-20 pb-35">
-                  <img :src="data.value" alt="" />
-                </div>
-        </div>
-        <div v-else-if="data.type==='postquote'" class="post-quote d-block d-md-flex align-items-center">
-                <div class="thumb">
-                  <img :src="data.value" :alt="data.title" />
-                </div>
-                <div class="post-quote-content">
-                  <img src="@/assets/images/quote-icon.png" alt="" />
-                  <p>
-                  {{ data.desciption }}
-                  </p>
-                  <div class="user">
-                    <h5 class="title">{{ data.title }}</h5>
-                    <span>{{ data.source }}</span>
-                  </div>
-                </div>
-        </div>
-        <div v-else-if="data.type==='video'" class="post_gallery_play">
+                    <div v-else-if="data.type === 'image'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                        <span>{{ data.title }}</span>
+                        <span>{{ data.desciption }}</span>
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
+                      <div class="thumb">
+                        <img :src="data.value" :alt="data.title" />
+                      </div>
+                      <div class="post-quote-content">
+                        <img src="@/assets/images/quote-icon.png" alt="" />
+                        <p>
+                          {{ data.desciption }}
+                        </p>
+                        <div class="user">
+                          <h5 class="title">{{ data.title }}</h5>
+                          <span>{{ data.source }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  <div v-else-if="data.type==='video'" class="post_gallery_play">
       <div class="bg-image">
         <img
           :src="coverimage.value"
@@ -260,82 +262,83 @@
           ><i class="fas fa-play"></i
         ></a>
       </div>
-        </div>
-        <div v-else-if="data.type==='file' || data.type==='audio' || data.type==='externalAudio' ||data.type==='externalFile' ||data.type==='externalLink' " > 
-            <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
-        </div>
-        <div v-if="data.type==='code'" class="post-text mt-30">
-            <div v-html="data.value"></div>
-        </div>
-        
-    </div>
-    <div v-else-if="index===Posts.content.length-1" >
-        <div v-if="index!==skip_1 || index!==skip_2">
+        </div> -->
+                    <div
+                      v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                      <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
+                    </div>
+                    <div v-if="data.type === 'code'" class="post-text mt-30">
+                      <div v-html="data.value"></div>
+                    </div>
 
-        <div v-if="data.type==='text'" class="post-text mt-30">
-           <p>
-                {{ data.value }}
-            </p>
-  
-        </div>
-        <div v-else-if="data.type==='points'"  class="post-text mt-30">
-            <ul>
-                  <li><a>{{ data.value }}</a></li>
-            </ul>
-        </div>  
-        <div  v-else-if="data.type==='title'"  class="post-text pt-20">
-                <h3 class="title">{{ data.value }}</h3>
-        </div>
-        <div  v-else-if="data.type==='subtitle'" class="post-text pt-20">
-                <h5 class="title">{{ data.value }}</h5>
-        </div>
-        <div  v-else-if="data.type==='thumb'" class="row pt-10">
-                  <div class="col-lg-6">
-                    <div class="post-thumb">
-                      <img :src="data.value" :alt="data.title" />
-                    </div>
                   </div>
-                  <div class="col-lg-6">
-                    <div class="text">
-                      <p>
-                     {{ data.desciption }}
-                      </p>
-                    </div>
-                  </div>
-        </div>
-        <div  v-else-if="data.type==='quote'"  class="post-text pt-20">
-               <p>
-                  <span class="quote-text">{{ data.value }}</span>
-                </p>
-        </div>
-        <div v-else-if="data.type==='image'" class="post-text pt-20">
-               <div class="thumb pt-20 pb-35">
-                  <img :src="data.value" alt="" />
-                  <span>{{ data.title }}</span>
-                    <span>{{ data.desciption }}</span>
-                </div>
-        </div>
-        <div v-else-if="data.type==='externalImage'" class="post-text pt-20">
-               <div class="thumb pt-20 pb-35">
-                  <img :src="data.value" alt="" />
-                </div>
-        </div>
-        <div v-else-if="data.type==='postquote'" class="post-quote d-block d-md-flex align-items-center">
-                <div class="thumb">
-                  <img :src="data.value" :alt="data.title" />
-                </div>
-                <div class="post-quote-content">
-                  <img src="@/assets/images/quote-icon.png" alt="" />
-                  <p>
-                  {{ data.desciption }}
-                  </p>
-                  <div class="user">
-                    <h5 class="title">{{ data.title }}</h5>
-                    <span>{{ data.source }}</span>
-                  </div>
-                </div>
-        </div>
-        <div v-else-if="data.type==='video'" class="post_gallery_play">
+                  <div v-else-if="index === content.length - 1">
+                    <div v-if="index !== skip_1 && index !== skip_2">
+
+                      <div v-if="data.type === 'text'" class="post-text mt-30">
+                        <p>
+                          {{ data.value }}
+                        </p>
+
+                      </div>
+                      <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                        <ul>
+                          <li><a>{{ data.value }}</a></li>
+                        </ul>
+                      </div>
+                      <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                        <h3 class="title">{{ data.value }}</h3>
+                      </div>
+                      <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                        <h5 class="title">{{ data.value }}</h5>
+                      </div>
+                      <div v-else-if="data.type === 'thumb'" class="row pt-10">
+                        <div class="col-lg-6">
+                          <div class="post-thumb">
+                            <img :src="data.value" :alt="data.title" />
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="text">
+                            <p>
+                              {{ data.desciption }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else-if="data.type === 'quote'" class="post-text pt-20">
+                        <p>
+                          <span class="quote-text">{{ data.value }}</span>
+                        </p>
+                      </div>
+                      <div v-else-if="data.type === 'image'" class="post-text pt-20">
+                        <div class="thumb pt-20 pb-35">
+                          <img :src="data.value" alt="" />
+                          <span>{{ data.title }}</span>
+                          <span>{{ data.desciption }}</span>
+                        </div>
+                      </div>
+                      <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
+                        <div class="thumb pt-20 pb-35">
+                          <img :src="data.value" alt="" />
+                        </div>
+                      </div>
+                      <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
+                        <div class="thumb">
+                          <img :src="data.value" :alt="data.title" />
+                        </div>
+                        <div class="post-quote-content">
+                          <img src="@/assets/images/quote-icon.png" alt="" />
+                          <p>
+                            {{ data.desciption }}
+                          </p>
+                          <div class="user">
+                            <h5 class="title">{{ data.title }}</h5>
+                            <span>{{ data.source }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
       <div class="bg-image">
         <img
           :src="coverimage.value"
@@ -400,122 +403,124 @@
           ><i class="fas fa-play"></i
         ></a>
       </div>
-        </div>
-        <div v-else-if="data.type==='file' || data.type==='audio' || data.type==='externalAudio' ||data.type==='externalFile' ||data.type==='externalLink' " > 
-            <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
-        </div>
-        <div v-if="data.type==='code'" class="post-text mt-30">
-            <div v-html="data.value"></div>
-        </div>
-        
-    </div></div>
-    <div v-else-if="index!==skip_1 || index!==skip_2 ">
-        <div v-if="data.type==='backlink'" class="post-text mt-30">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'start'">
+        </div> -->
+                      <div
+                        v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                        <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
+                      </div>
+                      <div v-if="data.type === 'code'" class="post-text mt-30">
+                        <div v-html="data.value"></div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div v-else-if="index !== skip_1 && index !== skip_2">
+                    <div v-if="data.type === 'backlink'" class="post-text mt-30">
+                      <div v-if="JSON.parse(content[index + 1].value).position === 'start'">
                         <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
-                            {{ skip_1(index) }}
+                          {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                            JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          {{ assignSkip_1(index) }}
                         </p>
 
-                </div>
-         
-    </div>
+                      </div>
 
-        <div v-if="data.type==='text'" class="post-text mt-30">
-            <div v-if="Posts.content[index + 1].type === 'backlink'">
-                 <div v-if="JSON.parse(Posts.content[index + 1].value).position === 'end'">
-                        <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> 
-                        </p>
+                    </div>
 
-                </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'middle'">
-                        <p>
-                            {{ data.value }}<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a> {{ Posts.content[index + 2] }}
-                        </p>
-                        {{ skip_2(index) }}
-                </div>
-                <div v-else-if="JSON.parse(Posts.content[index + 1].value).position === 'between'">
-                        <p>
+                    <div v-if="data.type === 'text'" class="post-text mt-30">
+                      <div v-if="content[index + 1].type === 'backlink'">
+                        <div v-if="JSON.parse(content[index + 1].value).position === 'end'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'middle'">
+                          <p>
+                            {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a> {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                        <div v-else-if="JSON.parse(content[index + 1].value).position === 'between'">
+                          <p>
                             {{ data.value }}
-                        </p>
+                          </p>
+                          <p>
+                            :)<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                          </p>
+                          <p>
+                            {{ content[index + 2] }}
+                          </p>
+                          {{ assignSkip_2(index) }}
+                        </div>
+                      </div>
+                      <div v-else>
                         <p>
-                         :)<a :href="JSON.parse(Posts.content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(Posts.content[index +1].value).textOfLink }}</u></a>
+                          {{ data.value }}
                         </p>
-                        <p>
-                            {{ Posts.content[index + 2] }}
-                        </p>
-                        {{ skip_2(index) }}
-                </div>
-            </div>
-            <div v-else >
-            <p>
-                {{ data.value }}
-            </p>
-            </div>
-        </div>
-        <div v-else-if="data.type==='points'"  class="post-text mt-30">
-            <ul>
-                  <li><a>{{ data.value }}</a></li>
-            </ul>
-        </div>  
-        <div  v-else-if="data.type==='title'"  class="post-text pt-20">
-                <h3 class="title">{{ data.value }}</h3>
-        </div>
-        <div  v-else-if="data.type==='subtitle'" class="post-text pt-20">
-                <h5 class="title">{{ data.value }}</h5>
-        </div>
-        <div  v-else-if="data.type==='thumb'" class="row pt-10">
-                  <div class="col-lg-6">
-                    <div class="post-thumb">
-                      <img :src="data.value" :alt="data.title" />
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="text">
+                    <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                      <ul>
+                        <li><a>{{ data.value }}</a></li>
+                      </ul>
+                    </div>
+                    <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                      <h3 class="title">{{ data.value }}</h3>
+                    </div>
+                    <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                      <h5 class="title">{{ data.value }}</h5>
+                    </div>
+                    <div v-else-if="data.type === 'thumb'" class="row pt-10">
+                      <div class="col-lg-6">
+                        <div class="post-thumb">
+                          <img :src="data.value" :alt="data.title" />
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="text">
+                          <p>
+                            {{ data.desciption }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'quote'" class="post-text pt-20">
                       <p>
-                     {{ data.desciption }}
+                        <span class="quote-text">{{ data.value }}</span>
                       </p>
                     </div>
-                  </div>
-        </div>
-        <div  v-else-if="data.type==='quote'"  class="post-text pt-20">
-               <p>
-                  <span class="quote-text">{{ data.value }}</span>
-                </p>
-        </div>
-        <div v-else-if="data.type==='image'" class="post-text pt-20">
-               <div class="thumb pt-20 pb-35">
-                  <img :src="data.value" alt="" />
-                  <span>{{ data.title }}</span>
-                    <span>{{ data.desciption }}</span>
-                </div>
-        </div>
-        <div v-else-if="data.type==='externalImage'" class="post-text pt-20">
-               <div class="thumb pt-20 pb-35">
-                  <img :src="data.value" alt="" />
-                </div>
-        </div>
-        <div v-else-if="data.type==='postquote'" class="post-quote d-block d-md-flex align-items-center">
-                <div class="thumb">
-                  <img :src="data.value" :alt="data.title" />
-                </div>
-                <div class="post-quote-content">
-                  <img src="@/assets/images/quote-icon.png" alt="" />
-                  <p>
-                  {{ data.desciption }}
-                  </p>
-                  <div class="user">
-                    <h5 class="title">{{ data.title }}</h5>
-                    <span>{{ data.source }}</span>
-                  </div>
-                </div>
-        </div>
-        <div v-else-if="data.type==='video'" class="post_gallery_play">
+                    <div v-else-if="data.type === 'image'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                        <span>{{ data.title }}</span>
+                        <span>{{ data.desciption }}</span>
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
+                      <div class="thumb pt-20 pb-35">
+                        <img :src="data.value" alt="" />
+                      </div>
+                    </div>
+                    <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
+                      <div class="thumb">
+                        <img :src="data.value" :alt="data.title" />
+                      </div>
+                      <div class="post-quote-content">
+                        <img src="@/assets/images/quote-icon.png" alt="" />
+                        <p>
+                          {{ data.desciption }}
+                        </p>
+                        <div class="user">
+                          <h5 class="title">{{ data.title }}</h5>
+                          <span>{{ data.source }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
       <div class="bg-image">
         <img
           :src="coverimage.value"
@@ -580,23 +585,25 @@
           ><i class="fas fa-play"></i
         ></a>
       </div>
-        </div>
-        <div v-else-if="data.type==='file' || data.type==='audio' || data.type==='externalAudio' ||data.type==='externalFile' ||data.type==='externalLink' " > 
-            <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
-        </div>
-        <div v-if="data.type==='code'" class="post-text mt-30">
-            <div v-html="data.value"></div>
-        </div>
-        
-   
-   
-   
-    
+        </div> -->
+                    <div
+                      v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                      <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
+                    </div>
+                    <div v-if="data.type === 'code'" class="post-text mt-30">
+                      <div v-html="data.value"></div>
+                    </div>
 
 
-    </div>
-  </template>
-              
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+
               <div class="post-tags">
                 <ul>
                   <li>
@@ -802,15 +809,18 @@ export default {
   },
   components: { Header, StyleOne, FooterOne, OurLatestNews, Drawer },
   data: () => ({
-    Posts: "Posts",
+    Posts: [],
+    content: [],
     headerimage: "headerimage",
-    coverimage:"coverimage",
-    skip_1:-1,
-    skip_2:-1,
+    coverimage: "coverimage",
+    skip_1: -1,
+    skip_2: -1,
     sidebar: false,
   }),
   async created() {
     await this.fetchPosts();
+    this.content = this.Posts.content;
+    console.log("content", this.content);
     document.addEventListener("scroll", this.topToBottom);
   }, computed: {
     coverToShow() {
@@ -841,7 +851,7 @@ export default {
         const response = await fetch(`http://localhost:8000/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
         this.Posts = await response.json();
         this.headerimage = this.headerImage(this.Posts);
-        this.coverimage=this.coverToShow(this.Posts);
+        this.coverimage = this.coverToShow(this.Posts);
         console.log("post", this.Posts);
       } catch (error) {
         console.error(error);
@@ -861,12 +871,15 @@ export default {
         result.classList.remove("active");
       }
     },
-    skip_1(index){
-            this.skip_1=index+1;
+    assignSkip_1(index) {
+      this.skip_1 = index + 1;
+      console.log("passed by skip1");
     },
-    skip_2(index){
-            this.skip_2=index+2;
-    },    
+    assignSkip_2(index) {
+      this.skip_2 = index + 2;
+      console.log("passed by skip1");
+
+    },
 
   },
 };

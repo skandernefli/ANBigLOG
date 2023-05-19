@@ -2,7 +2,7 @@
   <section class="trending-news-area">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-8"  v-if="manageBigPosts.length > 0">
           <div
             :class="[
               'section-title',
@@ -47,6 +47,8 @@
                     ? darkClass.news_section
                     : '',
                 ]"
+                  v-if="manageSidePosts.length > 0"
+                
               >
                 <template
                   v-for="(small, index) in manageSidePosts.slice(0, 3)"
@@ -110,7 +112,7 @@
                 :settings="trendingSidebarSlide"
                 ref="trendingSidebarSlide"
               >
-                <div class="post_gallery_items">
+                <div class="post_gallery_items" v-if="manageSidePosts.length > 0">
                   <template
                     v-for="(small, index) in manageSidePosts.slice(6, 12)"
                   >
@@ -174,8 +176,8 @@ export default {
     },
   },
   data: () => ({
-    manageSidePosts: "manageSidePosts",
-    manageBigPosts:"manageBigPosts",
+    manageSidePosts: [],
+    manageBigPosts: [],
     trendingSettings: {
       arrows: false,
       slidesToShow: 2,
@@ -195,26 +197,15 @@ export default {
       slidesToShow: 1,
       slideToScroll: 1,
     },
-  }),
-  async created() {
-    await JSON.parse(JSON.stringify(this.fetchmanageBigPosts()));
-    await JSON.parse(JSON.stringify(this.fetchmanageSidePosts()));
-
-
-   
-
-  },
-  methods: {
+  }),  methods: {
     async fetchmanageBigPosts() {
       const response = await fetch("http://localhost:8000/server/manageBigPosts").then(res => res.json());
       const data = response[0].data;
-      console.log("110", data)
       return this.manageBigPosts = data;
     },
     async fetchmanageSidePosts() {
       const response = await fetch("http://localhost:8000/server/manageSidePosts").then(res => res.json());
       const data = response[0].data;
-      console.log("110", data)
       return this.manageSidePosts = data;
     },
     //trending
@@ -231,6 +222,15 @@ export default {
       this.$refs.trendingSidebarSlide.next();
     },
   },
+  async created() {
+    await this.fetchmanageBigPosts();
+    await this.fetchmanageSidePosts();
+
+
+   
+
+  },
+
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.$store.state.videoPopup">
+  <div v-if="$store.state.videoPopup">
     <div class="mfp-bg mfp-ready" @click.prevent="closePopup"></div>
     <div
       class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-ready"
@@ -19,7 +19,7 @@
             </button>
             <iframe
               class="mfp-iframe"
-              src="//www.youtube.com/embed/EE7NqzhMDms?autoplay=1"
+              :src="getVideoUrl()"
               frameborder="0"
               allowfullscreen=""
             ></iframe>
@@ -36,6 +36,11 @@ export default {
   methods: {
     closePopup() {
       this.$store.dispatch("toggleVideo");
+    },
+    getVideoUrl() {
+      // Replace this logic with your own to get the dynamic video URL from the store
+      const videoUrl = this.$store.state.videoUrl;
+      return `//www.youtube.com/embed/${videoUrl}?autoplay=1`;
     },
   },
 };

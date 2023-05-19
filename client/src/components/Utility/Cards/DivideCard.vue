@@ -2,43 +2,46 @@
   <div v-if="stype === 'row'" class="row">
     <div class="col-lg-6 col-md-6">
       <div class="business-post-thumb">
-        <img :src="datas.image" alt="feature" />
+        <img :src="datas.image" :alt="datas.title" />
       </div>
     </div>
     <div class="col-lg-6 col-md-6">
       <div class="trending-news-item">
         <div class="trending-news-content">
-          <div class="post-meta">
+          <div class="post-meta"  v-if="datas.category && datas.category.name && datas.category.create_At">
             <div class="meta-categories">
-              <router-link to="/buisness">{{
+              <a :href="datas.link" class="d-block">
+{{
                 datas.category.name
-              }}</router-link>
+              }}</a>
             </div>
             <div class="meta-date">
               <span>{{ datas.category.create_At }}</span>
             </div>
           </div>
           <h3 class="title">
-            <router-link to="/posts/postOne">{{ datas.title }}</router-link>
+            <a :href="datas.link" class="d-block">
+{{ datas.title }}</a>
           </h3>
           <p class="text">
-            {{ datas.article }}
+            {{ datas.description }}
           </p>
-          <a v-if="readMore" href="#">Read more</a>
+          <a v-if="readMore" :href="datas.link">Read more</a>
         </div>
       </div>
     </div>
   </div>
-  <div v-else-if="stype === 'row-style-2'" class="bussiness-post-item">
+  <div v-else-if="stype === 'row-style-2'" class="bussiness-post-item" >
     <div class="bussiness-post-thumb">
       <img
         :src="datas.image"
-        alt="business"
+        :alt="datas.title"
       />
     </div>
-    <div class="bussiness-post-content">
+    <div class="bussiness-post-content"  v-if="datas.category && datas.category.name && datas.category.create_At">
       <h3 class="title">
-        <router-link to="/posts/postOne">{{ datas.title }}</router-link>
+        <a :href="datas.link" class="d-block">
+{{ datas.title }}</a>
       </h3>
       <div class="meta-date-link">
         <span>{{ datas.category.create_At }}</span>
@@ -52,51 +55,52 @@
         </ul>
       </div>
       <p>
-        {{ datas.article }}
+        {{ datas.description }}
       </p>
-      <a href="#"
-        >LEARN MORE <img src="@/assets/images/arrow-2.svg" alt=""
+      <a :href="datas.link"
+        >LEARN MORE <img src="@/assets/images/arrow-2.svg"  :alt="datas.title"
       /></a>
     </div>
   </div>
   <div v-else-if="stype === 'col'" class="trending-news-item">
-    <div class="trending-news-thumb">
-      <img :src="datas.image" alt="feature" />
+    <div class="trending-news-thumb" >
+      <img :src="datas.image"  :alt="datas.title" />
       <div v-if="datas.action === 'trending'" class="icon">
-        <a href="#"><i class="fas fa-bolt"></i></a>
+        <a :href="datas.link"><i class="fas fa-bolt"></i></a>
       </div>
     </div>
     <div class="trending-news-content">
       <div class="post-meta">
-        <div class="meta-categories">
-          <a href="#">{{ datas.category.name }}</a>
+        <div class="meta-categories" v-if="datas.category && datas.category.name && datas.category.create_At">
+          <a :href="datas.link">{{ datas.category.name }}</a>
         </div>
-        <div class="meta-date">
+        <div class="meta-date"  v-if="datas.category && datas.category.name && datas.category.create_At">
           <span>{{ datas.category.create_At }}</span>
         </div>
       </div>
       <h3 class="title">
-        <router-link to="/posts/postOne">{{ datas.title }}</router-link>
+        <a :href="datas.link" class="d-block">
+{{ datas.title }}</a>
       </h3>
       <p class="text">
-        {{ datas.article }}
+        {{ datas.description }}
       </p>
-      <a v-if="readMore" href="#">Read more</a>
+      <a v-if="readMore" :href="datas.link">Read more</a>
     </div>
   </div>
   <div v-else-if="stype === 'col-style-2'" class="finance-item">
     <div class="finance-thumb">
       <img
         :src="datas.image"
-        alt="finance"
-      />
-      <div class="finance-date">
+        :alt="datas.title"      />
+      <div class="finance-date" v-if="datas.category && datas.category.name && datas.category.create_At">
         <span>{{ datas.category.name }}</span>
       </div>
     </div>
     <div class="finance-content">
       <h3 class="title">
-        <router-link to="/posts/postOne">{{ datas.title }}</router-link>
+        <a :href="datas.link" class="d-block">
+{{ datas.title }}</a>
       </h3>
       <p class="line-clumb">
         {{ datas.article }}
