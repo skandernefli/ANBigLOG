@@ -13,7 +13,7 @@
             </div>
             <div class="about-post-items">
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12" v-if="posts.length > 0">
                   <div class="bussiness-post-item mb-40" v-for="(post,index) in postsToShow" :key="index">
                     <div class="bussiness-post-thumb">
                       <img :src="coverToShow(post)" :alt="post.title" />
@@ -37,7 +37,7 @@
                       </div>
                       
                       <p>{{ post.intro }}</p>
-                      <router-link :to="'/posts/post/' + post._id"  @click.prevent="$router.push({ name: 'PostOne', params: { id: post._id } })">LEARN MORE<img src="@/assets/images/arrow-2.svg" alt="" /></router-link>
+                      <router-link :to="'/posts/post/' + post._id"  @click.prevent="$router.push({ name: 'PostOne', params: { id: post._id } })">LEARN MORE<img src="@/assets/images/arrow-2.svg" :alt="post.intro" /></router-link>
                     </div>
                   </div>
                   <div class="col-lg-12">
@@ -64,7 +64,7 @@
 export default {
 
   data: () => ({
-    posts:[{}],
+    posts:[],
     visiblePosts: 1,
   }),
   async created() {

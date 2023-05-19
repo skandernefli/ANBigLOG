@@ -1,7 +1,7 @@
 <template>
   <section class="single-play-post-area mt-10">
     <div class="container custom-container">
-      <div class="single-play-box">
+      <div class="single-play-box" v-if="ManageSinglePlayPosts.length > 0">
         <div class="single-play-post-slider position-relative">
           <span
             @click="playSliderPrev"
@@ -35,7 +35,7 @@ export default {
   components: { OverlayCard, Slider },
   data: () => ({
     //playPost
-    ManageSinglePlayPosts: [{}],
+    ManageSinglePlayPosts: [],
     playPostSettings: {
       arrows: false,
       slidesToShow: 2,
@@ -63,7 +63,6 @@ export default {
     async fetchManageSinglePlayPosts() {
       const response = await fetch("http://localhost:8000/server/manageSinglePlayPost").then(res => res.json());
       const data = response[0].data;
-      console.log("66", data)
       return this.ManageSinglePlayPosts = data;
     },
     playSliderPrev() {

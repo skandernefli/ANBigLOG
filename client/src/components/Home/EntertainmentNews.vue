@@ -8,7 +8,7 @@
     >
       <h3 class="title">Entertainment News</h3>
     </div>
-    <div class="row">
+    <div class="row" v-if="manageEntertainmentSection.length > 0">
       <template v-for="(data, index) in manageEntertainmentSection.slice(0, 4)">
         <div :key="index" class="col-lg-6 col-md-6">
           <divide-card
@@ -41,7 +41,6 @@ import DivideCard from "../Utility/Cards/DivideCard.vue";
     async fetchmanageEntertainmentSection() {
       const response = await fetch("http://localhost:8000/server/manageEntertainmentSection").then(res => res.json());
       const data = response[0].data;
-      console.log("43 MOVIES", data)
       return this.manageEntertainmentSection = data;
     },
    }

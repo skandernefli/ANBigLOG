@@ -20,37 +20,37 @@
                     ? darkClass.section_2
                     : '',
                 ]"
+                 v-if="mainvideo"
               >
                 <div class="video-news-post-thumb">
-                  <img :src="mainvideo.image" alt="" />
+                  <img :src="mainvideo.image" :alt="mainvideo.title" />
                   <div class="play-btn">
-                    <a
+                    <a 
                       class="video-popup"
-                      @click.prevent="$store.dispatch('toggleVideo')"
+                    
+                      @click.prevent="$store.dispatch('toggleVideo',mainvideo.linkvideo)"
                       ><i class="fab fa-youtube"></i
                     ></a>
                   </div>
                 </div>
                 <div class="video-news-post-content">
-                  <div class="post-meta">
-                    <div class="meta-categories">
-                      <a href="#">{{ mainvideo.category.name }}</a>
+                  <div class="post-meta" v-if="mainvideo.category && mainvideo.category.name && mainvideo.category.create_At">
+                    <div class="meta-categories"  >
+                      <a :href="mainvideo.linkpost">{{ mainvideo.category.name }}</a>
                     </div>
                     <div class="meta-date">
                       <span>{{ mainvideo.category.create_At }}</span>
                     </div>
                   </div>
                   <h3 class="title">
-                    <router-link to="/posts/postOne"
-                      >{{ mainvideo.title }}r</router-link
-                    >
+                    <a :href="mainvideo.linkpost">{{ mainvideo.title }}</a>
                   </h3>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-lg-4">
-            <div class="populer-post">
+            <div class="populer-post"     v-if="smallPostGallery.length > 0">
               <div class="section-title">
                 <h3 class="title">Popular</h3>
               </div>
@@ -125,7 +125,7 @@ export default {
   },
   data: () => ({
     smallPostGallery: [],
-    mainvideo: [],
+    mainvideo: {},
     videoNewsSlide: {
       arrows: false,
       slidesToShow: 1,

@@ -8,7 +8,7 @@
           </div>
         </div>
       </div>
-      <div class="feature-post-slider position-relative">
+      <div class="feature-post-slider position-relative" v-if="post.length > 0">
         <span
           @click="featureSliderPrev"
           class="prev slick-arrow"
@@ -70,7 +70,6 @@ export default {
      async fetchFeature() {
       const response = await fetch("http://localhost:8000/server/feature").then(res => res.json());
       const data = response[0].data;
-      console.log("fzature news",data)
       return this.post = data;
     },
     //feature

@@ -9,7 +9,7 @@
       <h3 class="title">Sports News</h3>
     </div>
     <div class="row">
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-6 col-md-6"  v-if="manageSportsMainSection.length > 0">
         <divide-card
           :class="[darkClass && 'item' in darkClass ? darkClass.item : '']"
           stype="col"
@@ -17,7 +17,7 @@
         />
       </div>
       <div class="col-lg-6 col-md-6">
-        <div class="trending-sidebar-slider">
+        <div class="trending-sidebar-slider"  v-if="manageSideSportsSection.length > 0">
           <span
             @click="sportSliderPrev"
             class="prev slick-arrow d-md-block d-none"
@@ -39,7 +39,7 @@
               </template>
             </div>
             <div class="post_gallery_items">
-              <template v-for="(data, index) in manageSideSportsSection.slice(1, 6)">
+              <template v-for="(data, index) in manageSideSportsSection.slice(6, 12)">
                 <row-card
                   :class="[
                     darkClass && 'news_item' in darkClass
@@ -76,8 +76,8 @@ export default {
     },
   },
   data: () => ({
-    manageSportsMainSection: [{}],
-    manageSideSportsSection:[{}],
+    manageSportsMainSection: [],
+    manageSideSportsSection:[],
     trendingSidebarSlide: {
       arrows: false,
       slidesToShow: 1,
@@ -96,13 +96,11 @@ export default {
     async fetchmanageSportsMainSection() {
       const response = await fetch("http://localhost:8000/server/manageSportsMainSection").then(res => res.json());
       const data = response[0].data;
-      console.log("99 manageSportsMainSection ", data)
       return this.manageSportsMainSection = data;
     },
     async fetchmanageSideSportsSection() {
       const response = await fetch("http://localhost:8000/server/manageSideSportsSection").then(res => res.json());
       const data = response[0].data;
-      console.log("trendy", data)
       return this.manageSideSportsSection = data;
     },
     //sports
