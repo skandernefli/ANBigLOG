@@ -415,17 +415,24 @@
                     </div>
                   </div>
                   <div v-else-if="index !== skip_1 && index !== skip_2">
-                    <div v-if="data.type === 'backlink'" class="post-text mt-30">
-                      <div v-if="JSON.parse(content[index + 1].value).position === 'start'">
+                    <div v-if="data.type ==='backlink'" class="post-text mt-30">
+                      <div v-if="JSON.parse(data.value).position === 'start'">
                         <p>
-                          {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
-                            JSON.parse(content[index + 1].value).textOfLink }}</u></a>
+                         <a :href="JSON.parse(data.value).backlinkLink"><u>{{JSON.parse(data.value).textOfLink }}</u></a> {{ content[index + 1].value }}
                           {{ assignSkip_1(index) }}
+
                         </p>
 
                       </div>
-
+<!--                       {{ consoleLog(data.type ) }}
+ -->
                     </div>
+
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
 
                     <div v-if="data.type === 'text'" class="post-text mt-30">
                       <div v-if="content[index + 1].type === 'backlink'">
@@ -439,7 +446,7 @@
                         <div v-else-if="JSON.parse(content[index + 1].value).position === 'middle'">
                           <p>
                             {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
-                              JSON.parse(content[index + 1].value).textOfLink }}</u></a> {{ content[index + 2] }}
+                              JSON.parse(content[index + 1].value).textOfLink }}</u></a>{{ content[index + 2].value }}
                           </p>
                           {{ assignSkip_2(index) }}
                         </div>
@@ -452,7 +459,7 @@
                               JSON.parse(content[index + 1].value).textOfLink }}</u></a>
                           </p>
                           <p>
-                            {{ content[index + 2] }}
+                            {{ content[index + 2].value }}
                           </p>
                           {{ assignSkip_2(index) }}
                         </div>
@@ -599,6 +606,11 @@
 
 
 
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
 
                   </div>
                 </div>
@@ -877,9 +889,12 @@ export default {
     },
     assignSkip_2(index) {
       this.skip_2 = index + 2;
-      console.log("passed by skip1");
+      console.log("passed by skip2");
 
     },
+    consoleLog(breakpoint){
+      console.log("passed by point",breakpoint);
+    }
 
   },
 };
