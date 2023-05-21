@@ -21,7 +21,7 @@
           </div>
           <h3 class="title">
             <a :href="datas.link" class="d-block">
-{{ datas.title }}</a>
+              {{ truncatedText }}</a>
           </h3>
           <p class="text">
             {{ datas.description }}
@@ -41,7 +41,7 @@
     <div class="bussiness-post-content"  v-if="datas.category && datas.category.name && datas.category.create_At">
       <h3 class="title">
         <a :href="datas.link" class="d-block">
-{{ datas.title }}</a>
+          {{ truncatedText }}</a>
       </h3>
       <div class="meta-date-link">
         <span>{{ datas.category.create_At }}</span>
@@ -80,7 +80,7 @@
       </div>
       <h3 class="title">
         <a :href="datas.link" class="d-block">
-{{ datas.title }}</a>
+          {{ truncatedText }}</a>
       </h3>
       <p class="text">
         {{ datas.description }}
@@ -100,7 +100,7 @@
     <div class="finance-content">
       <h3 class="title">
         <a :href="datas.link" class="d-block">
-{{ datas.title }}</a>
+          {{ truncatedText }}</a>
       </h3>
       <p class="line-clumb">
         {{ datas.article }}
@@ -133,7 +133,15 @@ export default {
     stype: {
       type: String,
     },
-  },
+  },  computed: {
+    truncatedText() {
+      const maxLength = 60;
+      if (this.datas.title.length > maxLength) {
+        return this.datas.title.substring(0, maxLength) + "...";
+      }
+      return this.datas.title;
+    }
+  }
 };
 </script>
 
