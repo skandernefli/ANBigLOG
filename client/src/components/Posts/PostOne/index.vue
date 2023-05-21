@@ -99,6 +99,7 @@
                           {{ data.value }}<a :href="JSON.parse(content[index + 1].value).backlinkLink"><u>{{
                             JSON.parse(content[index + 1].value).textOfLink }}</u></a>
                         </p>
+                        
                         {{ assignSkip_1(index) }}
 
                       </div>
@@ -626,33 +627,160 @@
                   <li><a href="#">Corona</a></li>
                 </ul>
               </div>
-              <div class="post-reader-text pt-50">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="post-reader-prev">
-                      <span>PREVIOUS NEWS</span>
-                      <h4 class="title">
-                        <a href="#">Kushner puts himself in middle of white house’s
-                          chaotic coronavirus response.</a>
-                      </h4>
+    
+            </div>
+          </div>
+          <div class="col-lg-4" v-if="smallPostGallery.length > 0 && latestPostGallery.length > 0 &&popularPostGallery.length > 0 " >
+          <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
+            :darkClass="darkClass" role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery"
+            :datas_3="popularPostGallery" />
+            <div class="all-post-sidebar">
+              <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div>  <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div>
+                <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div></div>
+                <div class="Categories-post mt-40">
+                <div
+                  class="
+                    section-title
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                  "
+                >
+                  <h3 class="title">Categories</h3>
+                  <a href="#">ALL SEE</a>
+                </div>
+                <div class="Categories-item">
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-1.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Restaurant</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="post-reader-prev">
-                      <span>NEXT NEWS</span>
-                      <h4 class="title">
-                        <a href="#">C.I.A. Hunts for authentic virus totals in china,
-                          dismissing government tallies</a>
-                      </h4>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Entertainment</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-3.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Financial</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-4.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Business</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+               
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Scientists</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>International’s</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
                     </div>
                   </div>
                 </div>
+                <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div>
               </div>
-            </div>
           </div>
-          <div class="col-lg-4">
-            <style-one :datas="Posts" />
-          </div>
+    
+        
         </div>
       </div>
     </section>
@@ -661,124 +789,17 @@
 
     <!--====== LATEST NEWS PART START ======-->
 
-    <our-latest-news :Posts="Posts" />
 
     <!--====== LATEST NEWS PART ENDS ======-->
 
     <!--====== POST FORM PART START ======-->
 
-    <div class="post-form-area">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="section-title">
-              <h3 class="title">Leave an opinion</h3>
-            </div>
-            <div class="post-form-box">
-              <form action="#">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="input-box">
-                      <input type="text" placeholder="Full name" />
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="input-box">
-                      <input type="text" placeholder="Email address" />
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <div class="input-box">
-                      <textarea name="#" id="#" cols="30" rows="10" placeholder="Tell us about your opinion…"></textarea>
-                      <button class="main-btn" type="button">
-                        POST OPINION
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <!--====== POST FORM PART ENDS ======-->
 
     <!--====== POST COMMENTS PART START ======-->
 
-    <section class="post-comments-area pb-100">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="section-title">
-              <h3 class="title">Post Comments</h3>
-            </div>
-            <div class="post-comments-list">
-              <div class="post-comments-item">
-                <div class="thumb">
-                  <img src="@/assets/images/comments-1.png" alt="comments" />
-                </div>
-                <div class="post">
-                  <a href="#">Reply</a>
-                  <h5 class="title">Rafiqul islam</h5>
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
-                </div>
-              </div>
-              <div class="post-comments-item">
-                <div class="thumb">
-                  <img src="@/assets/images/comments-2.png" alt="comments" />
-                </div>
-                <div class="post">
-                  <a href="#">Reply</a>
-                  <h5 class="title">Rafiqul islam</h5>
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
-                </div>
-              </div>
-              <div class="post-comments-item ml-30">
-                <div class="thumb">
-                  <img src="@/assets/images/comments-3.png" alt="comments" />
-                </div>
-                <div class="post">
-                  <a href="#">Reply</a>
-                  <h5 class="title">Rafiqul islam</h5>
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
-                </div>
-              </div>
-              <div class="post-comments-item">
-                <div class="thumb">
-                  <img src="@/assets/images/comments-4.png" alt="comments" />
-                </div>
-                <div class="post">
-                  <a href="#">Reply</a>
-                  <h5 class="title">Rafiqul islam</h5>
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="post-load-btn">
-              <a class="main-btn" href="#">LOAD MORE</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!--====== POST COMMENTS PART ENDS ======-->
 
@@ -808,10 +829,9 @@
 
 <script>
 import Header from "../../Utility/Header/index";
-import StyleOne from "../../Utility/Sidebar/StyleOne.vue";
 import FooterOne from "../../Utility/Footer/FooterOne.vue";
-import OurLatestNews from "../../Utility/Common/OurLatestNews.vue";
 import Drawer from "../../Mobile/Drawer.vue";
+import HomeOne from "../../Utility/Sidebar/StyleOne.vue";HomeOne
 
 export default {
   props: {
@@ -819,10 +839,14 @@ export default {
       type: String,
     }
   },
-  components: { Header, StyleOne, FooterOne, OurLatestNews, Drawer },
+  components: { Header, HomeOne, FooterOne, Drawer },
   data: () => ({
     Posts: [],
     content: [],
+    latestPostGallery: [],
+    popularPostGallery: [],
+    smallPostGallery: [],
+    selectedGallery: 'trendy',
     headerimage: "headerimage",
     coverimage: "coverimage",
     skip_1: -1,
@@ -831,6 +855,9 @@ export default {
   }),
   async created() {
     await this.fetchPosts();
+    await this.fetchsmallPostGallery();
+    await this.fetchlatestPostGallery();
+    await this.fetchpopularPostGallery();
     this.content = this.Posts.content;
     console.log("content", this.content);
     document.addEventListener("scroll", this.topToBottom);
@@ -894,7 +921,23 @@ export default {
     },
     consoleLog(breakpoint){
       console.log("passed by point",breakpoint);
-    }
+    },   selectGalleryTab(value) {
+      this.selectedGallery = value;
+    },   async fetchsmallPostGallery() {
+      const response = await fetch("http://localhost:8000/server/trendy").then(res => res.json());
+      const data = response[0].data;
+      return this.smallPostGallery = data;
+    },
+    async fetchlatestPostGallery() {
+      const response = await fetch("http://localhost:8000/server/latest").then(res => res.json());
+      const data = response[0].data;
+      return this.latestPostGallery = data;
+    },
+    async fetchpopularPostGallery() {
+      const response = await fetch("http://localhost:8000/server/popular").then(res => res.json());
+      const data = response[0].data;
+      return this.popularPostGallery = data;
+    },
 
   },
 };
