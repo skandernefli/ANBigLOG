@@ -7,7 +7,7 @@ const postSchema=new mongoose.Schema({
         type: { type: String, enum: ['text','audio', 'image','headerimage','coverimage','thumb','backlink', 'title', 'subtitle', 'code', 'quote','points','video','headervideo','file' ,'externalImage','postquote',"tag","headervideoupload",
         'externalVideo',
         'externalAudio',
-        'externalFile','externalLink'] },
+        'externalFile','externalLink','end_paragraph'] },
         value: { type: String },
         desciption:{ type: String },
         title:{ type: String },

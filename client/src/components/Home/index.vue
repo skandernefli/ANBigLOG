@@ -8,8 +8,8 @@
 
     <!--====== POST PART START ======-->
 
-    <post-part-home-one />
-
+<!--     <post-part-home-one />
+ -->
     <!--====== POST PART ENDS ======-->
 
     <!--====== POST GALLERY PART START ======-->
@@ -251,8 +251,8 @@
 </template>
 <script>
 import HeaderOne from "../Utility/Header/index";
-import PostPartHomeOne from "./PostPartHomeOne.vue";
-import PostGallery from "./PostGallery.vue";
+/* import PostPartHomeOne  from "./PostPartHomeOne.vue";
+ */import PostGallery from "./PostGallery.vue";
 import Features from "./Features.vue";
 import TrendingNews from "./TrendingNews.vue";
 import SinglePlayPost from "./SinglePlayPost.vue";
@@ -268,7 +268,7 @@ export default {
   components: {
     HeaderOne,
     Movies,
-    PostPartHomeOne,
+    /* PostPartHomeOne */
     PostGallery,
     Features,
     TrendingNews,

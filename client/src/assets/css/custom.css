@@ -21,7 +21,7 @@
   position: relative;
 }
 .header-nav-box.header-nav-box-3 .newspark-header-main-menu ul > li > a {
-  color: #fff;
+  color: #181818;
 }
 .newspark-header-main-menu > ul > li > a::before {
   position: absolute;
@@ -41,10 +41,10 @@
   .sub-menu
   li
   a {
-  color: #0e1133;
+  color: #fff;
 }
 .header-nav-box.header-nav-box-3 .newspark-btn-box .login-btn {
-  color: #fff;
+  color: #181818;
 }
 .header-nav-box.header-nav-box-3 .newspark-btn-box .main-btn {
   background: #ff6b58;
