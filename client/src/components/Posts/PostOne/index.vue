@@ -88,91 +88,92 @@
                 </div>
               </div>
               <div>
-                <div v-for="(data, index) in content" :key="data._id">
-                  <div v-if="index > l">
-                    
-                    <div v-if="data.type === 'backlink' || data.type === 'text'" class="post-text mt-30">
-                      {{ filteredContent(index) }}
-                      <div v-for="(innerData) in  newParagraph" :key="innerData._id">
-                        <div v-if="innerData.type === 'backlink'">
-                          <p>
-                            <a :href="JSON.parse(innerData.value).backlinkLink"><u>{{
-                              (JSON.parse(innerData.value)).textOfLink
-                            }}</u></a>
-                            {{ log((JSON.parse(innerData.value)).textOfLink) }}
-                          </p>
+                <div v-for="(data) in content" :key="data._id">
 
 
-                        </div>
-                        <div v-else-if="innerData.type === 'text'">
-                          <p>
-                            {{ innerData.value }}
-                            {{ log(innerData.value) }}
+                  <div v-if="Array.isArray(data)" class="post-text mt-30">
 
-                          </p>
-                        </div>
 
-                      </div>
-                    </div>
+                    <p>
+                      <span v-for="(innerData) in   data " :key="innerData._id">
+                        <template v-if="innerData.type === 'backlink'">
+                          <a :href="JSON.parse(innerData.value).backlinkLink"><u>{{
+                            (JSON.parse(innerData.value)).textOfLink
+                          }}</u></a>
 
-                    <div v-else-if="data.type === 'points'" class="post-text mt-30">
-                      <ul>
-                        <li><a>{{ data.value }}</a></li>
-                      </ul>
-                    </div>
-                    <div v-else-if="data.type === 'title'" class="post-text pt-20">
-                      <h3 class="title">{{ data.value }}</h3>
-                    </div>
-                    <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
-                      <h5 class="title">{{ data.value }}</h5>
-                    </div>
-                    <div v-else-if="data.type === 'thumb'" class="row pt-10">
-                      <div class="col-lg-6">
-                        <div class="post-thumb">
-                          <img :src="data.value" :alt="data.title" />
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="text">
-                          <p>
-                            {{ data.desciption }}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-else-if="data.type === 'quote'" class="post-text pt-20">
-                      <p>
-                        <span class="quote-text">{{ data.value }}</span>
-                      </p>
-                    </div>
-                    <div v-else-if="data.type === 'image'" class="post-text pt-20">
-                      <div class="thumb pt-20 pb-35">
-                        <img :src="data.value" alt="" />
-                        <span>{{ data.title }}</span>
-                        <span>{{ data.desciption }}</span>
-                      </div>
-                    </div>
-                    <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
-                      <div class="thumb pt-20 pb-35">
-                        <img :src="data.value" alt="" />
-                      </div>
-                    </div>
-                    <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
-                      <div class="thumb">
+                        </template>
+                        <template v-else-if="innerData.type === 'text'">
+
+                          {{ innerData.value }}
+
+
+                        </template>
+                      </span>
+                    </p>
+
+
+
+
+                  </div>
+
+                  <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                    <ul>
+                      <li><a>{{ data.value }}</a></li>
+                    </ul>
+                  </div>
+                  <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                    <h3 class="title">{{ data.value }}</h3>
+                  </div>
+                  <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                    <h5 class="title">{{ data.value }}</h5>
+                  </div>
+                  <div v-else-if="data.type === 'thumb'" class="row pt-10">
+                    <div class="col-lg-6">
+                      <div class="post-thumb">
                         <img :src="data.value" :alt="data.title" />
                       </div>
-                      <div class="post-quote-content">
-                        <img src="@/assets/images/quote-icon.png" alt="" />
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="text">
                         <p>
                           {{ data.desciption }}
                         </p>
-                        <div class="user">
-                          <h5 class="title">{{ data.title }}</h5>
-                          <span>{{ data.source }}</span>
-                        </div>
                       </div>
                     </div>
-                    <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
+                  </div>
+                  <div v-else-if="data.type === 'quote'" class="post-text pt-20">
+                    <p>
+                      <span class="quote-text">{{ data.value }}</span>
+                    </p>
+                  </div>
+                  <div v-else-if="data.type === 'image'" class="post-text pt-20">
+                    <div class="thumb pt-20 pb-35">
+                      <img :src="data.value" alt="" />
+                      <span>{{ data.title }}</span>
+                      <span>{{ data.desciption }}</span>
+                    </div>
+                  </div>
+                  <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
+                    <div class="thumb pt-20 pb-35">
+                      <img :src="data.value" alt="" />
+                    </div>
+                  </div>
+                  <div v-else-if="data.type === 'postquote'" class="post-quote d-block d-md-flex align-items-center">
+                    <div class="thumb">
+                      <img :src="data.value" :alt="data.title" />
+                    </div>
+                    <div class="post-quote-content">
+                      <img src="@/assets/images/quote-icon.png" alt="" />
+                      <p>
+                        {{ data.desciption }}
+                      </p>
+                      <div class="user">
+                        <h5 class="title">{{ data.title }}</h5>
+                        <span>{{ data.source }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!--   <div v-else-if="data.type==='video'" class="post_gallery_play">
 <div class="bg-image">
 <img
 :src="coverimage.value"
@@ -238,26 +239,14 @@ a
 ></a>
 </div>
 </div> -->
-                    <div
-                      v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
-                      <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
-                    </div>
-                    <div v-if="data.type === 'code'" class="post-text mt-30">
-                      <div v-html="data.value"></div>
-                    </div>
-
-
-
-
-
-
-                    <!-- ----------------------------------------------------------------------------------------------------------------------------->
-                    <!-- ----------------------------------------------------------------------------------------------------------------------------->
-                    <!-- ----------------------------------------------------------------------------------------------------------------------------->
-                    <!-- ----------------------------------------------------------------------------------------------------------------------------->
-                    <!-- ----------------------------------------------------------------------------------------------------------------------------->
-
+                  <div
+                    v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                    <button class="main-btn" :href="data.value" target="_blank">Click me! :)</button>
                   </div>
+                  <div v-if="data.type === 'code'" class="post-text mt-30">
+                    <div v-html="data.value"></div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -274,122 +263,123 @@ a
             </div>
 
           </div>
-        </div>
-        <div class="col-lg-4"
-          v-if="smallPostGallery.length > 0 && latestPostGallery.length > 0 && popularPostGallery.length > 0">
-          <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
-            :darkClass="darkClass" role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery"
-            :datas_3="popularPostGallery" />
-          <div class="all-post-sidebar">
-            <div class="sidebar-add pt-35">
-              <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+          <div class="col-lg-4"
+            v-if="smallPostGallery.length > 0 && latestPostGallery.length > 0 && popularPostGallery.length > 0">
+            <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
+              role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery"
+              :datas_3="popularPostGallery" />
+            <div class="all-post-sidebar">
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
             </div>
-            <div class="sidebar-add pt-35">
-              <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
-            </div>
-            <div class="sidebar-add pt-35">
-              <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
-            </div>
-          </div>
-          <div class="Categories-post mt-40">
-            <div class="
+            <div class="Categories-post mt-40">
+              <div class="
                     section-title
                     d-flex
                     justify-content-between
                     align-items-center
                   ">
-              <h3 class="title">Categories</h3>
-              <a href="#">ALL SEE</a>
-            </div>
-            <div class="Categories-item">
-              <div class="item">
-                <img src="@/assets/images/categories-1.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>Restaurant</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
-                </div>
+                <h3 class="title">Categories</h3>
+                <a href="#">ALL SEE</a>
               </div>
-              <div class="item">
-                <img src="@/assets/images/categories-2.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>Entertainment</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
+              <div class="Categories-item">
+                <div class="item">
+                  <img src="@/assets/images/categories-1.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>Restaurant</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div class="item">
-                <img src="@/assets/images/categories-2.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>ad</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
+                <div class="item">
+                  <img src="@/assets/images/categories-2.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>Entertainment</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div class="item">
-                <img src="@/assets/images/categories-3.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>Financial</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
+                <div class="item">
+                  <img src="@/assets/images/categories-2.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>ad</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div class="item">
-                <img src="@/assets/images/categories-4.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>Business</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
+                <div class="item">
+                  <img src="@/assets/images/categories-3.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>Financial</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div class="item">
-                <img src="@/assets/images/categories-2.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>ad</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
+                <div class="item">
+                  <img src="@/assets/images/categories-4.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>Business</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
                 </div>
-              </div>
+                <div class="item">
+                  <img src="@/assets/images/categories-2.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>ad</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
+                </div>
 
-              <div class="item">
-                <img src="@/assets/images/categories-5.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>Scientists</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
+                <div class="item">
+                  <img src="@/assets/images/categories-5.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>Scientists</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="@/assets/images/categories-6.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>International’s</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="@/assets/images/categories-2.jpg" alt="categories" />
+                  <div class="Categories-content">
+                    <a href="#">
+                      <span>ad</span>
+                      <img src="@/assets/images/arrow.svg" alt="" />
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div class="item">
-                <img src="@/assets/images/categories-6.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>International’s</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
-                </div>
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
               </div>
-              <div class="item">
-                <img src="@/assets/images/categories-2.jpg" alt="categories" />
-                <div class="Categories-content">
-                  <a href="#">
-                    <span>ad</span>
-                    <img src="@/assets/images/arrow.svg" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="sidebar-add pt-35">
-              <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
             </div>
           </div>
         </div>
+
 
 
       </div>
@@ -458,12 +448,12 @@ export default {
     popularPostGallery: [],
     smallPostGallery: [],
     newParagraph: [],
+    newContent:[],
     l: -1,
-    start: -1,
     selectedGallery: 'trendy',
     headerimage: "headerimage",
     coverimage: "coverimage",
-    skip: -1,
+    start: -1,
     sidebar: false,
   }),
   async created() {
@@ -472,6 +462,33 @@ export default {
     await this.fetchlatestPostGallery();
     await this.fetchpopularPostGallery();
     this.content = this.Posts.content;
+    console.log("new contern",this.content);
+
+    this.newContent = [...this.content]; // Create a copy of the original array
+
+let index = 0; // Start from the desired index
+
+do {
+  const data = this.newContent[index];
+  
+  if (data && (data.type === "text" || data.type === "backlink")) {
+    let end = this.lCalculate(index);
+    console.log("index",index);
+    console.log("end created",end);
+    let start = index;
+    let newParagraph = this.filteredContent(start, end);
+    let length=newParagraph.length;
+    this.newContent.splice(start,length , newParagraph);
+    index++; 
+  }else{
+
+  index++;}
+} while (index < this.newContent.length);
+
+this.content = this.newContent; // Assign the modified array back to this.content
+console.log("new contern",this.content);
+
+
     document.addEventListener("scroll", this.topToBottom);
   }, computed: {
 
@@ -506,20 +523,17 @@ export default {
         this.Posts = await response.json();
         this.headerimage = this.headerImage(this.Posts);
         this.coverimage = this.coverToShow(this.Posts);
-        console.log("post", this.Posts);
       } catch (error) {
         console.error(error);
       }
     },
-    filteredContent(index) {
-      let i=index;
-      const start = i;
-      console.log("start",start);
-      this.lCalculate(i);
-      const end=this.l;
-      console.log("this/l",this.l);
-      const filteredContent = this.content.filter((data, index) => start <= index && index <=end);
-this.newParagraph.splice(0, this.newParagraph.length, ...filteredContent);
+
+    filteredContent(index, end) {
+      const start = index;
+       console.log("start",start);
+       console.log("end",end);
+      const filteredContent = this.newContent.filter((data, index) => start <= index && index <= end);
+      return filteredContent;
     },
     toggleSidebar() {
       this.sidebar = !this.sidebar;
@@ -538,22 +552,22 @@ this.newParagraph.splice(0, this.newParagraph.length, ...filteredContent);
 
     lCalculate(index) {
       let l = -1; // Use this.l as the initial value of l
-      for (let i = index; i < this.content.length; i++) {
-        if (this.content[i].type !== "text" && this.content[i].type !== "backlink") {
-          l = i;
-          this.l = l;
-          return this.l; // Update this.l with the new value
+      for (let i = index; i < this.newContent.length; i++) {
+        console.log(" // Update this.l with the new value",l);
 
+        if (this.newContent[i].type !== "text" && this.newContent[i].type !== "backlink") {
+          if (i===0){l=0} else if(i=== this.newContent.length-1){l= this.newContent.length-1} else{l = i-1}
+          console.log(" // Update this.l with the new value");
+
+          return l; // Update this.l with the new value
+        } else if(i=== this.newContent.length-1){
+          l=this.newContent.length;
+          return l;
         }
       }
-    }, log(data) {
-      console.log(data)
-    },
+    }, 
 
-    assignSkip(index) {
-      let skip = index;
-      this.skip = skip;
-    },
+ 
 
 
     selectGalleryTab(value) {

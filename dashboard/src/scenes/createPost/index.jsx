@@ -346,6 +346,8 @@ const CreatePostPage = () => {
             "headervideo",
             "tag",
             "headervideoupload",
+            "end_paragraph",
+
           ]),
         value: yup.string(),
         desciption: yup.string(),
@@ -490,6 +492,22 @@ const CreatePostPage = () => {
   };
   return (
     <BoxInsider>
+        <Box>
+          <AnimatedButton
+            className="button"
+            onClick={() => {
+              addElement("end_paragraph");
+            }}
+            sx={{
+              "& .button .top, .button .bottom, .button .left, .button .right":
+                { backgroundColor: "#ebff33" },
+              "& .button .border": { border: "1px solid #ebff33" },
+              "& .button": { color: "#ebff33" },
+            }}
+          >
+            End Paragraph
+          </AnimatedButton>
+        </Box>
       <Typography
         variant={"h4"}
         color="rgba(255,75,75,1)"
@@ -498,6 +516,7 @@ const CreatePostPage = () => {
         Dashboard/Manage_Posts/Create_Post
       </Typography>
       <Box className="controllersLayout">
+        
         <Box>
           <AnimatedButton
             className="button"
@@ -674,7 +693,7 @@ const CreatePostPage = () => {
             thumb
           </AnimatedButton>
         </Box>
-     
+      
         <Box>
           <AnimatedButton
             className="button"
@@ -827,6 +846,37 @@ const CreatePostPage = () => {
                               fontSize: 16,
                               color: "rgba(255,75,75,1)",
                             },
+                          }}
+                        />
+                      );
+                    }
+                    else if (element.type === "end_paragraph") {
+                      return (
+                        <TextField
+                          onBlur={handleBlur}
+                          value={values.end_paragraph}
+                          key={element.id}
+                          name={`${element.type}-${element.id}`}
+                          error={Boolean(
+                            touched.content &&
+                              touched.content[index] &&
+                              errors.content &&
+                              errors.content[index]
+                          )}
+                          variant="filled"
+                          label="Title"
+                          sx={{
+                            gridColumn: "span 2",
+                            mb: "1rem",
+                            backgroundColor: "rgba(255,255,255,0.7)",
+                            width: "90%",
+                            borderColor: "#000",
+                          }}
+                          inputProps={{
+                            style: { fontSize: 18, color: "#FFF" },
+                          }}
+                          InputLabelProps={{
+                            style: { fontSize: 16, color: "rgba(255,75,75,1)" },
                           }}
                         />
                       );
