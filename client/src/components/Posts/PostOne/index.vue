@@ -45,11 +45,7 @@
                 <p>
                   {{ Posts.intro }}
                 </p>
-                <template v-for="(data, index) in content">
-                  <div v-if="data.type === 'image'" :key="index" class="thumb">
-                    <img :src="data.value" :alt="Posts.title" />
-                  </div>
-                </template>
+            
               </div>
               <div class="post-author">
                 <div class="author-info">
@@ -249,8 +245,7 @@ a
 
                 </div>
               </div>
-            </div>
-
+              <div class="post-text mt-35">
             <div class="post-tags">
               <ul>
                 <li>
@@ -261,8 +256,14 @@ a
                 <li><a href="#">Corona</a></li>
               </ul>
             </div>
+            
+          </div>
+            </div>
+        
+
 
           </div>
+
           <div class="col-lg-4"
             v-if="smallPostGallery.length > 0 && latestPostGallery.length > 0 && popularPostGallery.length > 0">
             <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
@@ -378,6 +379,7 @@ a
               </div>
             </div>
           </div>
+          
         </div>
 
 
