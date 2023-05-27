@@ -1,7 +1,7 @@
 <div v-if="Array.isArray(data)" class="post-text mt-30"   >
                   
                      
-  <p
+
    <span  v-for="(innerData) in   data " :key="innerData._id">
      <template  v-if="innerData.type === 'backlink'">
        <a :href="JSON.parse(innerData.value).backlinkLink"><u>{{

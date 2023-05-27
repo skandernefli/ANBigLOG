@@ -66,8 +66,12 @@ const routes = [
     name: 'PostOne',
     component: PostOne,
     props: true
-
-  },
+}, {
+  path: '/Categories/latest/PostsInCategory/:categorie_name',
+  name: 'PostsInCategory',
+  component: Features,
+  props: true
+},
   {
     path: '/posts/postOne',
     name: 'PostOne',
@@ -93,11 +97,7 @@ const routes = [
     name: 'Entertainment',
     component: Entertainment
   },
-  {
-    path: '/features',
-    name: 'Features',
-    component: Features
-  },
+ 
   {
     path: '/sports',
     name: 'Sports',
