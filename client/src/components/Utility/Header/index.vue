@@ -31,7 +31,7 @@
     <div class="header-menubar">
       <div class="mar-left">
         <div class="row align-items-center">
-          <div class="col-lg-8 col-sm-3 col-3">
+          <div class="col-lg-12 col-sm-3 col-3">
             <svg
               class="menu-drawer"
               style="cursor: pointer"

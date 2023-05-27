@@ -21,7 +21,7 @@
                     <div class="bussiness-post-content">
                       <h3 class="title">
                        
-                        <router-link :to="'/posts/post/' + post._id" @click.prevent>{{ post.title }}</router-link>
+                        <router-link :to="'/posts/post/' + post._id" @click.prevent>{{truncatedTextT(post.title )}}</router-link>
                       </h3>
                       <div class="meta-date-link">
                         <span>Created at {{ post.created_at }}</span>
@@ -36,7 +36,7 @@
                         </ul>
                       </div>
                       
-                      <p>{{ post.intro }}</p>
+                      <p>{{truncatedTextI(post.intro)}} </p>
                       <router-link :to="'/posts/post/' + post._id"  @click.prevent="$router.push({ name: 'PostOne', params: { id: post._id } })">LEARN MORE<img src="@/assets/images/arrow-2.svg" :alt="post.intro" /></router-link>
                     </div>
                   </div>
@@ -65,7 +65,7 @@ export default {
 
   data: () => ({
     posts:[],
-    visiblePosts: 1,
+    visiblePosts: 15,
   }),
   async created() {
     await this.fetchPosts();
@@ -85,8 +85,7 @@ export default {
         }
         return "";
       };
-    }
-
+    },
 
 
 
@@ -104,6 +103,29 @@ export default {
     loadMore() {
       this.visiblePosts += 5;
     },
+    truncatedTextI(data) {
+      const maxLength = 150;
+      if (data.length > maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = "\u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+truncatedTextT(data) {
+      const maxLength = 100;
+      if (data.length >= maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length+10;
+    const invisibleChars = " \u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+}
+
   },
 };
 

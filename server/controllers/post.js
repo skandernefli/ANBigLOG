@@ -80,6 +80,23 @@ const getPosts_Cl=(req,res)=>{
       });
     });
 }
+const getPosts_Cteg = (req, res) => {
+  const categorie_name = req.params.categorie_name;
+
+  postModel
+    .find({ categorie_name: categorie_name })
+    .sort({ created_at: -1 })
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        error: error
+      });
+    });
+};
+
 const deletePost=(req,res)=>{
     const userInfo=req.user;
         const postId=req.params.id;
@@ -184,4 +201,4 @@ const updatePost = (req, res) => {
     }
   };
   
-module.exports={postPost,getPosts_Cl, getPosts_Ad, deletePost,updatePost,getPost}
+module.exports={postPost,getPosts_Cl,getPosts_Cteg, getPosts_Ad, deletePost,updatePost,getPost}
