@@ -74,6 +74,7 @@ export default {
       type: String,
     }
   },
+ 
   components: { CategoryLayout, StyleOne },
   data: () => ({
     posts: [],
@@ -128,7 +129,12 @@ truncatedTextT(data) {
 }
 
   
-  }
+  }, watch: {
+    category(newValue, oldValue) {
+      if (newValue !== oldValue) {
+      this.fetchPosts();
+    }
+    },}
 
 };
 </script>

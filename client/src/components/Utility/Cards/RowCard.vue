@@ -10,14 +10,14 @@
       <div class="gallery_item_content">
         <div class="post-meta">
           <div class="meta-categories">
-            <a :href="datas.link">{{ datas.category.name }}</a>
+            <a :href="datas.link">{{ truncatedTextI(datas.category.name) }}</a>
           </div>
           <div class="meta-date">
             <span>{{ datas.category.create_At }}</span>
           </div>
         </div>
         <h4 class="title">
-          <a :href="datas.link">{{ datas.title }}</a>
+          <a :href="datas.link">{{ truncatedTextT(datas.title)}}</a>
         </h4>
       </div>
     </template>
@@ -156,7 +156,31 @@ export default {
     count: {
       type: Number,
     },
-  },
+  },methods:{
+    truncatedTextI(data) {
+      const maxLength = 17;
+      if (data.length > maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = "\u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+truncatedTextT(data) {
+      const maxLength = 50;
+      if (data.length >= maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = " \u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+
+  }
 };
 </script>
 

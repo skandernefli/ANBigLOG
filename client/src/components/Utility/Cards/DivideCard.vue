@@ -21,10 +21,10 @@
           </div>
           <h3 class="title">
             <a :href="datas.link" class="d-block">
-              {{ truncatedText }}</a>
+              {{ truncatedTextT(datas.title) }}</a>
           </h3>
           <p class="text">
-            {{ datas.description }}
+            {{ truncatedTextI(datas.description) }}
           </p>
           <a v-if="readMore" :href="datas.link">Read more</a>
         </div>
@@ -41,7 +41,7 @@
     <div class="bussiness-post-content"  v-if="datas.category && datas.category.name && datas.category.create_At">
       <h3 class="title">
         <a :href="datas.link" class="d-block">
-          {{ truncatedText }}</a>
+          {{ truncatedTextT(datas.title) }}</a>
       </h3>
       <div class="meta-date-link">
         <span>{{ datas.category.create_At }}</span>
@@ -55,8 +55,7 @@
         </ul>
       </div>
       <p>
-        {{ datas.description }}
-      </p>
+        {{ truncatedTextI(datas.description) }}      </p>
       <a :href="datas.link"
         >LEARN MORE <img src="@/assets/images/arrow-2.svg"  :alt="datas.title"
       /></a>
@@ -80,11 +79,10 @@
       </div>
       <h3 class="title">
         <a :href="datas.link" class="d-block">
-          {{ truncatedText }}</a>
+          {{ truncatedTextT(datas.title) }}</a>
       </h3>
       <p class="text">
-        {{ datas.description }}
-      </p>
+        {{ truncatedTextI(datas.description) }}      </p>
       <a v-if="readMore" :href="datas.link">Read more</a>
     </div>
   </div>
@@ -133,14 +131,29 @@ export default {
     stype: {
       type: String,
     },
-  },  computed: {
-    truncatedText() {
+  },  methods:{
+    truncatedTextI(data) {
+      const maxLength = 90;
+      if (data.length > maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = "\u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+truncatedTextT(data) {
       const maxLength = 60;
-      if (this.datas.title.length > maxLength) {
-        return this.datas.title.substring(0, maxLength) + "...";
-      }
-      return this.datas.title;
-    }
+      if (data.length >= maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = " \u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
   }
 };
 </script>
