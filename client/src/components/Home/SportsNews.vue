@@ -39,7 +39,7 @@
               </template>
             </div>
             <div class="post_gallery_items">
-              <template v-for="(data, index) in manageSideSportsSection.slice(6, 12)">
+              <template v-for="(data, index) in manageSideSportsSection.slice(5, 12)">
                 <row-card
                   :class="[
                     darkClass && 'news_item' in darkClass

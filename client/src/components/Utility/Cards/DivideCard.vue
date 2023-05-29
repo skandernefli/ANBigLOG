@@ -133,7 +133,7 @@ export default {
     },
   },  methods:{
     truncatedTextI(data) {
-      const maxLength = 90;
+      const maxLength = 120;
       if (data.length > maxLength) {
         return data.substring(0, maxLength) + "...";
       }else if (data.length < maxLength) {

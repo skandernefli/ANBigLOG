@@ -65,7 +65,7 @@ export default {
 
   data: () => ({
     posts:[],
-    visiblePosts: 15,
+    visiblePosts: 10,
   }),
   async created() {
     await this.fetchPosts();

@@ -21,7 +21,7 @@
   position: relative;
 }
 .header-nav-box.header-nav-box-3 .newspark-header-main-menu ul > li > a {
-  color: #181818;
+  color: #fff;
 }
 .newspark-header-main-menu > ul > li > a::before {
   position: absolute;

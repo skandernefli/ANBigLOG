@@ -27,9 +27,9 @@
                 </ul>
               </div>
               <div class="about-post-items">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6" v-if="posts.length > 0">
-                    <div class="trending-image-post feature-item mt-30"  v-for="(post,index) in postsToShow" :key="index">
+                <div class="row" v-if="posts.length > 0"> 
+                  <div class="col-lg-6 col-md-6"  v-for="(post,index) in postsToShow" :key="index">
+                    <div class="trending-image-post feature-item mt-30  "  >
                       <img :src="coverToShow(post)" :alt="post.title" />
                       <div class="trending-image-content">
                         <div class="post-meta">

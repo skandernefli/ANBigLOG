@@ -29,7 +29,11 @@
                   <a href="#"
                     ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
                   /></a>
-                </div>  <div class="sidebar-add pt-35">
+                </div>         <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div> <div class="sidebar-add pt-35">
                   <a href="#"
                     ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
                   /></a>

@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="section-title">
-            <h3 class="title">Feature News</h3>
+            <h3 class="title">Feature Posts</h3>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@ export default {
   components: { Slider, OverlayCard },
   data: () => ({
     //feature
-    post:[{}],
+    post:[],
     featureSliderSettings: {
       slidesToShow: 4,
       slideToScroll: 1,
