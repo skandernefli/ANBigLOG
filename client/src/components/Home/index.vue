@@ -3,7 +3,7 @@
     <video-pop-up />
     <drawer @toggleSidebar="toggleSidebar" :sidebar="sidebar" />
     <!--====== HEADER PART START ======-->
-    <header-one image="logo.png" @toggleSidebar="toggleSidebar" />
+    <header-one image="logo.svg" @toggleSidebar="toggleSidebar"  />
     <!--====== HEADER PART ENDS ======-->
 
     <!--====== POST PART START ======-->

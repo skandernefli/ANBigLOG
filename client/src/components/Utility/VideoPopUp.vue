@@ -40,7 +40,8 @@ export default {
     getVideoUrl() {
       // Replace this logic with your own to get the dynamic video URL from the store
       const videoUrl = this.$store.state.videoUrl;
-      return `//www.youtube.com/embed/${videoUrl}?autoplay=1`;
+      console.log(videoUrl);
+      return videoUrl;
     },
   },
 };

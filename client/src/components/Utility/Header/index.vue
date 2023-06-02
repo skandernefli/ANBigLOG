@@ -30,21 +30,15 @@
     </div>
     <div class="header-menubar">
       <div class="mar-left">
-        <div class="row align-items-center">
-          <div class="col-lg-12 col-sm-3 col-3">
-            <svg
-              class="menu-drawer"
-              style="cursor: pointer"
-              @click.prevent="hideSidebar"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              fill="currentColor"
-              height="24"
-            >
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path d="M3 4h18v2H3V4zm6 7h12v2H9v-2zm-6 7h18v2H3v-2z"></path>
-            </svg>
+        <div class="col align-items-center">
+          <div class="">
+            <img
+      class="menu-drawer"
+      style="cursor: pointer"
+      @click.prevent="hideSidebar"
+      :src="require(`@/assets/images/` + image)"
+      alt="Menu"
+    />
             <!-- <div
               :class="[
                 'newspark-header-main-menu',
@@ -94,7 +88,7 @@ export default {
   props: {
     image: {
       type: String,
-      default: "logo.png",
+      default: "logo.svg",
     },
     darkClass: {
       type: Object,
