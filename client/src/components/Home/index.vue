@@ -3,13 +3,13 @@
     <video-pop-up />
     <drawer @toggleSidebar="toggleSidebar" :sidebar="sidebar" />
     <!--====== HEADER PART START ======-->
-    <header-one image="logo.png" @toggleSidebar="toggleSidebar" />
+    <header-one image="logo.svg" @toggleSidebar="toggleSidebar"  />
     <!--====== HEADER PART ENDS ======-->
 
     <!--====== POST PART START ======-->
 
-<!--     <post-part-home-one />
- -->
+    <post-part-home-one />
+
     <!--====== POST PART ENDS ======-->
 
     <!--====== POST GALLERY PART START ======-->
@@ -29,7 +29,11 @@
                   <a href="#"
                     ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
                   /></a>
-                </div>  <div class="sidebar-add pt-35">
+                </div>         <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div> <div class="sidebar-add pt-35">
                   <a href="#"
                     ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
                   /></a>
@@ -671,8 +675,8 @@
 </template>
 <script>
 import HeaderOne from "../Utility/Header/index";
-/* import PostPartHomeOne  from "./PostPartHomeOne.vue";
- */import PostGallery from "./PostGallery.vue";
+import PostPartHomeOne  from "./PostPartHomeOne.vue";
+import PostGallery from "./PostGallery.vue";
 import Features from "./Features.vue";
 import TrendingNews from "./TrendingNews.vue";
 import SinglePlayPost from "./SinglePlayPost.vue";
@@ -688,7 +692,7 @@ export default {
   components: {
     HeaderOne,
     Movies,
-    /* PostPartHomeOne */
+    PostPartHomeOne ,
     PostGallery,
     Features,
     TrendingNews,

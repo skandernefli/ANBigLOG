@@ -1,9 +1,8 @@
 <template>
   <div>
     <drawer @toggleSidebar="toggleSidebar" :sidebar="sidebar" />
-    <Header image="logo.png" @toggleSidebar="toggleSidebar" />
+    <Header image="logo.svg" @toggleSidebar="toggleSidebar" />
     <info />
-    <Form />
     <div class="add-area text-center">
       <a href="#">
         <img src="@/assets/images/ads/one_ad.png" alt="" />
@@ -27,10 +26,9 @@
 import Drawer from "../Mobile/Drawer.vue";
 import FooterOne from "../Utility/Footer/FooterOne.vue";
 import Header from "../Utility/Header/index";
-import Form from "./Form.vue";
 import Info from "./Info.vue";
 export default {
-  components: { Header, Info, Form, FooterOne, Drawer },
+  components: { Header, Info,  FooterOne, Drawer },
   data: () => ({
     sidebar: false,
   }),

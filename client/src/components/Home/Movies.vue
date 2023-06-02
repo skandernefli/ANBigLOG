@@ -6,7 +6,7 @@
         darkClass && 'title' in darkClass ? darkClass.title : '',
       ]"
     >
-      <h3 class="title">Movies</h3>
+      <h3 class="title"> Movies & Shows</h3>
     </div>
     <div class="row" v-if="moviesDatas.length > 0">
       <template v-for="(data, index) in moviesDatas.slice(0, 6)">

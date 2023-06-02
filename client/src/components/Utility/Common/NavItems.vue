@@ -9,7 +9,7 @@
        <li><router-link to="/">Home</router-link></li>
       <li v-for="(item, index) in categories.slice(0,5)" :key="index">
      
-        <router-link :to="'/Categories/latest/PostsInCategory/' + item.name"  @click.prevent="$router.push({ name: 'PostsInCategory', params: { category: item.name } })">{{
+        <router-link :to="'/Categories/latest/PostsInCategory/' + item.name"  >{{
           item.name
         }}</router-link></li>
       <li v-for="(item, index) in nav_items" :key="index">
@@ -21,8 +21,8 @@
           item.linkText
         }}</router-link>
         <ul v-if="item.child" class="sub-menu">
-          <li v-for="(lvlTwo, index) in categories" :key="index">
-            <router-link :to="'/Categories/latest/PostsInCategory/' + item.name"  @click.prevent="$router.push({ name: 'PostsInCategory', params: { category: item.name } })">
+          <li v-for="(lvlTwo, index) in categories.slice(6,categories.length)" :key="index">
+            <router-link :to="'/Categories/latest/PostsInCategory/' + lvlTwo.name"  >
               {{ lvlTwo.name }}
             </router-link>
           

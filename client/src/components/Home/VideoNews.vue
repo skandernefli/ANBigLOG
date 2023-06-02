@@ -25,11 +25,8 @@
                 <div class="video-news-post-thumb">
                   <img :src="mainvideo.image" :alt="mainvideo.title" />
                   <div class="play-btn">
-                    <a 
-                      class="video-popup"
-                    
-                      @click.prevent="$store.dispatch('toggleVideo',mainvideo.linkvideo)"
-                      ><i class="fab fa-youtube"></i
+                    <a class="video-popup" @click.prevent="$store.dispatch('setUrl', mainvideo.linkvideo); $store.dispatch('toggleVideo')">
+<i class="fab fa-youtube"></i
                     ></a>
                   </div>
                 </div>

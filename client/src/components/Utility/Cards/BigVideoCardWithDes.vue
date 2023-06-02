@@ -18,10 +18,10 @@
           </div>
         </div>
         <h2 class="title">
-          <a :href="datas.link">{{ datas.title }}</a>
+          <a :href="datas.link">{{  truncatedTextT( datas.title  ) }}</a>
         </h2>
         <p>
-          {{ datas.description }}
+          {{ truncatedTextI( datas.description )  }}
         </p>
       </div>
       <div
@@ -44,6 +44,30 @@
 <script>
 export default {
   props: ["datas","datas_2"],
+  methods:{
+    truncatedTextI(data) {
+      const maxLength = 190;
+      if (data.length > maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = "\u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+truncatedTextT(data) {
+      const maxLength = 30;
+      if (data.length >= maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = " \u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+}
+  }
 };
 
 </script>

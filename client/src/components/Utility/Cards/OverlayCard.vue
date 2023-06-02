@@ -9,14 +9,14 @@
     <div class="feature-post-content"  v-if="datas.category && datas.category.name && datas.category.create_At">
       <div class="post-meta">
         <div class="meta-categories">
-          <a href="#">{{ datas.category.name }}</a>
+          <a href="#">{{ truncatedTextI(datas.category.name) }}</a>
         </div>
         <div class="meta-date">
           <span>{{ datas.category.create_At }}</span>
         </div>
       </div>
       <h4 class="title">
-        <a href="#">{{ datas.title }}</a>
+        <a href="#">  {{ truncatedTextT(datas.title) }}</a>
       </h4>
     </div>
   </a>
@@ -57,7 +57,30 @@ export default {
     stype: {
       type: String,
     },
-  },
+  },  methods:{
+    truncatedTextI(data) {
+      const maxLength =19;
+      if (data.length > maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = "\u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+truncatedTextT(data) {
+      const maxLength = 40;
+      if (data.length >= maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = " \u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+  }
 };
 </script>
 

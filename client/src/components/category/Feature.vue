@@ -10,7 +10,7 @@
                   <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                   <li class="breadcrumb-item"><a href="#">Category</a></li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    {{ $route.params.categorie_name }}
+                    <a href="#"> {{ $route.params.categorie_name }}</a>
                   </li>
                 </ol>
               </nav>
@@ -27,9 +27,9 @@
                 </ul>
               </div>
               <div class="about-post-items">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6" v-if="posts.length > 0">
-                    <div class="trending-image-post feature-item mt-30"  v-for="(post,index) in postsToShow" :key="index">
+                <div class="row" v-if="posts.length > 0"> 
+                  <div class="col-lg-6 col-md-6"  v-for="(post,index) in postsToShow" :key="index">
+                    <div class="trending-image-post feature-item mt-30  "  >
                       <img :src="coverToShow(post)" :alt="post.title" />
                       <div class="trending-image-content">
                         <div class="post-meta">
@@ -56,8 +56,571 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <style-one :datas="posts.slice(1, 6)" />
+          <div class="col-lg-4"
+            v-if="smallPostGallery.length > 0 && latestPostGallery.length > 0 && popularPostGallery.length > 0">
+            <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
+              role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery"
+              :datas_3="popularPostGallery" />
+            <div class="all-post-sidebar">
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
+            </div>
+            <div class="Categories-post mt-40">
+                <div
+                  class="
+                    section-title
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                  "
+                >
+                  <h3 class="title">Categories</h3>
+                </div>
+                <div class="Categories-item">
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-1.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Personal Development </span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Health and Fitness</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-3.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Travel and Adventure</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-4.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Technology and Gadgets</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+               
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Food and Cooking</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Fashion and Beauty</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Finanace and Money Management</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>DIY and Crafts</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Parenting and Family</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Home and Gardening</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Book Reviews and Literature</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Business and Entrepreneurship</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Photography and Visual Arts</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Sustainable Living</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Pet Care and Animal Wellfare </span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>News and Current Events</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Politics and Government</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Social issues and Activism</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Technology Trends</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Entertainment and Pop Culture</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Gaming and Esports</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Science And Space</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Environment and Sustainability</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Education and Learning </span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Sports and Fitness</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Personal Finance and Investing </span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Mental Health and Well-being</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Cultural Insights and Travel</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div> <div class="item">
+                    <img
+                      src="@/assets/images/categories-5.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Artificial Intelligence and Robotics</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-6.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Cryptocurrency and Blockchain</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img
+                      src="@/assets/images/categories-2.jpg"
+                      alt="categories"
+                    />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="sidebar-add pt-35">
+                  <a href="#"
+                    ><img src="@/assets/images/ads/two_ad.jpg" alt="ad"
+                  /></a>
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -66,7 +629,8 @@
 </template>
 
 <script>
-import StyleOne from "../Utility/Sidebar/StyleOne.vue";
+import HomeOne from "../Utility/Sidebar/StyleOne.vue"; 
+
 import CategoryLayout from "./CategoryLayout.vue";
 export default {
   props: {
@@ -74,10 +638,16 @@ export default {
       type: String,
     }
   },
-  components: { CategoryLayout, StyleOne },
+ 
+  components: { CategoryLayout ,HomeOne},
   data: () => ({
     posts: [],
     visiblePosts: 18,
+    latestPostGallery: [],
+    popularPostGallery: [],
+    smallPostGallery: [],
+    selectedGallery: 'trendy',
+
   }),   computed: {
     postsToShow() {
 
@@ -99,6 +669,9 @@ export default {
 
 
   }, async created() {
+    await this.fetchsmallPostGallery();
+    await this.fetchlatestPostGallery();
+    await this.fetchpopularPostGallery();
     await this.fetchPosts();},  methods: {
     async fetchPosts() {
       try {
@@ -125,10 +698,31 @@ truncatedTextT(data) {
     return data + invisibleChars;
   }
   return data;
-}
-
+},
+selectGalleryTab(value) {
+      this.selectedGallery = value;
+    }, async fetchsmallPostGallery() {
+      const response = await fetch("http://localhost:8000/server/trendy").then(res => res.json());
+      const data = response[0].data;
+      return this.smallPostGallery = data;
+    },
+    async fetchlatestPostGallery() {
+      const response = await fetch("http://localhost:8000/server/latest").then(res => res.json());
+      const data = response[0].data;
+      return this.latestPostGallery = data;
+    },
+    async fetchpopularPostGallery() {
+      const response = await fetch("http://localhost:8000/server/popular").then(res => res.json());
+      const data = response[0].data;
+      return this.popularPostGallery = data;
+    },
   
-  }
+  }, watch: {
+    category(newValue, oldValue) {
+      if (newValue !== oldValue) {
+      this.fetchPosts();
+    }
+    },}
 
 };
 </script>

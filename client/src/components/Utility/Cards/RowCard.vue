@@ -10,14 +10,14 @@
       <div class="gallery_item_content">
         <div class="post-meta">
           <div class="meta-categories">
-            <a :href="datas.link">{{ datas.category.name }}</a>
+            <a :href="datas.link">{{ truncatedTextI(datas.category.name) }}</a>
           </div>
           <div class="meta-date">
             <span>{{ datas.category.create_At }}</span>
           </div>
         </div>
         <h4 class="title">
-          <a :href="datas.link">{{ datas.title }}</a>
+          <a :href="datas.link">{{ truncatedTextT(datas.title)}}</a>
         </h4>
       </div>
     </template>
@@ -34,11 +34,11 @@
     </div>
     <div class="post-gallery-content">
       <h5 class="title">
-        <a :href="datas.link">{{ datas.title }}</a>
+        <a :href="datas.link">{{ truncatedTextT(datas.title)}}</a>
       </h5>
       <div class="meta-post-2-style">
         <div class="meta-post-categores">
-          <a :href="datas.link">{{ datas.category.name }}</a>
+          <a :href="datas.link">{{ truncatedTextI(datas.category.name) }}</a>
         </div>
         <div class="meta-post-date">
           <span>{{ datas.category.create_At }}</span>
@@ -57,14 +57,14 @@
     <div class="gallery_item_content">
       <div class="post-meta">
         <div class="meta-categories">
-          <a :href="datas.link">{{ datas.category.name }}</a>
+          <a :href="datas.link">{{ truncatedTextI(datas.category.name) }}</a>
         </div>
         <div class="meta-date">
           <span>{{ datas.category.create_At }}</span>
         </div>
       </div>
       <h4 class="title">
-        <a :href="datas.link">{{ datas.title }}</a>
+        <a :href="datas.link">{{ truncatedTextT(datas.title)}}</a>
       </h4>
       <!-- <span v-if="counting">{{ counting }}</span> -->
     </div>
@@ -79,14 +79,14 @@
     <div class="gallery_item_content">
       <div class="post-meta">
         <div class="meta-categories">
-          <a :href="datas.link">{{ datas.category.name }}</a>
+          <a :href="datas.link">{{ truncatedTextI(datas.category.name) }}</a>
         </div>
         <div class="meta-date">
           <span>March 26, 2020</span>
         </div>
       </div>
       <h4 class="title">
-        <a :href="datas.link">{{ datas.title }}</a>
+        <a :href="datas.link">{{ truncatedTextT(datas.title)}}</a>
       </h4>
       <span>{{ count }}</span>
     </div>
@@ -101,14 +101,14 @@
       <div class="gallery_item_content">
         <div class="post-meta">
           <div class="meta-categories">
-            <a :href="datas.link">{{ datas.category.name }}</a>
+            <a :href="datas.link">{{ truncatedTextI(datas.category.name) }}</a>
           </div>
           <div class="meta-date">
             <span>{{ datas.category.create_At }}</span>
           </div>
         </div>
         <h4 class="title">
-          <a :href="datas.link">{{ datas.title }}</a>
+          <a :href="datas.link">{{ truncatedTextT(datas.title)}}</a>
         </h4>
       </div>
     </template>
@@ -126,7 +126,7 @@
       </div>
       <div class="post-content">
         <h4 class="title">
-          <a :href="datas.link" class="line-clumb">{{ datas.title }}</a>
+          <a :href="datas.link" class="line-clumb">{{ truncatedTextT(datas.title)}}</a>
         </h4>
         <p class="line-clumb-one">{{ datas.description }}</p>
       </div>
@@ -156,7 +156,31 @@ export default {
     count: {
       type: Number,
     },
-  },
+  },methods:{
+    truncatedTextI(data) {
+      const maxLength = 18;
+      if (data.length > maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = "\u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+truncatedTextT(data) {
+      const maxLength = 50;
+      if (data.length >= maxLength) {
+        return data.substring(0, maxLength) + "...";
+      }else if (data.length < maxLength) {
+    const invisibleCharsToAdd = maxLength - data.length;
+    const invisibleChars = " \u00A0".repeat(invisibleCharsToAdd);
+    return data + invisibleChars;
+  }
+  return data;
+},
+
+  }
 };
 </script>
 

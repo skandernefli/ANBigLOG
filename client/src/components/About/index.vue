@@ -3,7 +3,6 @@
     <drawer @toggleSidebar="toggleSidebar" :sidebar="sidebar" />
     <Header @toggleSidebar="toggleSidebar" />
     <about-author />
-    <other />
     <div class="add-area text-center">
       <a href="#">
         <img src="@/assets/images/ads/one_ad.png" alt="" />
@@ -28,12 +27,10 @@ import Drawer from "../Mobile/Drawer.vue";
 import FooterOne from "../Utility/Footer/FooterOne.vue";
 import Header from "../Utility/Header/index";
 import AboutAuthor from "./AboutAuthor.vue";
-import Other from "./Other.vue";
 export default {
   components: {
     Header,
     AboutAuthor,
-    Other,
     FooterOne,
     Drawer,
   },
