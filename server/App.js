@@ -41,7 +41,7 @@ App.use((req, res, next) => {
 App.use(addAccessTokenToHeaders);
 
 App.use((req, res, next) => {
-  var allowedOrigins = ['http://localhost:3000', 'http://localhost:8080', 'http://192.168.1.226:8080'];
+  var allowedOrigins = ['http://localhost:3000', 'http://localhost:8080', 'http://192.168.1.226:8080',"http://3.145.167.18/:8080","http://3.145.167.18/:3000"];
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);}
