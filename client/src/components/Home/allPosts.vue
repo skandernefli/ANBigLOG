@@ -94,7 +94,7 @@ export default {
   methods: {
     async fetchPosts() {
       try {
-        const response = await fetch("http://localhost:8000/server/post/client/");
+        const response = await fetch("http://http://3.145.167.18/:8000/server/post/client/");
         this.posts = await response.json();
       } catch (error) {
         console.error(error);
