@@ -94,12 +94,12 @@ export default {
   },
   methods: {
     async fetchmanageSportsMainSection() {
-      const response = await fetch("http://http://3.145.167.18/:8000/server/manageSportsMainSection").then(res => res.json());
+      const response = await fetch("http://3.145.167.18:8000/server/manageSportsMainSection").then(res => res.json());
       const data = response[0].data;
       return this.manageSportsMainSection = data;
     },
     async fetchmanageSideSportsSection() {
-      const response = await fetch("http://http://3.145.167.18/:8000/server/manageSideSportsSection").then(res => res.json());
+      const response = await fetch("http://3.145.167.18:8000/server/manageSideSportsSection").then(res => res.json());
       const data = response[0].data;
       return this.manageSideSportsSection = data;
     },
