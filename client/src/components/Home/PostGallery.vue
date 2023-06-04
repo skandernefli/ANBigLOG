@@ -68,24 +68,24 @@ export default {
     },
     //post gallery
     async fetchPostGallery() {
-      const response = await fetch("http://http://3.145.167.18/:8000/server/postgalley");
+      const response = await fetch("http://3.145.167.18:8000/server/postgalley");
       const data = await response.json();
       this.postGallery = data[0].data;
 
 
     },
     async fetchsmallPostGallery() {
-      const response = await fetch("http://http://3.145.167.18/:8000/server/trendy").then(res => res.json());
+      const response = await fetch("http://3.145.167.18:8000/server/trendy").then(res => res.json());
       const data = response[0].data;
       return this.smallPostGallery = data;
     },
     async fetchlatestPostGallery() {
-      const response = await fetch("http://http://3.145.167.18/:8000/server/latest").then(res => res.json());
+      const response = await fetch("http://3.145.167.18:8000/server/latest").then(res => res.json());
       const data = response[0].data;
       return this.latestPostGallery = data;
     },
     async fetchpopularPostGallery() {
-      const response = await fetch("http://http://3.145.167.18/:8000/server/popular").then(res => res.json());
+      const response = await fetch("http://3.145.167.18:8000/server/popular").then(res => res.json());
       const data = response[0].data;
       return this.popularPostGallery = data;
     },
