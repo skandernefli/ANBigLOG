@@ -1,5 +1,5 @@
 <template>
-  <div class="post-entertainment">
+  <div class="post-entertainment pdt">
     <div
       :class="[
         'section-title',
@@ -46,4 +46,7 @@ export default {
 </script>
 
 <style>
+.pdt{
+  padding-top:100px !important ;
+}
 </style>

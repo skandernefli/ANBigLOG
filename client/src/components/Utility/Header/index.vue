@@ -31,14 +31,20 @@
     <div class="header-menubar">
       <div class="mar-left">
         <div class="col align-items-center">
-          <div class="">
+          <div >
+            <a href="#"       class="menu-drawer"
+>
+
             <img
-      class="menu-drawer"
-      style="cursor: pointer"
-      @click.prevent="hideSidebar"
-      :src="require(`@/assets/images/` + image)"
-      alt="Menu"
+            class="size "
+            :src="require(`@/assets/images/` + pnl)"
+
     />
+    <i class="fas fa-heart height red" ></i>    
+    <i class="fas fa-bars height red"   style="cursor: pointer"
+      @click.prevent="hideSidebar"
+      alt="Menu"></i>
+  </a>
             <!-- <div
               :class="[
                 'newspark-header-main-menu',
@@ -89,6 +95,9 @@ export default {
     image: {
       type: String,
       default: "logo.svg",
+    },   pnl: {
+      type: String,
+      default: "logophone.png",
     },
     darkClass: {
       type: Object,
@@ -115,6 +124,24 @@ export default {
   border-radius: 7px;
 }
 .mar-left{
-  margin-left: 10px;
+padding: 0;
+margin-left: 0;
 }
+
+.size{
+  height: 50px !important;
+}
+.height{
+ font-size:  20px;
+ padding-bottom: 7px;
+}
+.green{
+  color: #49BF3C !important;
+
+}
+.red{
+  box-shadow: 0px 0px 10px rgba(0,0,0,1);
+}
+
+
 </style>

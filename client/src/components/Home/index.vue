@@ -14,9 +14,10 @@
 
     <!--====== POST GALLERY PART START ======-->
     <post-gallery />
+    
 
     <!--====== POST GALLERY PART ENDS ======-->
-    <section class="all-post-area">
+    <section class="all-post-area pdt">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8">
@@ -674,6 +675,7 @@
   </div>
 </template>
 <script>
+
 import HeaderOne from "../Utility/Header/index";
 import PostPartHomeOne  from "./PostPartHomeOne.vue";
 import PostGallery from "./PostGallery.vue";
@@ -735,5 +737,8 @@ export default {
 /* play post */
 .single-play-post-area .single-play-box {
   padding: 23px 12px !important;
+}
+.pdt{
+  padding-top:50pxnb  !important ;
 }
 </style>

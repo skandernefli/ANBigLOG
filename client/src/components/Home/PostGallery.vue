@@ -3,12 +3,13 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8"  v-if="postGallery.length > 0">
+          <div class="limit">
           <div class="post_gallery_slider">
             <slider :settings="BigCardsSettings" ref="BigCards">
               <big-video-card-with-des v-for="(single, index) in postGallery" :key="index" :datas="single" />
             </slider>
 
-          </div>
+          </div></div>
           <div class="post_gallery_inner_slider" style="position: relative">
             <span @click="postGalleryPrev" class="prev slick-arrow" style="display: block"><i
                 class="fal fa-angle-left"></i></span>
@@ -127,4 +128,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@media (max-width: 767px) {
+  .limit{
+    box-shadow: 5px 5px 25px rgba(0,0,0,1);
+padding:1px !important;
+border-radius:1%
+}
+}
+</style>
