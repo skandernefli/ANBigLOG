@@ -218,7 +218,8 @@
   .newspark-header-main-menu {
     display: none;
   }
-  .menu-drawer {
+  .menu-drawer { 
+  
     display: block;
   width:40% ;
 margin-left:30%;
@@ -230,9 +231,11 @@ padding-top: 2.5%;
     display: none;
   }
   .menu-drawer {
-    display: block;
-    width:40% ;
-  margin-left:30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+
   padding-top: 2.5%;  }
 }
 .newspark-header-main-menu ul {

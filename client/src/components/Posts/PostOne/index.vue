@@ -45,13 +45,14 @@
                 <h3 class="title">
                   {{ Posts.title }}
                 </h3>
-                <p>
+                <p>                      <span > {{" \u00A0"}} {{" \u00A0"}} {{" \u00A0"}}</span>
+
                   {{ Posts.intro }}
                 </p>
 
               </div>
               <div class="post-author">
-                <div class="author-info">
+                <div class="author-info t">
                   <div class="thumb">
                     <img src="@/assets/images/author1.png" alt="" />
                   </div>
@@ -60,7 +61,7 @@
                     <li>Created {{ Posts.created_at }}</li>
                   </ul>
                 </div>
-                <div class="author-social">
+                <div class="author-social t">
                   <ul>
                     <li>
                       <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -83,10 +84,12 @@
                 <div v-for="(data) in content" :key="data._id">
 
 
-                  <div v-if="Array.isArray(data)" class="post-text mt-30">
+                  <div v-if="Array.isArray(data)" class="post-text mt">
 
-
+                  
                     <p>
+                      <span > {{" \u00A0"}} {{" \u00A0"}} {{" \u00A0"}}</span>
+
                       <span v-for="(innerData) in   data " :key="innerData._id">
                         <template v-if="innerData.type === 'backlink'">
                           <a class="backlink" :href="JSON.parse(innerData.value).backlinkLink"><u>{{
@@ -108,20 +111,20 @@
 
                   </div>
 
-                  <div v-else-if="data.type === 'points'" class="post-text mt-30">
+                  <div v-else-if="data.type === 'points'" class="post-text mt">
                     <ul>
-                      <li><a>{{ data.value }}</a></li>
+                      <li><a class="highlight">{{ data.value }}</a></li>
                     </ul>
                   </div>
-                  <div v-else-if="data.type === 'title'" class="post-text pt-20">
+                  <div v-else-if="data.type === 'title'" class="post-text pt20">
                     <h3 class="title">{{ data.value }}</h3>
                   </div>
-                  <div v-else-if="data.type === 'subtitle'" class="post-text pt-20">
+                  <div v-else-if="data.type === 'subtitle'" class="post-text pt20">
                     <h5 class="title">{{ data.value }}</h5>
                   </div>
                   <div v-else-if="data.type === 'thumb'" class="row pt-10">
                     <div class="col-lg-6 thumbtext">
-                      <div class="post-thumb">
+                      <div class="post-thumb ">
                         <img :src="data.value" :alt="data.title" />
                       </div>
                     </div>
@@ -133,20 +136,20 @@
                       </div>
                     </div>
                   </div>
-                  <div v-else-if="data.type === 'quote'" class="post-text pt-20">
+                  <div v-else-if="data.type === 'quote'" class="post-text pt20">
                     <p>
                       <span class="quote-text">{{ data.value }}</span>
                     </p>
                   </div>
-                  <div v-else-if="data.type === 'image'" class="post-text pt-20">
-                    <div class="thumb pt-20 pb-35">
+                  <div v-else-if="data.type === 'image'" class="post-text pt20">
+                    <div class="thumb pt20 pt35">
                       <img :src="data.value" alt="" />
                       <span>{{ data.title }}</span>
                       <span>{{ data.desciption }}</span>
                     </div>
                   </div>
-                  <div v-else-if="data.type === 'externalImage'" class="post-text pt-20">
-                    <div class="thumb pt-20 pb-35">
+                  <div v-else-if="data.type === 'externalImage'" class="post-text pt20">
+                    <div class="thumb pt20 pt35">
                       <img :src="data.value" alt="" />
                     </div>
                   </div>
@@ -185,25 +188,25 @@
                         {{ data.desciption }}
                       </p>
                     </div>
-                    <div class="post_play_btn">
-                      <a class="video-popup"
+                    <div class="post_play_btn ">
+                      <a class="video-popup "
                         @click.prevent="$store.dispatch('setUrl', data.value); $store.dispatch('toggleVideo')"><i
-                          class="fas fa-play"></i></a>
+                          class="fas fa-play fontsize"></i></a>
                     </div>
                   </div>
               
                   <div
-                    v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'">
+                    v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'" class="cv">
                     <button class="main-btn"><a class="main-btn" :href="data.value" target="_blank">Click me! :)</a>
 </button>
                   </div>
-                <!--   <div v-if="data.type === 'code'" class="post-text mt-30">
+                <!--   <div v-if="data.type === 'code'" class="post-text mt">
                     <code>{{ data.value }}</code>
                   </div> -->
 
                 </div>
               </div>
-              <div class="post-text mt-35">
+              <div class="post-text mt">
                 <div class="post-tags">
                 <!--   <ul>
                     <li>
@@ -875,18 +878,35 @@ export default {
     },
 
 
+  },mounted() {
+    this.$nextTick(() => {
+      const script = document.createElement('script');
+      script.src =  "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2009700016046113";
+      script.async = true;
+      document.body.appendChild(script);
+    });
+  },
+  head() {
+    return {
+      script: [
+        {
+          src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2009700016046113",
+          async: true,
+          crossorigin:"anonymous"
+        },
+      ],
+    };
   },
 };
 </script>
 <style>
-.thumbtext {
 
-  font-weight: 300;
-}
 
 .backlink {
   font-style: italic;
-  color: aqua;
+  color: #fff;
+  font-weight: 700;
+  font-size: large;
 }
 
 .backlink:hover {
@@ -894,8 +914,139 @@ export default {
 }
 
 u {
-  border-bottom: 2px solid #e60234;
+  border-bottom: 2px solid #49BF3C;
   /* Change the color value to the desired color */
   text-decoration: none;
 }
+@media (max-width: 767px) {
+  p{font-weight: 400;font-size:15px ; line-height: 20px;color: #e2e2e2 !important;}
+  span{font-weight: 400;font-size:15px ;line-height: 20px;color: #e2e2e2 !important;}
+
+
+.post-layout-top-content .post-categories .categories-item span {
+  font-weight: 600 !important;font-size:12px !important;color: #e2e2e2 !important;background-color: #49BF3C ;padding: 5px;
+}
+.post-layout-top-content .post-text .title{  font-weight: 700 !important;font-size:30px ;line-height: 30px !important;color: #e60234 !important;margin-left: 20px ;margin-top: 20px;
+}
+.post-layout-top-content .post-text .title h5{ font-size: 9px !important;
+}
+.post-layout-top-content .post-content .title{
+  font-weight: 700 !important;font-size:30px !important;line-height: 30px !important;color: #e60234 !important;margin-left: 20px;
+
+}
+.post-layout-top-content .post-text ul{
+  margin-left: 30px  !important;line-height: 20px;
+}
+.about-author-content nav ol {
+  display: none;
+}
+.post-layout-top-content{
+  padding-top: 0px !important;
+}
+.post-layout-top-content .post-text p {
+  font-weight: 400 !important;font-size:15px !important; ;line-height: 20px !important;    margin-bottom: 20px !important;
+}
+.pt35{
+  padding-bottom: 10px!important;
+}
+.pt20{
+  padding-top: 0px !important;
+}
+.t{
+  display: none;
+}
+.indent{
+margin-left: 100px !important;
+
+
+}
+.post-layout-top-content .post-text ul li{
+color: #fff  !important;
+font-size: 13px;
+font-weight: 600;
+margin: 0 !important;
+}
+.highlight{
+  background-color:rgba(49,191,60,0.5);
+}
+.mt{margin-top: 10px;}
+.mb{margin-bottom: 10px;}
+.post_gallery_play{
+  height: 200px !important;
+}
+.post_gallery_play .bg-image::before{
+  height:200px !important;
+}
+.fontsize{
+  font-size: 13px;
+}
+
+.post_gallery_play .post__gallery_play_content .post-meta .meta-date{
+  display: none;
+}
+.post_gallery_play .post__gallery_play_content .post-meta .meta-categories a{
+  color:#fff !important;
+  background-color: #49BF3C;
+}
+.main-btn a{
+padding: 0  !important;
+font-size: 20px;
+}
+.main-btn {
+padding: 0 30px  !important;
+line-height: 50px !important;
+align-self: center !important;
+color: #ffff  !important;
+background-color: #49BF3C !important;
+
+}
+.cv button {
+  position: relative !important;
+  
+  left: 25% !important;
+}
+.thumbtext p {
+margin-top: 30px;
+}
+.post-quore-content img{
+  width: 10px !important;
+}
+.post-quote .post-quote-content img{
+  width:25px !important;
+}
+.post-quote .post-quote-content p{
+  padding:0 25px !important;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.post-quote .post-quote-content .user span{
+  border-bottom: 2px solid #49BF3C;
+  /* Change the color value to the desired color */
+  text-decoration: none;}
+  .post-layout-top-content .post-text .quote-text {
+    font-weight: 600 !important;font-size:12px !important;color: #fff !important;background-color: #010101 ;padding: 5px;
+  }
+  .post-layout-top-content .post-text .thumb span{
+    display:none !important;
+  }
+  .post_gallery_play .post__gallery_play_content p{
+font-size:5px !important  }
+
+.post_gallery_inner_slider{
+display:none !important}
+.post_gallery_play .bg-image::before {
+ 
+/*   border-radius:3%;
+ */  background: linear-gradient(rgba(23, 34, 43, 0) 0%,rgba(255, 0, 0, 0.2) 50%) !important;
+}
+.post-layout-top-content .post-text .thumb img {
+  border-radius:3% !important;
+}
+.post-thumb img{
+  border-radius:3% !important;
+
+}
+
+}
+
 </style>

@@ -25,6 +25,8 @@
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
+
 }
 
 .home-2-bg *,
@@ -33,6 +35,8 @@ body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  overflow-x: hidden;
+
 }
 
 body {
@@ -41,10 +45,13 @@ body {
   font-size: 15px;
   color: #fff;
   line-height: 24px;
+  overflow-x: hidden;
 }
 
 .home-1-bg {
   background: #fcfcfc;
+  overflow-x: hidden;
+
 }
 
 .home-2-bg {
@@ -61,6 +68,8 @@ body {
 
 img {
   max-width: 100%;
+  overflow-x: hidden;
+
 }
 
 a {
@@ -123,6 +132,8 @@ p {
 
 .slick-slide {
   outline: 0;
+  overflow-x: hidden;
+
 }
 
 .page-link:focus {
@@ -132,6 +143,8 @@ p {
 @media only screen and (min-width: 1600px) {
   .custom-container {
     max-width: 1260px !important;
+    overflow-x: hidden;
+
   }
 }
 
@@ -153,6 +166,7 @@ p {
 
 /*===== All Button Style =====*/
 .main-btn {
+ 
   display: inline-block;
   font-weight: 700;
   text-align: center;
@@ -177,6 +191,7 @@ p {
   transition: all 0.4s ease-out 0s;
   background-color: #ff5555;
 }
+
 .main-btn:hover {
   background-color: #101010;
   color: #ff5555;
@@ -508,7 +523,7 @@ p {
 
 .header-centerbar {
   padding: 0px 0;
-  background: #101010;
+  background: linear-gradient( #181818,#101010);
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -530,6 +545,12 @@ display:none;
 
 .header-menubar {
   background: #101010;
+  border-style: solid;
+  border-width:0 0  1.25px 0 ;
+  border-bottom-color: rgba(255,255,255,0.2);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+
+
 }
 
 .header-menu-rightbar {
@@ -1543,8 +1564,9 @@ display:none;
 }
 @media (max-width: 767px) {
   .post_gallery_play .post__gallery_play_content .title {
-    font-size: 20px;
-    line-height: 30px;
+    font-size: 13px;
+    line-height: 20px;
+    color: #E60234  !important;
   }
 }
 @media only screen and (min-width: 576px) and (max-width: 767px) {
@@ -1565,10 +1587,10 @@ display:none;
   top: 15px;
 }
 .post_gallery_play .post_play_btn a {
-  height: 55px;
-  width: 55px;
+  height: 30px;
+  width: 30px;
   text-align: center;
-  line-height: 55px;
+  line-height: 30px;
   background: #ff5555;
   color: #101010;
   border-radius: 50%;
@@ -3430,7 +3452,7 @@ display:none;
     6.ALL POST css 
 ===========================*/
 .all-post-area {
-  padding-top: 100px;
+  padding-top: 150px;
   padding-bottom: 100px;
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
