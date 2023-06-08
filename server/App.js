@@ -19,17 +19,12 @@ const manageSidePostsRoute=require('./routes/manageSidePosts');
 const manageSideSportsSectionRoute=require('./routes/manageSideSportsSection');
 const manageSinglePlayPostRoute=require('./routes/manageSinglePlayPost');
 const manageSportsMainSectionRoute=require('./routes/manageSportsMainSection');
-const path = require('path');
+
 
 require("dotenv").config();
 
 const App = express();
-const distPath = path.resolve(__dirname, './../client/dist');
 
-App.use(express.static(distPath));
-App.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
-});
 App.use(cors({
   origin: 'http://localhost:3000',
   credentials: true,
