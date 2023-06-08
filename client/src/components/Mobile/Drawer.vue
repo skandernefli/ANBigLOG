@@ -1,66 +1,29 @@
 <template>
   <!--====== OFFCANVAS MENU PART START ======-->
   <div>
-    <div
-      class="off_canvars_overlay"
-      :class="[sidebar ? 'active' : '']"
-      @click.prevent="hideSidebar"
-    ></div>
+    <div class="off_canvars_overlay" :class="[sidebar ? 'active' : '']" @click.prevent="hideSidebar"></div>
     <div class="offcanvas_menu">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div
-              class="offcanvas_menu_wrapper"
-              :class="[sidebar ? 'active' : '']"
-              style="overflow-y: scroll; overflow-x: hidden"
-            >
+            <div class="offcanvas_menu_wrapper" :class="[sidebar ? 'active' : '']"
+              style="overflow-y: scroll; overflow-x: hidden">
               <div class="canvas_close">
-                <a href="javascript:void(0)" @click="hideSidebar"
-                  ><i class="fa fa-times"></i
-                ></a>
+                <a href="javascript:void(0)" @click="hideSidebar"><i class="fa fa-times"></i></a>
               </div>
               <div class="offcanvas-brand text-center mb-40">
-                <img src="@/assets/images/logo.png" alt="appie" />
+                <img src="@/assets/images/logoV2.png" alt="appie" />
               </div>
               <div id="menu" :style="heightPro" class="text-left">
                 <ul class="offcanvas_main_menu list-unstyled">
-                  <li
-                    v-for="(item, index) in menuItems"
-                    :key="index"
-                    class="menu-item-has-children active"
-                    :class="[menuOpen === item.linkText ? 'menu-open' : '']"
-                  >
-                    <span
-                      v-if="item.submenu && item.submenu.length > 0 && nasted"
-                      class="menu-expand"
-                      ><i class="fa fa-angle-down"></i
-                    ></span>
-                    <router-link
-                      style="text-transform: capitalize"
-                      v-if="item.link"
-                      :to="item.link"
-                    >
-                      {{ item.linkText }}</router-link
-                    >
-                    <a v-else href="#" @click.prevent="show(item.linkText)">
-                      {{ item.linkText }}</a
-                    >
-                    <ul
-                      v-if="item.submenu && nasted"
-                      :id="item.linkText"
-                      class="sidebar-sub-menu list-unstyled ml-3"
-                      :class="[
-                        menuOpen === item.linkText ? 'expend_menu_item' : '',
-                      ]"
-                    >
-                      <li v-for="(subItem, i) in item.submenu" :key="i">
-                        <router-link :to="subItem.link ? subItem.link : '#'">{{
-                          subItem.linkText
-                        }}</router-link>
+                  <li v-for="(item, index) in categories" :key="index" class="menu-item-has-children active"
+                    :class="[menuOpen === item.linkText ? 'menu-open' : '']">
+
+                    <router-link style="text-transform: capitalize" v-if="item.name"
+                      :to="'/Categories/latest/PostsInCategory/' + item.name">
+                      {{ item.name
+                      }}</router-link>
                       </li>
-                    </ul>
-                  </li>
                 </ul>
               </div>
               <div class="offcanvas-social">
@@ -82,20 +45,14 @@
               <div class="footer-widget-info">
                 <ul>
                   <li>
-                    <a href="#"
-                      ><i class="fal fa-envelope"></i> support@appie.com</a
-                    >
+                    <a href="#"><i class="fal fa-envelope"></i> skander.nefli@gmail.com</a>
                   </li>
                   <li>
-                    <a href="#"
-                      ><i class="fal fa-phone"></i> +(642) 342 762 44</a
-                    >
+                    <a href="#"><i class="fal fa-phone"></i> +(216)21067995</a>
                   </li>
                   <li>
-                    <a href="#"
-                      ><i class="fal fa-map-marker-alt"></i> 442 Belle Terre St
-                      Floor 7, San Francisco, AV 4206</a
-                    >
+                    <a href="#"><i class="fal fa-map-marker-alt"></i> 21 Klm Ben Nouiji Henchir Ghbar
+Morneg, Ben Arous</a>
                   </li>
                 </ul>
               </div>
@@ -109,7 +66,6 @@
 </template>
 
 <script>
-import Navs from "../Data/NavItems";
 export default {
   props: {
     sidebar: {
@@ -125,8 +81,11 @@ export default {
     return {
       menuOpen: null,
       subMenuHeight: null,
-      menuItems: Navs.data,
+      categories: []
     };
+  }, async created() {
+    await this.fetchCtegories();
+    console.log(this.categories)
   },
   computed: {
     heightPro() {
@@ -148,6 +107,14 @@ export default {
       const getListItem = document.querySelectorAll(`#${value} li`).length;
       this.subMenuHeight = 43 * getListItem + "px";
     },
+    async fetchCtegories() {
+      try {
+        const response = await fetch("http://3.145.167.18:8000/server/category");
+        this.categories = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
 };
 </script>
@@ -158,12 +125,15 @@ export default {
   overflow: hidden;
   height: 0px;
 }
+
 .sidebar-sub-menu {
   transition: all linear 0.65s;
 }
+
 .sidebar-sub-menu.expend_menu_item {
   transition: all linear 0.65s;
 }
+
 .expend_menu_item.sidebar-sub-menu {
   height: var(--height);
 }

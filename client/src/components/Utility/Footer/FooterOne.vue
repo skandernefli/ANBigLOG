@@ -28,12 +28,12 @@
             </div>
           </div>
         </div>
-        <div class="footer-widget-area">
+        <div  class="footer-widget-area">
           <div class="row">
             <div >
               <div class="footer-widget-right-border">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6">
+                  <div v-if="isDisplay===false" class="col-lg-6 col-md-6">
                     <div class="widget widget-list">
                       <div class="section-title section-title-2">
                         <h3 class="title">Our categories</h3>
@@ -60,7 +60,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-6">
+                  <div   class="col-lg-6 col-md-6">
                     <div class="widget widget-list widget-list-2">
                       <div class="section-title section-title-2">
                         <h3 class="title">More</h3>
@@ -88,21 +88,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="footer-twitter-post">
+                <div  class="footer-twitter-post">
                   <div class="row">
                     <div class="col-lg-5 col-md-5">
                       <div class="widget widget-list">
                         <div class="section-title section-title-2">
-                          <h3 class="title">Creators</h3>
+                          <h3 class="title">Creator</h3>
                         </div>
                         <div class="list">
                           <ul>
                             <li><a href="#">Skander NEFLI</a></li>
-                            <li><a href="#">Wejdenne GMATI</a></li>
-                            <li><a href="#">Mehdi GHARBI</a></li>
-                            <li><a href="#">Ala NOUALI</a></li>
-                            <li><a href="#">Aziz MEJRI</a></li>
-                            <li><a href="#">Ahlem BEN YAROU</a></li>
+                      
                          
                           </ul>
                         </div>
@@ -149,7 +145,23 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    isDisplay:false,
+
+  }),  mounted() {
+    // Add event listener for window resize
+    window.addEventListener("resize", this.handleResize);
+    // Initial check
+    this.handleResize();
+  },beforeDestroy() {
+    // Remove event listener when component is destroyed
+    window.removeEventListener("resize", this.handleResize);
+  },  methods: { handleResize() {
+      // Update the value of isLargeScreen based on the media query
+      this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
+    },}
+};
 </script>
 
 <style></style>
