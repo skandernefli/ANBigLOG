@@ -93,7 +93,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 display_2">
           <div class="trending-right-sidebar">
             <FollowCount />
             <div class="trending-most-view mt-25">
@@ -234,4 +234,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+@media (max-width: 767px) {
+.display_2{
+  display: none;
+}
+}
+</style>

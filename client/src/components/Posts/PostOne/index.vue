@@ -7,7 +7,7 @@
     <!--====== POST LAYOUT 1 PART START ======-->
     <div class="thumb">
       <img :src=headerimage.value :alt="headerimage.title" style="width: 100%; height: auto;">
-      
+
     </div>
     <section class="post-layout-1-area pb-80">
 
@@ -45,7 +45,7 @@
                 <h3 class="title">
                   {{ Posts.title }}
                 </h3>
-                <p>                      <span > {{" \u00A0"}} {{" \u00A0"}} {{" \u00A0"}}</span>
+                <p> <span> {{ " \u00A0" }} {{ " \u00A0" }} {{ " \u00A0" }}</span>
 
                   {{ Posts.intro }}
                 </p>
@@ -81,14 +81,19 @@
                 </div>
               </div>
               <div>
-                <div v-for="(data) in content" :key="data._id">
+                <div v-for="(data,index) in content" :key="data._id">
+                  <div v-if="isDisplay && (index % 10 === 0) && index!==0" class="all-post-sidebar">
+                    <div class="sidebar-add pt-35">
+                      <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+                    </div>
 
+                  </div>
 
                   <div v-if="Array.isArray(data)" class="post-text mt">
 
-                  
+
                     <p>
-                      <span > {{" \u00A0"}} {{" \u00A0"}} {{" \u00A0"}}</span>
+                      <span> {{ " \u00A0" }} {{ " \u00A0" }} {{ " \u00A0" }}</span>
 
                       <span v-for="(innerData) in   data " :key="innerData._id">
                         <template v-if="innerData.type === 'backlink'">
@@ -168,7 +173,7 @@
                       </div>
                     </div>
                   </div>
-                  <div v-else-if="data.type === 'video' || data.type ===  'externalVideo'" class="post_gallery_play">
+                  <div v-else-if="data.type === 'video' || data.type === 'externalVideo'" class="post_gallery_play">
                     <div class="bg-image">
                       <img :src="coverimage.value" :alt="coverimage.title" style="width: 100%; height: 100%" />
                     </div>
@@ -194,13 +199,14 @@
                           class="fas fa-play fontsize"></i></a>
                     </div>
                   </div>
-              
+
                   <div
-                    v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'" class="cv">
+                    v-else-if="data.type === 'file' || data.type === 'audio' || data.type === 'externalAudio' || data.type === 'externalFile' || data.type === 'externalLink'"
+                    class="cv">
                     <button class="main-btn"><a class="main-btn" :href="data.value" target="_blank">Click me! :)</a>
-</button>
+                    </button>
                   </div>
-                <!--   <div v-if="data.type === 'code'" class="post-text mt">
+                  <!--   <div v-if="data.type === 'code'" class="post-text mt">
                     <code>{{ data.value }}</code>
                   </div> -->
 
@@ -208,7 +214,7 @@
               </div>
               <div class="post-text mt">
                 <div class="post-tags">
-                <!--   <ul>
+                  <!--   <ul>
                     <li>
                       <a href="#"><i class="fas fa-tag"></i> Tags</a>
                     </li>
@@ -229,7 +235,7 @@
             v-if="smallPostGallery.length > 0 && latestPostGallery.length > 0 && popularPostGallery.length > 0">
             <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
               role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery" :datas_3="popularPostGallery" />
-            <div class="all-post-sidebar">
+            <div v-if="isDisplay === false" class="all-post-sidebar">
               <div class="sidebar-add pt-35">
                 <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
               </div>
@@ -240,7 +246,7 @@
                 <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
               </div>
             </div>
-            <div class="Categories-post mt-40">
+            <div v-if="isDisplay === false" class="Categories-post mt-40">
               <div class="
                     section-title
                     d-flex
@@ -727,8 +733,9 @@ export default {
       type: String,
     }
   },
-  components: { Header, HomeOne, FooterOne, Drawer,     VideoPopUp,
-},
+  components: {
+    Header, HomeOne, FooterOne, Drawer, VideoPopUp,
+  },
   data: () => ({
     Posts: [],
     content: [],
@@ -737,7 +744,7 @@ export default {
     smallPostGallery: [],
     newParagraph: [],
     newContent: [],
-
+    isDisplay: false,
     l: -1,
     selectedGallery: 'trendy',
     headerimage: "headerimage",
@@ -806,6 +813,10 @@ export default {
 
   },
   methods: {
+    handleResize() {
+      // Update the value of isLargeScreen based on the media query
+      this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
+    },
     async fetchPosts() {
       try {
         const response = await fetch(`http://3.145.167.18:8000/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
@@ -878,30 +889,18 @@ export default {
     },
 
 
-  },mounted() {
-    this.$nextTick(() => {
-      const script = document.createElement('script');
-      script.src =  "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2009700016046113";
-      script.async = true;
-      document.body.appendChild(script);
-    });
-  },
-  head() {
-    return {
-      script: [
-        {
-          src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2009700016046113",
-          async: true,
-          crossorigin:"anonymous"
-        },
-      ],
-    };
+  }, mounted() {
+    // Add event listener for window resize
+    window.addEventListener("resize", this.handleResize);
+    // Initial check
+    this.handleResize();
+  }, beforeDestroy() {
+    // Remove event listener when component is destroyed
+    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
 <style>
-
-
 .backlink {
   font-style: italic;
   color: #fff;
@@ -918,135 +917,220 @@ u {
   /* Change the color value to the desired color */
   text-decoration: none;
 }
+
 @media (max-width: 767px) {
-  p{font-weight: 400;font-size:15px ; line-height: 20px;color: #e2e2e2 !important;}
-  span{font-weight: 400;font-size:15px ;line-height: 20px;color: #e2e2e2 !important;}
+  p {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    color: #e2e2e2 !important;
+  }
+
+  span {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    color: #e2e2e2 !important;
+  }
 
 
-.post-layout-top-content .post-categories .categories-item span {
-  font-weight: 600 !important;font-size:12px !important;color: #e2e2e2 !important;background-color: #49BF3C ;padding: 5px;
-}
-.post-layout-top-content .post-text .title{  font-weight: 700 !important;font-size:30px ;line-height: 30px !important;color: #e60234 !important;margin-left: 20px ;margin-top: 20px;
-}
-.post-layout-top-content .post-text .title h5{ font-size: 9px !important;
-}
-.post-layout-top-content .post-content .title{
-  font-weight: 700 !important;font-size:30px !important;line-height: 30px !important;color: #e60234 !important;margin-left: 20px;
+  .post-layout-top-content .post-categories .categories-item span {
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    color: #e2e2e2 !important;
+    background-color: #49BF3C;
+    padding: 5px;
+  }
 
-}
-.post-layout-top-content .post-text ul{
-  margin-left: 30px  !important;line-height: 20px;
-}
-.about-author-content nav ol {
-  display: none;
-}
-.post-layout-top-content{
-  padding-top: 0px !important;
-}
-.post-layout-top-content .post-text p {
-  font-weight: 400 !important;font-size:15px !important; ;line-height: 20px !important;    margin-bottom: 20px !important;
-}
-.pt35{
-  padding-bottom: 10px!important;
-}
-.pt20{
-  padding-top: 0px !important;
-}
-.t{
-  display: none;
-}
-.indent{
-margin-left: 100px !important;
+  .post-layout-top-content .post-text .title {
+    font-weight: 700 !important;
+    font-size: 30px;
+    line-height: 30px !important;
+    color: #e60234 !important;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+  .post-layout-top-content .post-text .title h5 {
+    font-size: 9px !important;
+  }
+
+  .post-layout-top-content .post-content .title {
+    font-weight: 700 !important;
+    font-size: 30px !important;
+    line-height: 30px !important;
+    color: #e60234 !important;
+    margin-left: 20px;
+
+  }
+
+  .post-layout-top-content .post-text ul {
+    margin-left: 30px !important;
+    line-height: 20px;
+  }
+
+  .about-author-content nav ol {
+    display: none;
+  }
+
+  .post-layout-top-content {
+    padding-top: 0px !important;
+  }
+
+  .post-layout-top-content .post-text p {
+    font-weight: 400 !important;
+    font-size: 15px !important;
+    ;
+    line-height: 20px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .pt35 {
+    padding-bottom: 10px !important;
+  }
+
+  .pt20 {
+    padding-top: 0px !important;
+  }
+
+  .t {
+    display: none;
+  }
+
+  .indent {
+    margin-left: 100px !important;
 
 
-}
-.post-layout-top-content .post-text ul li{
-color: #fff  !important;
-font-size: 13px;
-font-weight: 600;
-margin: 0 !important;
-}
-.highlight{
-  background-color:rgba(49,191,60,0.5);
-}
-.mt{margin-top: 10px;}
-.mb{margin-bottom: 10px;}
-.post_gallery_play{
-  height: 200px !important;
-}
-.post_gallery_play .bg-image::before{
-  height:200px !important;
-}
-.fontsize{
-  font-size: 13px;
-}
+  }
 
-.post_gallery_play .post__gallery_play_content .post-meta .meta-date{
-  display: none;
-}
-.post_gallery_play .post__gallery_play_content .post-meta .meta-categories a{
-  color:#fff !important;
-  background-color: #49BF3C;
-}
-.main-btn a{
-padding: 0  !important;
-font-size: 20px;
-}
-.main-btn {
-padding: 0 30px  !important;
-line-height: 50px !important;
-align-self: center !important;
-color: #ffff  !important;
+  .post-layout-top-content .post-text ul li {
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 !important;
+  }
+
+  .highlight {
+    background-color: rgba(49, 191, 60, 0.5);
+  }
+
+  .mt {
+    margin-top: 10px;
+  }
+
+  .mb {
+    margin-bottom: 10px;
+  }
+
+  .post_gallery_play {
+    height: 200px !important;
+  }
+
+  .post_gallery_play .bg-image::before {
+    height: 200px !important;
+  }
+
+  .fontsize {
+    font-size: 13px;
+  }
+
+  .post_gallery_play .post__gallery_play_content .post-meta .meta-date {
+    display: none;
+  }
+
+  .post_gallery_play .post__gallery_play_content .post-meta .meta-categories a {
+    color: #fff !important;
+    background-color: #49BF3C;
+    font-size: 20px !important;
+  }
+
+  .main-btn a {
+    padding: 0 !important;
+    font-size: 20px;
+  }
+
+  .main-btn {
+    padding: 0 30px !important;
+    line-height: 50px !important;
+    align-self: center !important;
+    /* color: #ffff  !important;
 background-color: #49BF3C !important;
+ */
+  }
 
-}
-.cv button {
-  position: relative !important;
-  
-  left: 25% !important;
-}
-.thumbtext p {
-margin-top: 30px;
-}
-.post-quore-content img{
-  width: 10px !important;
-}
-.post-quote .post-quote-content img{
-  width:25px !important;
-}
-.post-quote .post-quote-content p{
-  padding:0 25px !important;
-  margin-bottom: 8px;
-  color: #fff;
-}
-.post-quote .post-quote-content .user span{
-  border-bottom: 2px solid #49BF3C;
-  /* Change the color value to the desired color */
-  text-decoration: none;}
+  .cv button {
+    position: relative !important;
+
+    left: 25% !important;
+  }
+
+  .thumbtext p {
+    margin-top: 30px;
+  }
+
+  .post-quore-content img {
+    width: 10px !important;
+  }
+
+  .post-quote .post-quote-content img {
+    width: 25px !important;
+  }
+
+  .post-quote .post-quote-content p {
+    padding: 0 25px !important;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .post-quote .post-quote-content .user span {
+    border-bottom: 2px solid #49BF3C;
+    /* Change the color value to the desired color */
+    text-decoration: none;
+  }
+
   .post-layout-top-content .post-text .quote-text {
-    font-weight: 600 !important;font-size:12px !important;color: #fff !important;background-color: #010101 ;padding: 5px;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    color: #fff !important;
+    background-color: #010101;
+    padding: 5px;
   }
-  .post-layout-top-content .post-text .thumb span{
-    display:none !important;
+
+  .post-layout-top-content .post-text .thumb span {
+    display: none !important;
   }
-  .post_gallery_play .post__gallery_play_content p{
-font-size:5px !important  }
 
-.post_gallery_inner_slider{
-display:none !important}
-.post_gallery_play .bg-image::before {
- 
-/*   border-radius:3%;
- */  background: linear-gradient(rgba(23, 34, 43, 0) 0%,rgba(255, 0, 0, 0.2) 50%) !important;
-}
-.post-layout-top-content .post-text .thumb img {
-  border-radius:3% !important;
-}
-.post-thumb img{
-  border-radius:3% !important;
+  .post_gallery_play .post__gallery_play_content p {
+    display: none !important
+  }
+
+  .post_gallery_play .post__gallery_play_content .title {
+    width: 290px !important;
+    font-size: larger !important;
+  }
+
+  .post_gallery_inner_slider {
+    display: none !important
+  }
+
+  .post_gallery_play .bg-image::before {
+
+    /*   border-radius:3%;
+ */
+    background: transparent !important;
+  }
+
+  .post-layout-top-content .post-text .thumb img {
+    border-radius: 3% !important;
+  }
+
+  .post-thumb img {
+    border-radius: 3% !important;
+
+  }
 
 }
-
+.sidebar-add{
+  margin-bottom: 30px !important;
 }
-
 </style>

@@ -15,6 +15,83 @@
               <div class="row">
                 <div class="col-lg-12" v-if="posts.length > 0">
                   <div class="bussiness-post-item mb-40" v-for="(post,index) in postsToShow" :key="index">
+                    <div v-if="isDisplay" class="col-lg-4"
+       >
+
+            <div     v-if="index%3===0 && index!==0"  class="all-post-sidebar">
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
+              <div class="Categories-post mt-40">
+                <div class="
+                    section-title
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                  ">
+                  <h3 class="title">Categories</h3>
+                </div>
+                <div class="Categories-item">
+                  <div class="item">
+                    <img src="@/assets/images/categories-5.jpg" alt="categories" />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Book Reviews and Literature</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="@/assets/images/categories-6.jpg" alt="categories" />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Business and Entrepreneurship</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="@/assets/images/categories-2.jpg" alt="categories" />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>ad</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="@/assets/images/categories-5.jpg" alt="categories" />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Photography and Visual Arts</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="@/assets/images/categories-6.jpg" alt="categories" />
+                    <div class="Categories-content">
+                      <a href="#">
+                        <span>Sustainable Living</span>
+                        <img src="@/assets/images/arrow.svg" alt="" />
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+       
+          <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
+            :darkClass="darkClass" role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery"
+            :datas_3="popularPostGallery" />
+        </div>
+                    
+                    
+                    
+                    
+                    
+                    
                     <div class="bussiness-post-thumb">
                       <img :src="coverToShow(post)" :alt="post.title" />
                     </div>
@@ -66,6 +143,8 @@ export default {
   data: () => ({
     posts:[],
     visiblePosts: 10,
+    isDisplay:false,
+
   }),
   async created() {
     await this.fetchPosts();
@@ -92,6 +171,10 @@ export default {
 
   },
   methods: {
+    handleResize() {
+      // Update the value of isLargeScreen based on the media query
+      this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
+    },
     async fetchPosts() {
       try {
         const response = await fetch("http://3.145.167.18:8000/server/post/client/");
@@ -126,8 +209,28 @@ truncatedTextT(data) {
   return data;
 }
 
-  },
+  },mounted() {
+    // Add event listener for window resize
+    window.addEventListener("resize", this.handleResize);
+    // Initial check
+    this.handleResize();
+  },beforeDestroy() {
+    // Remove event listener when component is destroyed
+    window.removeEventListener("resize", this.handleResize);
+  },  
+
 };
 
 </script>
-<style></style>
+<style>
+
+@media (max-width: 767px) {
+  .bussiness-post-item .bussiness-post-content .meta-date-link span {
+  font-size: x-small !important;
+  color: #e60234 !important;
+} .footer-area{
+  padding-left: 20px;
+}
+}
+
+</style>
