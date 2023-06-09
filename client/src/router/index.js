@@ -5,7 +5,7 @@ import Contact from '../views/Contact.vue'
 import About from '../views/About.vue'
 import fourOfour from '../components/404.vue'
 import PostOne from '../components/Posts/PostOne/index.vue'
-
+import StillHOT from '../components/Posts/StillHot/index.vue'
 import Features from '../components/category/Feature.vue'
 
 
@@ -17,6 +17,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/Buzz',
+    name: 'Buzz',
+    component: StillHOT
   },
  {
     path: '/contact',
@@ -44,7 +49,14 @@ const routes = [
   name: 'PostsInCategory',
   component: Features,
   props: true
-},
+}, {
+    path: '/404',
+    name: '404',
+    component: fourOfour
+  },  {
+    path: '*',
+    redirect: '/404'
+  }
 
 ]
 

@@ -46,7 +46,7 @@
               <i class="fas fa-align-center height red " style="cursor: pointer" @click.prevent="hideSidebar"
                 alt="Menu"></i>
                 <a class="responsive"><router-link to="/">Home</router-link></a>
-                <a class="responsive red"><router-link class="red" to="/"><i class="fab fa-gripfire height red"></i>  Still Hot</router-link></a>
+                <a class="responsive red"><router-link class="red" to="/Buzz"><i class="fab fa-gripfire height red"></i> Buzz</router-link></a>
                 <a class="responsive"><router-link to="/contact">Contact</router-link></a>
                 <a class="responsive"><router-link to="/about-us">About</router-link></a>
 
