@@ -199,12 +199,12 @@ export default {
     },
   }),  methods: {
     async fetchmanageBigPosts() {
-      const response = await fetch("https://3.145.167.18:8000/server/manageBigPosts").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:443/server/manageBigPosts").then(res => res.json());
       const data = response[0].data;
       return this.manageBigPosts = data;
     },
     async fetchmanageSidePosts() {
-      const response = await fetch("https://3.145.167.18:8000/server/manageSidePosts").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:443/server/manageSidePosts").then(res => res.json());
       const data = response[0].data;
       return this.manageSidePosts = data;
     },

@@ -137,12 +137,12 @@ export default {
   },
   methods: {
     async fetchsmallPostGallery() {
-      const response = await fetch("https://3.145.167.18:8000/server/managevideoposts").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:443/server/managevideoposts").then(res => res.json());
       const data = response[0].data;
       return this.smallPostGallery = data;
     },
     async fetchmainvideo() {
-      const response = await fetch("https://3.145.167.18:8000/server/mainvideo").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:443/server/mainvideo").then(res => res.json());
       const data = response[0].data[0];
 
       return this.mainvideo = data;

@@ -645,7 +645,7 @@
       },
       async fetchPosts() {
         try {
-          const response = await fetch(`https://3.145.167.18:8000/server/post/category/${this.$route.params.categorie_name}`); // use "postId" instead of "id"
+          const response = await fetch(`https://3.145.167.18:443/server/post/category/${this.$route.params.categorie_name}`); // use "postId" instead of "id"
           this.posts = await response.json();
           console.log("this posts",this.posts);
           this.headerimage = this.headerImage(this.posts);
@@ -672,17 +672,17 @@
   selectGalleryTab(value) {
         this.selectedGallery = value;
       }, async fetchsmallPostGallery() {
-        const response = await fetch("https://3.145.167.18:8000/server/trendy").then(res => res.json());
+        const response = await fetch("https://3.145.167.18:443/server/trendy").then(res => res.json());
         const data = response[0].data;
         return this.smallPostGallery = data;
       },
       async fetchlatestPostGallery() {
-        const response = await fetch("https://3.145.167.18:8000/server/latest").then(res => res.json());
+        const response = await fetch("https://3.145.167.18:443/server/latest").then(res => res.json());
         const data = response[0].data;
         return this.latestPostGallery = data;
       },
       async fetchpopularPostGallery() {
-        const response = await fetch("https://3.145.167.18:8000/server/popular").then(res => res.json());
+        const response = await fetch("https://3.145.167.18:443/server/popular").then(res => res.json());
         const data = response[0].data;
         return this.popularPostGallery = data;
       },

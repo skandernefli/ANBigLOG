@@ -68,7 +68,7 @@ export default {
   },
   methods: {
      async fetchFeature() {
-      const response = await fetch("https://3.145.167.18:8000/server/feature").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:443/server/feature").then(res => res.json());
       const data = response[0].data;
       return this.post = data;
     },

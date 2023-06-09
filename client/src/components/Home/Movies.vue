@@ -37,7 +37,7 @@ export default {
     await this.fetchMoviesDatas();
    }, methods: {
     async fetchMoviesDatas() {
-      const response = await fetch("https://3.145.167.18:8000/server/manageMoviesSection").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:443/server/manageMoviesSection").then(res => res.json());
       const data = response[0].data;
       return this.moviesDatas = data;
     },

@@ -5,7 +5,7 @@ const options={
     cert:fs.readFileSync('ssl/cert.pem')
 }
 const App=require('./App');
-const port=8000;
+const port=443;
 
 const server=https.createServer(options,App);
 server.listen(port)
