@@ -109,7 +109,7 @@ export default {
     },
     async fetchCtegories() {
       try {
-        const response = await fetch("http://3.145.167.18:8000/server/category");
+        const response = await fetch("https://3.145.167.18:8000/server/category");
         this.categories = await response.json();
       } catch (error) {
         console.error(error);
