@@ -131,10 +131,10 @@
             >
               <p>© Copyright 2023, All Rights Reserved</p>
               <ul>
-                <li><a href="#">About</a></li>
+                <li><router-link to="/about-us">About</router-link></li>
                 <li><a href="#">Advertise</a></li>
-                <li><a href="#">Privacy & Policy</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="https://www.termsfeed.com/live/7924089a-50ec-44e4-8732-82241c08c0e7">Privacy Policy</a></li>
+                <li><a href="https://www.termsfeed.com/live/48bc2b1c-51ba-4d4f-b972-878bdfd03331">Terms of Service</a></li>                <li><router-link to="/contact">Contact Us</router-link></li>
               </ul>
             </div>
           </div>

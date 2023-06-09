@@ -383,8 +383,9 @@
               <ul>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Advertise</a></li>
-                <li><a href="#">Privacy & Policy</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="https://www.termsfeed.com/live/7924089a-50ec-44e4-8732-82241c08c0e7">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Contact Us </a></li>
               </ul>
             </div>
           </div>

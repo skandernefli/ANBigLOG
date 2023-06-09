@@ -29,6 +29,12 @@
               <div class="about-post-items">
                 <div class="row" v-if="posts.length > 0"> 
                   <div class="col-lg-6 col-md-6"  v-for="(post,index) in postsToShow" :key="index">
+                    <div v-if="isDisplay && index%3===0 && index!==0" class="all-post-sidebar">
+              <div class="sidebar-add pt-35">
+                <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
+              </div>
+
+            </div>
                     <div class="trending-image-post feature-item mt-30  "  >
                       <img :src="coverToShow(post)" :alt="post.title" />
                       <div class="trending-image-content">
@@ -61,7 +67,7 @@
             <home-one :trendingShortPost="false" :signup="false" :trendingBigPost="false" :ad="false" :sharePost="false"
               role="sidebar" :datas="smallPostGallery" :datas_2="latestPostGallery"
               :datas_3="popularPostGallery" />
-            <div class="all-post-sidebar">
+            <div v-if="isDisplay===false" class="all-post-sidebar">
               <div class="sidebar-add pt-35">
                 <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
               </div>
@@ -72,7 +78,7 @@
                 <a href="#"><img src="@/assets/images/ads/two_ad.jpg" alt="ad" /></a>
               </div>
             </div>
-            <div class="Categories-post mt-40">
+            <div v-if="isDisplay===false" class="Categories-post mt-40">
                 <div
                   class="
                     section-title
@@ -647,6 +653,8 @@ export default {
     popularPostGallery: [],
     smallPostGallery: [],
     selectedGallery: 'trendy',
+    isDisplay:false,
+
 
   }),   computed: {
     postsToShow() {
@@ -673,6 +681,10 @@ export default {
     await this.fetchlatestPostGallery();
     await this.fetchpopularPostGallery();
     await this.fetchPosts();},  methods: {
+      handleResize() {
+      // Update the value of isLargeScreen based on the media query
+      this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
+    },
     async fetchPosts() {
       try {
         const response = await fetch(`http://3.145.167.18:8000/server/post/category/${this.$route.params.categorie_name}`); // use "postId" instead of "id"
@@ -722,7 +734,15 @@ selectGalleryTab(value) {
       if (newValue !== oldValue) {
       this.fetchPosts();
     }
-    },}
+    },}, mounted() {
+    // Add event listener for window resize
+    window.addEventListener("resize", this.handleResize);
+    // Initial check
+    this.handleResize();
+  },beforeDestroy() {
+    // Remove event listener when component is destroyed
+    window.removeEventListener("resize", this.handleResize);
+  },  
 
 };
 </script>
