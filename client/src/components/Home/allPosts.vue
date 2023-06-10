@@ -177,7 +177,7 @@ export default {
     },
     async fetchPosts() {
       try {
-        const response = await fetch("https://3.145.167.18:443/server/post/client/");
+        const response = await fetch("https://3.145.167.18:8000/server/post/client/");
         this.posts = await response.json();
       } catch (error) {
         console.error(error);

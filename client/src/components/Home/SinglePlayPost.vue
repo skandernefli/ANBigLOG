@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     async fetchManageSinglePlayPosts() {
-      const response = await fetch("https://3.145.167.18:443/server/manageSinglePlayPost").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:8000/server/manageSinglePlayPost").then(res => res.json());
       const data = response[0].data;
       return this.ManageSinglePlayPosts = data;
     },

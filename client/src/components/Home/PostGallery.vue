@@ -246,7 +246,7 @@ export default {
     },
     //post gallery
     async fetchPostGallery() {
-      const response = await fetch("https://3.145.167.18:443/server/postgalley");
+      const response = await fetch("https://3.145.167.18:8000/server/postgalley");
       const data = await response.json();
       this.postGallery = data[0].data;
 
@@ -277,17 +277,17 @@ export default {
       this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
     },
     async fetchsmallPostGallery() {
-      const response = await fetch("https://3.145.167.18:443/server/trendy").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:8000/server/trendy").then(res => res.json());
       const data = response[0].data;
       return this.smallPostGallery = data;
     },
     async fetchlatestPostGallery() {
-      const response = await fetch("https://3.145.167.18:443/server/latest").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:8000/server/latest").then(res => res.json());
       const data = response[0].data;
       return this.latestPostGallery = data;
     },
     async fetchpopularPostGallery() {
-      const response = await fetch("https://3.145.167.18:443/server/popular").then(res => res.json());
+      const response = await fetch("https://3.145.167.18:8000/server/popular").then(res => res.json());
       const data = response[0].data;
       return this.popularPostGallery = data;
     },
