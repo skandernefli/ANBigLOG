@@ -50,7 +50,7 @@ export default {
   methods: {
     async fetchCtegories() {
       try {
-        const response = await fetch("https://18.218.162.154/server/category");
+        const response = await fetch("https://18.218.162.154:8443/server/category");
         this.categories = await response.json();
       } catch (error) {
         console.error(error);

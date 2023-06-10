@@ -819,7 +819,7 @@ export default {
     },
     async fetchPosts() {
       try {
-        const response = await fetch(`https://18.218.162.154/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
+        const response = await fetch(`https://18.218.162.154:8443/server/post/${this.$route.params.postId}`); // use "postId" instead of "id"
         this.Posts = await response.json();
         this.headerimage = this.headerImage(this.Posts);
         this.coverimage = this.coverToShow(this.Posts);
@@ -873,17 +873,17 @@ export default {
     selectGalleryTab(value) {
       this.selectedGallery = value;
     }, async fetchsmallPostGallery() {
-      const response = await fetch("https://18.218.162.154/server/trendy").then(res => res.json());
+      const response = await fetch("https://18.218.162.154:8443/server/trendy").then(res => res.json());
       const data = response[0].data;
       return this.smallPostGallery = data;
     },
     async fetchlatestPostGallery() {
-      const response = await fetch("https://18.218.162.154/server/latest").then(res => res.json());
+      const response = await fetch("https://18.218.162.154:8443/server/latest").then(res => res.json());
       const data = response[0].data;
       return this.latestPostGallery = data;
     },
     async fetchpopularPostGallery() {
-      const response = await fetch("https://18.218.162.154/server/popular").then(res => res.json());
+      const response = await fetch("https://18.218.162.154:8443/server/popular").then(res => res.json());
       const data = response[0].data;
       return this.popularPostGallery = data;
     },
