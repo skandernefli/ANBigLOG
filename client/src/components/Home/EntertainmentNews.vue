@@ -39,7 +39,7 @@ import DivideCard from "../Utility/Cards/DivideCard.vue";
     await JSON.parse(JSON.stringify(this.fetchmanageEntertainmentSection()));
    }, methods: {
     async fetchmanageEntertainmentSection() {
-      const response = await fetch("https://18.218.162.154/server/manageEntertainmentSection").then(res => res.json());
+      const response = await fetch("https://18.218.162.154:8443/server/manageEntertainmentSection").then(res => res.json());
       const data = response[0].data;
       return this.manageEntertainmentSection = data;
     },

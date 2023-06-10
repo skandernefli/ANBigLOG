@@ -137,12 +137,12 @@ export default {
   },
   methods: {
     async fetchsmallPostGallery() {
-      const response = await fetch("https://18.218.162.154/server/managevideoposts").then(res => res.json());
+      const response = await fetch("https://18.218.162.154:8443/server/managevideoposts").then(res => res.json());
       const data = response[0].data;
       return this.smallPostGallery = data;
     },
     async fetchmainvideo() {
-      const response = await fetch("https://18.218.162.154/server/mainvideo").then(res => res.json());
+      const response = await fetch("https://18.218.162.154:8443/server/mainvideo").then(res => res.json());
       const data = response[0].data[0];
 
       return this.mainvideo = data;
