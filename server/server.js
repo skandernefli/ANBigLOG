@@ -1,11 +1,13 @@
 const https =require('https');
 const fs=require('fs');
-const options={
-    key:fs.readFileSync('ssl/key.pem'),
-    cert:fs.readFileSync('ssl/cert.pem')
-}
+const key=fs.readFileSync('private.key');
+const cert=fs.readFileSync('certificate.crt');
 const App=require('./App');
 const port=8000;
-
-const server=https.createServer(options,App);
-server.listen(port)
+const cred={
+    key,
+    cert
+}
+App.listen(port);
+const server=https.createServer(cred,App);
+server.listen(8443);
