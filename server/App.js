@@ -41,7 +41,7 @@ App.use((req, res, next) => {
 App.use(addAccessTokenToHeaders);
 
 App.use((req, res, next) => {
-  var allowedOrigins = ['http://localhost:3000', 'http://localhost:8080', 'http://192.168.1.226:8080',"http://3.145.167.18","http://3.145.167.18:3000","http://www.anguidehub.com","https://www.anguidehub.com"];  var origin = req.headers.origin;
+  var allowedOrigins = ['http://localhost:3000', 'http://localhost:8080', 'http://192.168.1.226:8080',"https://3.145.167.18","https://www.anguidehub.com"];  var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);}
    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
