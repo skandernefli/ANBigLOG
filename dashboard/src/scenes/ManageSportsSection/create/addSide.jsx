@@ -26,7 +26,7 @@ const CreatePostPage = () => {
 
  
   useEffect(() => {
-    fetch('http://localhost:8000/server/category')
+    fetch('https://18.218.162.154:8443/server/category')
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
@@ -110,7 +110,7 @@ const Select=(event)=>{
   };
   
   const createPost = async (postData) => {
-  try {  const SavedPostResonse = await fetch("http://localhost:8000/server/manageSideSportsSection", {
+  try {  const SavedPostResonse = await fetch("https://18.218.162.154:8443/server/manageSideSportsSection", {
       method: "POST",
       credentials: "include",
       headers: {

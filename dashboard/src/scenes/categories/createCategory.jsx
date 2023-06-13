@@ -52,7 +52,7 @@ const CreatePostPage = () => {
 
   
   const createPost = async (postData) => {
-  try {  const SavedPostResonse = await fetch("http://localhost:8000/server/category", {
+  try {  const SavedPostResonse = await fetch("https://18.218.162.154:8443/server/category", {
       method: "POST",
       credentials: "include",
       headers: {

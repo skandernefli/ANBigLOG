@@ -28,7 +28,7 @@ const HeaderBar = () => {
   
   const logout=async()=>{
    const logoutser= await fetch(
-  "http://localhost:8000/server/auth/logout",
+  "https://18.218.162.154:8443/server/auth/logout",
   {
     method: "POST",
     credentials: 'include',

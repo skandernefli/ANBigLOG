@@ -41,7 +41,7 @@ import {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-      fetch("http://localhost:8000/server/feature")
+      fetch("https://18.218.162.154:8443/server/feature")
         .then((response) => response.json())
         .then((response) => setData(response[0].data))
         .catch((error) => console.log(error));
@@ -111,7 +111,7 @@ import {
       },
     ];
     const handleDelete = async (_id) => {
-      fetch(`http://localhost:8000/server/feature/${_id}`, {
+      fetch(`https://18.218.162.154:8443/server/feature/${_id}`, {
         method: "delete",
         credentials: "include",
         headers: {

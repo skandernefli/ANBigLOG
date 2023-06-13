@@ -41,7 +41,7 @@ const PostsList = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("http://localhost:8000/server/latest")
+    fetch("https://18.218.162.154:8443/server/latest")
       .then((response) => response.json())
       .then((response) => setData(response[0].data))
       .catch((error) => console.log(error));
@@ -111,7 +111,7 @@ const PostsList = () => {
     },
   ];
   const handleDelete = async (_id) => {
-    fetch(`http://localhost:8000/server/latest/${_id}`, {
+    fetch(`https://18.218.162.154:8443/server/latest/${_id}`, {
       method: "delete",
       credentials: "include",
       headers: {
