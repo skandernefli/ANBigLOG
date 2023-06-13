@@ -60,11 +60,32 @@ export default {
 
   },
   methods: {
-    async fetchManageSinglePlayPosts() {
-      const response = await fetch("https://18.218.162.154:8443/server/manageSinglePlayPost").then(res => res.json());
-      const data = response[0].data;
-      return this.ManageSinglePlayPosts = data;
-    },
+    async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+    let retries = 0;
+    while (retries < maxRetries) {
+      try {
+        const response = await fetch(url, options);
+        console.log('Response Status:', response.status); // Add this line
+        if (response.status === 200) {
+          console.log('Success');
+          return response.json();
+        } else {
+          throw new Error('Non-200 response status');
+        }
+      } catch (error) {
+        console.log(`Error: ${error.message}`);
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
+      console.log('Retry:', retries); // Add this line
+    }
+    throw new Error('Max retries exceeded');
+  },
+  async  fetchManageSinglePlayPosts() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/manageSinglePlayPost").then(response => {
+       this.ManageSinglePlayPosts= response[0].data;
+    });
+  },
     playSliderPrev() {
       this.$refs.playPost.prev();
     },

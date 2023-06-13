@@ -33,21 +33,13 @@
                 </div>
                 <div class="Categories-item">
                   <div class="item">
-                    <img src="@/assets/images/categories-5.jpg" alt="categories" />
-                    <div class="Categories-content">
-                      <a href="#">
-                        <span>Book Reviews and Literature</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Business and Entrepreneurship</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Sustainable Living'">
+        <span>Sustainable Living </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -62,17 +54,28 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Photography and Visual Arts</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Pet Care and Animal Wellfare'">
+        <span>Pet Care and Animal Wellfare </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
+                      <router-link :to="'/Categories/latest/PostsInCategory/News and Current Events'">
+        <span>News and Current Events </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="@/assets/images/categories-2.jpg" alt="categories" />
+                    <div class="Categories-content">
                       <a href="#">
-                        <span>Sustainable Living</span>
+                        <span>ad</span>
                         <img src="@/assets/images/arrow.svg" alt="" />
                       </a>
                     </div>
@@ -171,18 +174,37 @@ export default {
 
   },
   methods: {
+    async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+    let retries = 0;
+    while (retries < maxRetries) {
+      try {
+        const response = await fetch(url, options);
+        console.log('Response Status:', response.status); // Add this line
+        if (response.status === 200) {
+          console.log('Success');
+          return response.json();
+        } else {
+          throw new Error('Non-200 response status');
+        }
+      } catch (error) {
+        console.log(`Error: ${error.message}`);
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
+      console.log('Retry:', retries); // Add this line
+    }
+    throw new Error('Max retries exceeded');
+  },
     handleResize() {
       // Update the value of isLargeScreen based on the media query
       this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
     },
-    async fetchPosts() {
-      try {
-        const response = await fetch("https://18.218.162.154:8443/server/post/client/");
-        this.posts = await response.json();
-      } catch (error) {
-        console.error(error);
-      }
-    },
+    async  fetchPosts() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/post/client/").then(response => {
+       this.posts= response;
+    });
+  },
+  
     loadMore() {
       this.visiblePosts += 5;
     },

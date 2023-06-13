@@ -198,16 +198,37 @@ export default {
       slideToScroll: 1,
     },
   }),  methods: {
-    async fetchmanageBigPosts() {
-      const response = await fetch("https://18.218.162.154:8443/server/manageBigPosts").then(res => res.json());
-      const data = response[0].data;
-      return this.manageBigPosts = data;
-    },
-    async fetchmanageSidePosts() {
-      const response = await fetch("https://18.218.162.154:8443/server/manageSidePosts").then(res => res.json());
-      const data = response[0].data;
-      return this.manageSidePosts = data;
-    },
+    async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+    let retries = 0;
+    while (retries < maxRetries) {
+      try {
+        const response = await fetch(url, options);
+        console.log('Response Status:', response.status); // Add this line
+        if (response.status === 200) {
+          console.log('Success');
+          return response.json();
+        } else {
+          throw new Error('Non-200 response status');
+        }
+      } catch (error) {
+        console.log(`Error: ${error.message}`);
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
+      console.log('Retry:', retries); // Add this line
+    }
+    throw new Error('Max retries exceeded');
+  },
+  async  fetchmanageBigPosts() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/manageBigPosts").then(response => {
+       this.manageBigPosts= response[0].data;
+    });
+  },
+  async  fetchmanageSidePosts() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/manageSidePosts").then(response => {
+       this.manageSidePosts= response[0].data;
+    });
+  },
     //trending
     trandingPrev() {
       this.$refs.trendingSlider.prev();

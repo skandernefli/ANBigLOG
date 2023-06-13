@@ -5,49 +5,40 @@
     </div>
     <ul>
       <li>
-        <a href="#">
+        <a href="https://www.facebook.com/profile.php?id=100093210267113">
           <i class="fab fa-facebook-f"></i>
-          <span>34,456</span>
-          <p>Fans</p>
-        </a>
+<!--           <span>34,456</span>
+ -->          <span>Follow</span>
+           <p> <span>us</span></p>
+</a>
       </li>
       <li>
-        <a class="item-2" href="#">
+        <a class="item-2" href="https://twitter.com/ANGuideHU">
           <i class="fab fa-twitter"></i>
-          <span>34,456</span>
-          <p>Followers</p>
-        </a>
+<!--           <span>34,456</span>
+ -->            <span>Follow</span>
+           <p> <span>us</span></p>
+</a>
       </li>
       <li>
-        <a class="item-3" href="#">
+        <a class="item-3" href="https://www.youtube.com/channel/UC1NFBLqXHqGYRytj-2YGVqg">
           <i class="fab fa-youtube"></i>
-          <span>34,456</span>
-          <p>Subscribers</p>
+            <span>Follow</span>
+           <p> <span>us</span></p>
+
         </a>
       </li>
     </ul>
     <ul>
       <li>
-        <a class="item-4" href="#">
+        <a class="item-4" href="https://www.instagram.com/anguidehub/">
           <i class="fab fa-instagram"></i>
-          <span>34,456</span>
-          <p>Followers</p>
+<!--           <span>200,264</span>
+ -->           <span>Follow</span>
+           <p> <span>us</span></p>
         </a>
       </li>
-      <li>
-        <a class="item-5" href="#">
-          <i class="fab fa-vimeo-v"></i>
-          <span>34,456</span>
-          <p>Followers</p>
-        </a>
-      </li>
-      <li>
-        <a class="item-6" href="#">
-          <i class="fab fa-maxcdn"></i>
-          <span>34,456</span>
-          <p>Fans</p>
-        </a>
-      </li>
+    
     </ul>
   </div>
 </template>

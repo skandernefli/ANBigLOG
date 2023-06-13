@@ -22,19 +22,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Food and Cooking</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Finance and Money Management'">
+        <span>Finance and Money Management </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Fashion and Beauty</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/DIY and Crafts'">
+        <span>DIY and Crafts </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -49,19 +51,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Finanace and Money Management</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Parenting and Family'">
+        <span>Parenting and Family </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>DIY and Crafts</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Home and Gardening'">
+        <span>Home and Gardening </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
 
@@ -163,19 +167,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Parenting and Family</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Book Reviews and Literature'">
+        <span>Book Reviews and Literature </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Home and Gardening</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Business and Entrepreneurship'">
+        <span>Business and Entrepreneurship </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -190,10 +196,11 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Book Reviews and Literature</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Photography and Visual Arts'">
+        <span>Photography and Visual Arts </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
 
@@ -245,13 +252,33 @@ export default {
       this.selectedGallery = value;
     },
     //post gallery
-    async fetchPostGallery() {
-      const response = await fetch("https://18.218.162.154:8443/server/postgalley");
-      const data = await response.json();
-      this.postGallery = data[0].data;
+    async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+  let retries = 0;
+  while (retries < maxRetries) {
+    try {
+      const response = await fetch(url, options);
+      console.log('Response Status:', response.status); // Add this line
+      if (response.status === 200) {
+        console.log('Success');
+        return response.json();
+      } else {
+        throw new Error('Non-200 response status');
+      }
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
+    await new Promise(resolve => setTimeout(resolve, delay));
+    retries++;
+    console.log('Retry:', retries); // Add this line
+  }
+  throw new Error('Max retries exceeded');
+},
 
-
-    }, truncatedTextI(data) {
+async  fetchPostGallery() {
+  return this.fetchWithRetry("https://18.218.162.154:8443/server/postgalley").then(response => {
+    this.postGallery= response[0].data;
+  });
+}, truncatedTextI(data) {
       const maxLength = 120;
       if (data.length > maxLength) {
         return data.substring(0, maxLength) + "...";
@@ -276,21 +303,26 @@ export default {
       // Update the value of isLargeScreen based on the media query
       this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
     },
-    async fetchsmallPostGallery() {
-      const response = await fetch("https://18.218.162.154:8443/server/trendy").then(res => res.json());
-      const data = response[0].data;
-      return this.smallPostGallery = data;
-    },
-    async fetchlatestPostGallery() {
-      const response = await fetch("https://18.218.162.154:8443/server/latest").then(res => res.json());
-      const data = response[0].data;
-      return this.latestPostGallery = data;
-    },
-    async fetchpopularPostGallery() {
-      const response = await fetch("https://18.218.162.154:8443/server/popular").then(res => res.json());
-      const data = response[0].data;
-      return this.popularPostGallery = data;
-    },
+   async  fetchsmallPostGallery() {
+  return this.fetchWithRetry("https://18.218.162.154:8443/server/trendy").then(response => {
+     this.smallPostGallery= response[0].data;
+     console.log( this.smallPostGallery)
+  });
+},
+
+async  fetchlatestPostGallery() {
+  return this.fetchWithRetry("https://18.218.162.154:8443/server/latest").then(response => {
+      this.latestPostGallery  = response[0].data;
+      console.log(  this.latestPostGallery )
+  });
+},
+
+async  fetchpopularPostGallery() {
+  return this.fetchWithRetry("https://18.218.162.154:8443/server/popular").then(response => {
+         this.popularPostGallery = response[0].data;
+         console.log(  this.popularPostGallery)
+  });
+},
 
   },
   data: () => ({

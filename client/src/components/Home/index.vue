@@ -42,19 +42,19 @@
                   <div class="item">
                     <img src="@/assets/images/categories-1.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
+                      <router-link :to="'/Categories/latest/PostsInCategory/Personal Development'"  >
                         <span>Personal Development </span>
                         <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      </router-link>
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-2.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Health and Fitness</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+    <router-link :to="'/Categories/latest/PostsInCategory/Health and Fitness'">
+        <span>Health and Fitness </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
                     </div>
                   </div>
                   <div class="item">
@@ -69,19 +69,19 @@
                   <div class="item">
                     <img src="@/assets/images/categories-3.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Travel and Adventure</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+    <router-link :to="'/Categories/latest/PostsInCategory/Travel and Adventure'">
+        <span>Travel and Adventure </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-4.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Technology and Gadgets</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+    <router-link :to="'/Categories/latest/PostsInCategory/Technology and Gadgets'">
+        <span>Technology and Gadgets </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
                     </div>
                   </div>
                   <div class="item">
@@ -112,20 +112,22 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Food and Cooking</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Food and Cooking'">
+        <span>Food and Cooking </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Fashion and Beauty</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
-                    </div>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Fashion and Beauty'">
+        <span>Fashion and Beauty </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
+                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-2.jpg" alt="categories" />
@@ -221,19 +223,19 @@
                   <div class="item">
                     <img src="@/assets/images/categories-1.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
+                      <router-link :to="'/Categories/latest/PostsInCategory/Personal Development'"  >
                         <span>Personal Development </span>
                         <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      </router-link>
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-2.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Health and Fitness</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+    <router-link :to="'/Categories/latest/PostsInCategory/Health and Fitness'">
+        <span>Health and Fitness </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
                     </div>
                   </div>
                   <div class="item">
@@ -248,19 +250,19 @@
                   <div class="item">
                     <img src="@/assets/images/categories-3.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Travel and Adventure</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+    <router-link :to="'/Categories/latest/PostsInCategory/Travel and Adventure'">
+        <span>Travel and Adventure </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-4.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Technology and Gadgets</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+    <router-link :to="'/Categories/latest/PostsInCategory/Technology and Gadgets'">
+        <span>Technology and Gadgets </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
                     </div>
                   </div>
                   <div class="item">
@@ -276,19 +278,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Food and Cooking</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Food and Cooking'">
+        <span>Food and Cooking </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Fashion and Beauty</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Fashion and Beauty'">
+        <span>Fashion and Beauty </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -303,19 +307,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Finanace and Money Management</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Finance and Money Management'">
+        <span>Finance and Money Management </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>DIY and Crafts</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/DIY and Crafts'">
+        <span>DIY and Crafts </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -330,19 +336,51 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Parenting and Family</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Parenting and Family'">
+        <span>Parenting and Family </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
+                      <router-link :to="'/Categories/latest/PostsInCategory/Home and Gardening'">
+        <span>Home and Gardening </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
+                    </div>
+                  </div>
+                  
+                  <div class="item">
+                    <img src="@/assets/images/categories-2.jpg" alt="categories" />
+                    <div class="Categories-content">
                       <a href="#">
-                        <span>Home and Gardening</span>
+                        <span>ad</span>
                         <img src="@/assets/images/arrow.svg" alt="" />
                       </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="@/assets/images/categories-5.jpg" alt="categories" />
+                    <div class="Categories-content">
+                      <router-link :to="'/Categories/latest/PostsInCategory/Book Reviews and Literature'">
+        <span>Book Reviews and Literature </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="@/assets/images/categories-6.jpg" alt="categories" />
+                    <div class="Categories-content">
+                      <router-link :to="'/Categories/latest/PostsInCategory/Business and Entrepreneurship'">
+        <span>Business and Entrepreneurship </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -357,19 +395,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Book Reviews and Literature</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Photography and Visual Arts'">
+        <span>Photography and Visual Arts </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Business and Entrepreneurship</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Sustainable Living'">
+        <span>Sustainable Living </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -384,19 +424,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Photography and Visual Arts</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Pet Care and Animal Wellfare'">
+        <span>Pet Care and Animal Wellfare </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Sustainable Living</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/News and Current Events'">
+        <span>News and Current Events </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -411,19 +453,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Pet Care and Animal Wellfare </span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Politics and Government'">
+        <span>Politics and Government </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>News and Current Events</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Social Issues and Activism'">
+        <span>Social Issues and Activism </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -438,19 +482,22 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Politics and Government</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Technology Trends'">
+        <span>Technology Trends </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Social issues and Activism</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Entertainment and Pop Culture'">
+        <span>Entertainment and Pop Culture </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
+
                     </div>
                   </div>
                   <div class="item">
@@ -465,19 +512,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Technology Trends</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Gaming and Esports'">
+        <span>Gaming and Esports </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Entertainment and Pop Culture</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Science and Space'">
+        <span>Science and Space </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -492,19 +541,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Gaming and Esports</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Environment and Sustainability'">
+        <span>Environment and Sustainability </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Science And Space</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Education and Learning'">
+        <span>Education and Learning </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -519,19 +570,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Environment and Sustainability</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Sports and Fitness'">
+        <span>Sports and Fitness </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Education and Learning </span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Personal Finance and Investing'">
+        <span>Personal Finance and Investing </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -546,19 +599,21 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Sports and Fitness</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Mental Health and Well-being'">
+        <span>Mental Health and Well-being </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Personal Finance and Investing </span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Cultural Insights and Travel'">
+        <span>Cultural Insights and Travel </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
@@ -573,46 +628,20 @@
                   <div class="item">
                     <img src="@/assets/images/categories-5.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Mental Health and Well-being</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Artificial Intelligence and Robotics'">
+        <span>Artificial Intelligence and Robotics </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
+
                     </div>
                   </div>
                   <div class="item">
                     <img src="@/assets/images/categories-6.jpg" alt="categories" />
                     <div class="Categories-content">
-                      <a href="#">
-                        <span>Cultural Insights and Travel</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <img src="@/assets/images/categories-2.jpg" alt="categories" />
-                    <div class="Categories-content">
-                      <a href="#">
-                        <span>ad</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <img src="@/assets/images/categories-5.jpg" alt="categories" />
-                    <div class="Categories-content">
-                      <a href="#">
-                        <span>Artificial Intelligence and Robotics</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <img src="@/assets/images/categories-6.jpg" alt="categories" />
-                    <div class="Categories-content">
-                      <a href="#">
-                        <span>Cryptocurrency and Blockchain</span>
-                        <img src="@/assets/images/arrow.svg" alt="" />
-                      </a>
+                      <router-link :to="'/Categories/latest/PostsInCategory/Cryptocurrency and Blockchain'">
+        <span>Cryptocurrency and Blockchain </span>
+        <img src="@/assets/images/arrow.svg" alt="" />
+    </router-link>
                     </div>
                   </div>
                   <div class="item">

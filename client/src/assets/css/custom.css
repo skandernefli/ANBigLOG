@@ -220,8 +220,14 @@
   }
   .menu-drawer { 
   
-    display: block;
-margin-left:30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    
+  
+
+  padding-top: 2.5%; 
 }
 }
 @media (max-width: 767px) {

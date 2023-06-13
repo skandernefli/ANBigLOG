@@ -93,16 +93,38 @@ export default {
 
   },
   methods: {
-    async fetchmanageSportsMainSection() {
-      const response = await fetch("https://18.218.162.154:8443/server/manageSportsMainSection").then(res => res.json());
-      const data = response[0].data;
-      return this.manageSportsMainSection = data;
-    },
-    async fetchmanageSideSportsSection() {
-      const response = await fetch("https://18.218.162.154:8443/server/manageSideSportsSection").then(res => res.json());
-      const data = response[0].data;
-      return this.manageSideSportsSection = data;
-    },
+    async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+    let retries = 0;
+    while (retries < maxRetries) {
+      try {
+        const response = await fetch(url, options);
+        console.log('Response Status:', response.status); // Add this line
+        if (response.status === 200) {
+          console.log('Success');
+          return response.json();
+        } else {
+          throw new Error('Non-200 response status');
+        }
+      } catch (error) {
+        console.log(`Error: ${error.message}`);
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
+      console.log('Retry:', retries); // Add this line
+    }
+    throw new Error('Max retries exceeded');
+  },
+    async  fetchmanageSportsMainSection() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/manageSportsMainSection").then(response => {
+       this.manageSportsMainSection= response[0].data;
+    });
+  },
+  async  fetchmanageSideSportsSection() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/manageSideSportsSection").then(response => {
+       this.manageSideSportsSection= response[0].data;
+    });
+  },
+  
     //sports
     sportSliderPrev() {
       this.$refs.sportSlider.prev();
