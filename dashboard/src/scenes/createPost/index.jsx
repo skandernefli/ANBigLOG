@@ -272,7 +272,7 @@ const CreatePostPage = () => {
     return backlink ? backlink.link : "";
   };
   useEffect(() => {
-    fetch("http://localhost:8000/server/category")
+    fetch("https://18.218.162.154:8443/server/category")
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
@@ -376,7 +376,7 @@ const CreatePostPage = () => {
       }
 
       const SavedPostResonse = await fetch(
-        "http://localhost:8000/server/post",
+        "https://18.218.162.154:8443/server/post",
         {
           method: "POST",
           credentials: "include",

@@ -40,7 +40,7 @@ const Form = () => {
     }
 
     const savedUserResponse = await fetch(
-      "http://localhost:8000/server/auth/register",
+      "https://18.218.162.154:8443/server/auth/register",
       {
         method: "POST",
         credentials: 'include',
@@ -57,7 +57,7 @@ const Form = () => {
   };
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch(
-      "http://localhost:8000/server/auth/login",
+      "https://18.218.162.154:8443/server/auth/login",
       {
         method: "POST",
         credentials: 'include', 

@@ -34,7 +34,7 @@ const token = store.getState().token;
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        fetch('http://localhost:8000/server/post/admin/')
+        fetch('https://18.218.162.154:8443/server/post/admin/')
           .then(response => response.json())
           .then(result => setData(result))
           .catch(error => console.log(error));
@@ -65,7 +65,7 @@ const token = store.getState().token;
       ];
       const handleDelete = async(post_id) => {
         console.log("this is a token",token)
-        fetch(`http://localhost:8000/server/post/${post_id}`, {  method: "delete",
+        fetch(`https://18.218.162.154:8443/server/post/${post_id}`, {  method: "delete",
         credentials: 'include',
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
        })
