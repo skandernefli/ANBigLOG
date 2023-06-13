@@ -136,18 +136,38 @@ export default {
 
   },
   methods: {
-    async fetchsmallPostGallery() {
-      const response = await fetch("https://18.218.162.154:8443/server/managevideoposts").then(res => res.json());
-      const data = response[0].data;
-      return this.smallPostGallery = data;
-    },
-    async fetchmainvideo() {
-      const response = await fetch("https://18.218.162.154:8443/server/mainvideo").then(res => res.json());
-      const data = response[0].data[0];
+    async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+    let retries = 0;
+    while (retries < maxRetries) {
+      try {
+        const response = await fetch(url, options);
+        console.log('Response Status:', response.status); // Add this line
+        if (response.status === 200) {
+          console.log('Success');
+          return response.json();
+        } else {
+          throw new Error('Non-200 response status');
+        }
+      } catch (error) {
+        console.log(`Error: ${error.message}`);
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
+      console.log('Retry:', retries); // Add this line
+    }
+    throw new Error('Max retries exceeded');
+  },
 
-      return this.mainvideo = data;
-      
-    },
+    async  fetchsmallPostGallery() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/managevideoposts").then(response => {
+       this.smallPostGallery= response[0].data;
+    });
+  },
+  async  fetchmainvideo() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/mainvideo").then(response => {
+       this.mainvideo= response[0].data[0];
+    });
+  },
     tssPrev() {
       this.$refs.trendingSidebarSlide.prev();
     },

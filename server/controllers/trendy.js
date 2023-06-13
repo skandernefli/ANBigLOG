@@ -49,6 +49,7 @@ const getGalleryPosts=(req,res)=>{
     .sort({ created_at: -1 })
     .then(trendyPosts => {
       res.status(200).json(trendyPosts);
+
     })
     .catch(error => {
       console.log(error);
@@ -56,6 +57,7 @@ const getGalleryPosts=(req,res)=>{
         error: error
       });
     });
+    console.log("Trendy Controller call");
 }
 
 const deleteGalleryPost=(req,res)=>{

@@ -7,6 +7,8 @@
   >
     <ul v-if="nav_items">
        <li><router-link to="/">Home</router-link></li>
+       <li class=" red"><router-link class="red" to="/Buzz"><i class="fab fa-gripfire height red"></i> Buzz</router-link></li>
+
       <li v-for="(item, index) in categories.slice(0,5)" :key="index">
      
         <router-link :to="'/Categories/latest/PostsInCategory/' + item.name"  >{{
@@ -21,7 +23,7 @@
           item.linkText
         }}</router-link>
         <ul v-if="item.child" class="sub-menu">
-          <li v-for="(lvlTwo, index) in categories.slice(6,categories.length)" :key="index">
+          <li v-for="(lvlTwo, index) in categories.slice(5,categories.length)" :key="index">
             <router-link :to="'/Categories/latest/PostsInCategory/' + lvlTwo.name"  >
               {{ lvlTwo.name }}
             </router-link>
@@ -48,14 +50,32 @@ export default {
     await this.fetchCtegories();
   },
   methods: {
-    async fetchCtegories() {
+    async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+    let retries = 0;
+    while (retries < maxRetries) {
       try {
-        const response = await fetch("https://18.218.162.154:8443/server/category");
-        this.categories = await response.json();
+        const response = await fetch(url, options);
+        console.log('Response Status:', response.status); // Add this line
+        if (response.status === 200) {
+          console.log('Success');
+          return response.json();
+        } else {
+          throw new Error('Non-200 response status');
+        }
       } catch (error) {
-        console.error(error);
+        console.log(`Error: ${error.message}`);
       }
-    }}
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
+      console.log('Retry:', retries); // Add this line
+    }
+    throw new Error('Max retries exceeded');
+  },
+    async  fetchCtegories() {
+    return this.fetchWithRetry("https://18.218.162.154:8443/server/category").then(response => {
+        this.categories  = response;
+    });
+  },}
 };
 </script>
 

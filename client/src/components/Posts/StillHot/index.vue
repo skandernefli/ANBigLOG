@@ -639,22 +639,44 @@
       await this.fetchlatestPostGallery();
       await this.fetchpopularPostGallery();
       await this.fetchPosts();},  methods: {
+        async  fetchWithRetry(url, options, maxRetries = 30, delay = 1000) {
+    let retries = 0;
+    while (retries < maxRetries) {
+      try {
+        const response = await fetch(url, options);
+        console.log('Response Status:', response.status); // Add this line
+        if (response.status === 200) {
+          console.log('Success');
+          return response.json();
+        } else {
+          throw new Error('Non-200 response status');
+        }
+      } catch (error) {
+        console.log(`Error: ${error.message}`);
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
+      console.log('Retry:', retries); // Add this line
+    }
+    throw new Error('Max retries exceeded');
+  },
         handleResize() {
         // Update the value of isLargeScreen based on the media query
         this.isDisplay = window.matchMedia("(max-width: 767px)").matches;
       },
       async fetchPosts() {
-        try {
-          const response = await fetch(`https://18.218.162.154:8443/server/post/category/${this.$route.params.categorie_name}`); // use "postId" instead of "id"
-          this.posts = await response.json();
-          console.log("this posts",this.posts);
-          this.headerimage = this.headerImage(this.posts);
-  
-          this.coverimage = this.coverToShow(this.posts);
-        } catch (error) {
-          console.error(error);
-        }
-      },
+      try {
+        return this.fetchWithRetry(`https://18.218.162.154:8443/server/post/category/${this.$route.params.categorie_name}`).then(response => {
+       this.posts= response;
+       this.headerimage = this.headerImage(this.posts);
+
+this.coverimage = this.coverToShow(this.posts);
+    });   
+       
+      } catch (error) {
+        console.error(error);
+      }
+    },
       loadMore() {
         this.visiblePosts += 5;
       },
